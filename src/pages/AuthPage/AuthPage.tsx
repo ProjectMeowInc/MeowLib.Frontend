@@ -1,9 +1,24 @@
 import React, {useState} from 'react';
 import styles from "./authPage.module.css"
+import {registration} from "../../apiRequests/AuthRequests";
+import {IError} from "../../models/Responses";
+
+async function ClickHandler (login: string, password: string, isLogin: boolean): Promise<undefined | IError> {
+    if(isLogin) {
+        return undefined
+    }
+    else{
+       return await registration(login, password);
+    }
+}
 
 const AuthPage = () => {
 
-    const [isLogin, setIsLogin] = useState<Boolean>(true)
+    const [isLogin, setIsLogin] = useState<boolean>(true)
+
+    const [login, setLogin] = useState<string>("")
+    const [password, setPassword] = useState<string>("")
+    const [response, setResponse] = useState<IError| undefined>(undefined)
 
     return (
         <div className={styles.wrapper}>
@@ -23,12 +38,14 @@ const AuthPage = () => {
 
                    <hr className={styles.separator}/>
 
-                   <input className={styles.input} type="text" placeholder={"Введите логин"}/>
-                   <input className={styles.input} type="password" placeholder={"Введите пароль"}/>
+                   <input onChange={(ctx) :void => setLogin(ctx.target.value)} className={styles.input} type="text" placeholder={"Введите логин"}/>
+                   <input onChange={(ctx) :void => setPassword(ctx.target.value)} className={styles.input} type="password" placeholder={"Введите пароль"}/>
 
                    <hr className={styles.separator}/>
 
-                   <button className={styles.button}>Войти</button>
+                   <p>{response?.displayMessage}</p>
+
+                   <button onClick={async () => setResponse(await ClickHandler(login, password, isLogin))} className={styles.button}>Войти</button>
                </div>
 
             </div>
