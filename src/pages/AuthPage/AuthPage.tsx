@@ -3,7 +3,7 @@ import styles from "./authPage.module.css"
 
 const AuthPage = () => {
 
-    const [isLogin, setIsLogin] = useState(true)
+    const [isLogin, setIsLogin] = useState<Boolean>(true)
 
     return (
         <div className={styles.wrapper}>
