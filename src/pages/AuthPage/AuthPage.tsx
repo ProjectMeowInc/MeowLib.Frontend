@@ -5,7 +5,7 @@ import {ErrorTypesEnum, IError} from "../../services/models/IError";
 
 const AuthPage = () => {
 
-    const [isLogin, setIsLogin] = useState<boolean>(true)
+    const [isLoginPage, setIsLoginPage] = useState<boolean>(true)
 
     const [login, setLogin] = useState<string>("")
     const [password, setPassword] = useState<string>("")
@@ -37,12 +37,12 @@ const AuthPage = () => {
                <div className={styles.modal_wrapper}>
                    <div className={styles.header}>
                        <img src="/img/homeIcon.png" alt=""/>
-                       <p onClick={() => setIsLogin(true)} className={isLogin? styles.active : styles.none_active}>Вход</p>
-                       <p onClick={() => setIsLogin(false)} className={!isLogin ? styles.active : styles.none_active}>Регистрация</p>
+                       <p onClick={() => setIsLoginPage(true)} className={isLoginPage? styles.active : styles.none_active}>Вход</p>
+                       <p onClick={() => setIsLoginPage(false)} className={!isLoginPage ? styles.active : styles.none_active}>Регистрация</p>
                    </div>
                    <hr className={styles.separator}/>
 
-                   {isLogin
+                   {isLoginPage
                        ? <p className={styles.login}>Вход через логин и пароль</p>
                        : <p className={styles.login}>Регистрация через логин и пароль</p>
                    }
@@ -58,7 +58,7 @@ const AuthPage = () => {
                        <p>{error.displayMessage}</p>
                    )}
 
-                   <button onClick={async () => ClickHandler(login, password, isLogin)} className={styles.button}>Войти</button>
+                   <button onClick={async () => ClickHandler(login, password, isLoginPage)} className={styles.button}>Войти</button>
                </div>
 
             </div>
