@@ -10,7 +10,7 @@ import {ITokenData} from "./models/DTO/IUserModels";
  */
 export class UserService {
     /**
-     * 
+     * Метод для регистрации пользователя
      * @param requestData Данные для регистрации.
      * @returns Ошибку или если её нет null
      */
@@ -47,11 +47,10 @@ export class UserService {
     }
 
     /**
-     *
+     * Метод для авторизации пользователя
      * @param requestData Данные для авторизации.
      * @returns Возвращает оибку или два токена
      */
-
     static async authorization (requestData: ILogInRequest): Promise<IError | ITokenData> {
         try {
             return await axios.post("http://localhost:5270/api/users/log-in", requestData);
