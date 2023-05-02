@@ -1,4 +1,4 @@
-import { ErrorTypesEnum, IError } from "./models/IError";
+import {ErrorTypesEnum, IError} from "./models/IError";
 
 /**
  * Класс для удобного создания ошибок
@@ -14,12 +14,10 @@ export class ErrorService {
      * @returns Модель ошибки.
      */
     static criticalError(displayMessage: string | null): IError {
-        const error: IError = {
+        return {
             displayMessage: displayMessage ?? "Неизвестная критическая ошибка",
             errorType: ErrorTypesEnum.Critical
-        }
-
-        return error;
+        };
     }
 
     /**
@@ -28,12 +26,10 @@ export class ErrorService {
      * @returns Модель ошибки.
      */
     static warningError(displayMessage: string | null): IError {
-        const error: IError = {
+        return {
             displayMessage: displayMessage,
             errorType: ErrorTypesEnum.Warning
-        }
-
-        return error;
+        };
     }
 
     /**
@@ -42,11 +38,9 @@ export class ErrorService {
      * @returns Модель ошибки.
      */
     static commonError(displayMessage: string | null): IError {
-        const error: IError = {
+        return {
             displayMessage: displayMessage,
             errorType: ErrorTypesEnum.Error
-        }
-
-        return error;
+        };
     }
 }

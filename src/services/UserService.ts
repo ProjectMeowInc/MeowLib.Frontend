@@ -1,17 +1,18 @@
-import axios, { AxiosError } from "axios"
-import { IBaseErrorResponse } from "./models/responses/errors/IBaseErrorResponse"
-import { ISignInRequest } from './models/requests/IUserRequests';
-import { ErrorService } from "./ErrorService";
-import { IError } from "./models/IError";
+import axios, {AxiosError} from "axios"
+import {IBaseErrorResponse} from "./models/responses/errors/IBaseErrorResponse"
+import {ILogInRequest, ISignInRequest} from './models/requests/IUserRequests';
+import {ErrorService} from "./ErrorService";
+import {IError} from "./models/IError";
+import {ITokenData} from "./models/DTO/IUserModels";
 
 /**
  * Сервис для работы с пользователем.
  */
 export class UserService {
     /**
-     * 
+     * Метод для регистрации пользователя
      * @param requestData Данные для регистрации.
-     * @returns 
+     * @returns Ошибку или если её нет null
      */
     static async registration(requestData: ISignInRequest): Promise<IError | null> {
         try {
@@ -32,7 +33,7 @@ export class UserService {
                 }
     
                 // Если ответ - пустой возвращаем фатальную ошибку.
-                if (baseErrorResponse.response == undefined) {
+                if (baseErrorResponse.response === undefined) {
                     return ErrorService.criticalError("Неизвестная ошибка. Попробуйте ещё раз.")
                 }
 
@@ -41,6 +42,34 @@ export class UserService {
             }
             // Если ошибка - не isAxiosError
             // возвращаем фатальную ошибку
+            return ErrorService.criticalError("Неизвестная ошибка. Попробуйте ещё раз.")
+        }
+    }
+
+    /**
+     * Метод для авторизации пользователя
+     * @param requestData Данные для авторизации.
+     * @returns Возвращает оибку или два токена
+     */
+    static async authorization (requestData: ILogInRequest): Promise<IError | ITokenData> {
+        try {
+            return await axios.post("http://localhost:5270/api/users/log-in", requestData);
+        }
+        catch (err: any) {
+            if (err.isAxiosError) {
+                const baseErrorResponse = err as AxiosError<IBaseErrorResponse>
+
+                if (baseErrorResponse === null) {
+                    return ErrorService.criticalError("Неизвестная ошибка. Попробуйте ещё раз.")
+                }
+
+                if (baseErrorResponse.response === undefined) {
+                    return ErrorService.criticalError("Неизвестная ошибка. Попробуйте ещё раз.")
+                }
+
+                return ErrorService.commonError(baseErrorResponse.response.data.errorMessage)
+            }
+
             return ErrorService.criticalError("Неизвестная ошибка. Попробуйте ещё раз.")
         }
     }
