@@ -1,14 +1,15 @@
 import React, {useState} from 'react';
 import styles from "./authPage.module.css"
-import {registration} from "../../apiRequests/AuthRequests";
-import {IError} from "../../models/Responses";
+import {ITokenData} from "../../services/models/DTO/IUserModels";
+import {UserService} from "../../services/UserService";
+import {IError} from "../../services/models/IError";
 
-async function ClickHandler (login: string, password: string, isLogin: boolean): Promise<undefined | IError> {
+async function ClickHandler (login: string, password: string, isLogin: boolean): Promise<null | IError | ITokenData> {
     if(isLogin) {
-        return undefined
+        return await UserService.authorization({login, password})
     }
     else{
-       return await registration(login, password);
+       return await UserService.registration({login, password});
     }
 }
 
@@ -18,7 +19,7 @@ const AuthPage = () => {
 
     const [login, setLogin] = useState<string>("")
     const [password, setPassword] = useState<string>("")
-    const [response, setResponse] = useState<IError| undefined>(undefined)
+    const [response, setResponse] = useState<IError| null| ITokenData>()
 
     return (
         <div className={styles.wrapper}>
@@ -43,7 +44,7 @@ const AuthPage = () => {
 
                    <hr className={styles.separator}/>
 
-                   <p>{response?.displayMessage}</p>
+                   <p>{response !== null && response !== undefined && "displayMessage" in response ? response.displayMessage :<></>}</p>
 
                    <button onClick={async () => setResponse(await ClickHandler(login, password, isLogin))} className={styles.button}>Войти</button>
                </div>
