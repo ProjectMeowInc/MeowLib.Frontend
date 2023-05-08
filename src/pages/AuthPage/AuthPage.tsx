@@ -2,6 +2,11 @@ import React, {useState} from 'react';
 import styles from "./authPage.module.css"
 import {UserService} from "../../services/UserService";
 import {ErrorTypesEnum, IError} from "../../services/models/IError";
+import {ErrorService} from "../../services/ErrorService";
+import {useCookies} from "react-cookie";
+import {TokenService} from "../../services/TokenService";
+import {UserRolesEnum} from "../../services/models/DTO/IUserModels";
+import {useNavigate} from "react-router-dom";
 
 const AuthPage = () => {
 
@@ -10,10 +15,25 @@ const AuthPage = () => {
     const [login, setLogin] = useState<string>("")
     const [password, setPassword] = useState<string>("")
     const [error, setError] = useState<IError | null>(null)
+    const [cookie, setCookie] = useCookies(["token"])
+    const navigate = useNavigate()
 
     async function ClickHandler (login: string, password: string, isLogin: boolean): Promise<void> {
         if(isLogin) {
-            await UserService.authorization({login, password})
+            const response = await UserService.authorization({login, password})
+
+            if(ErrorService.isError(response)) {
+                alert(response.displayMessage)
+                return
+            }
+
+            const token = TokenService.parseToken(response.accessToken)
+
+            setCookie("token", response.accessToken)
+
+            if(token?.role === UserRolesEnum.Moderator || token?.role === UserRolesEnum.Admin) {
+                navigate("/admin")
+            }
         }
         else{
             const error = await UserService.registration({login, password});
