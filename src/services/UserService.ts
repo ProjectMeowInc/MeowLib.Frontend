@@ -3,7 +3,7 @@ import {IBaseErrorResponse} from "./models/responses/errors/IBaseErrorResponse"
 import {ILogInRequest, ISignInRequest} from './models/requests/IUserRequests';
 import {ErrorService} from "./ErrorService";
 import {IError} from "./models/IError";
-import {ITokenData} from "./models/DTO/IUserModels";
+import {ILoginResponse} from "./models/responses/IUserResponses";
 
 /**
  * Сервис для работы с пользователем.
@@ -14,7 +14,7 @@ export class UserService {
      * @param requestData Данные для регистрации.
      * @returns Ошибку или если её нет null
      */
-    static async registration(requestData: ISignInRequest): Promise<IError | null> {
+    static async registration (requestData: ISignInRequest): Promise<IError | null> {
         try {
             await axios.post("http://localhost:5270/api/users/sign-in",
                 requestData)
@@ -49,11 +49,13 @@ export class UserService {
     /**
      * Метод для авторизации пользователя
      * @param requestData Данные для авторизации.
-     * @returns Возвращает оибку или два токена
+     * @returns Возвращает ошибку или два токена
      */
-    static async authorization (requestData: ILogInRequest): Promise<IError | ITokenData> {
+    static async authorization (requestData: ILogInRequest): Promise<IError | ILoginResponse> {
         try {
-            return await axios.post("http://localhost:5270/api/users/log-in", requestData);
+            const response = await axios.post<ILoginResponse>("http://localhost:5270/api/users/log-in", requestData)
+
+            return response.data
         }
         catch (err: any) {
             if (err.isAxiosError) {
