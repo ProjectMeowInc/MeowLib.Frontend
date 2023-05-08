@@ -43,4 +43,18 @@ export class ErrorService {
             errorType: ErrorTypesEnum.Error
         };
     }
+
+    /**
+     * Метод проверяет данные на наличие ошибки
+     * @param data Данные необходимые для проверки
+     * @returns boolean
+     */
+
+    static isError(data: any): data is IError {
+        if (!("errorType" in data) || !("displayMessage" in data)) {
+            return false
+        }
+
+        return true
+    }
 }
