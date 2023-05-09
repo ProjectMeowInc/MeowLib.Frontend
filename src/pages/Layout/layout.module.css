@@ -1,0 +1,29 @@
+.wrapper {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.content {
+    margin: 5vh 0;
+    width: 90%;
+    min-height: 90vh;
+    box-shadow: 5px 5px 100px rgba(97, 91, 91, 0.25);
+    border-radius: 15px;
+}
+
+.header {
+    margin: 0 auto;
+    width: 95%;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    font-size: 32px;
+    font-family: Righteous, serif;
+}

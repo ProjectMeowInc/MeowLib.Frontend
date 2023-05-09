@@ -1,0 +1,16 @@
+.item {
+    margin-bottom: 40px;
+    width: 95%;
+    height: 75px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 0 100px rgba(0, 0, 0, 0.05);
+    font-family: Raleway, serif;
+    border-radius: 15px;
+    transition: .4s all;
+    font-size: 20px;
+}
+
+.id {
+    margin: 0 30px;
+}
