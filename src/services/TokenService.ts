@@ -42,17 +42,19 @@ export class TokenService {
         const token = Cookies.get("token")
 
         if(token === undefined) {
-            return ErrorService.criticalError("Cookie не найден")
+            return ErrorService.commonError("Ошибка токена")
         }
 
         return token
     }
 
-    static setAccessToken (token: string): void | IError {
+    static setAccessToken (token: string): null | IError {
         if(token.length === 0) {
             return ErrorService.criticalError("Cookie не найден")
         }
 
         Cookies.set("token", token)
+
+        return null
     }
 }

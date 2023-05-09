@@ -22,7 +22,8 @@ const AuthPage = () => {
 
             if(ErrorService.isError(response)) {
                 if(response.errorType === ErrorTypesEnum.Critical) {
-                    return alert(ErrorService.criticalError("Неизвестная ошибка"))
+                    //Пока alert потом можно это логировать
+                    return alert(response.displayMessage)
                 }
                 return alert(response.displayMessage)
             }
@@ -32,23 +33,23 @@ const AuthPage = () => {
             const token = TokenService.parseToken(response.accessToken)
 
             if(token === null) {
-                return
+                return alert("Ошибка авторизации")
             }
 
             if(token.role === UserRolesEnum.Moderator || token.role === UserRolesEnum.Admin) {
                 return navigate("/admin")
             }
         }
-        else{
+        else {
             const error = await UserService.registration({login, password});
             if(!error) {
                 return
             }
 
-            //TODO: Сделать обработку критических ошибок
+            //TODO: Заменить обработку критических ошибок
 
             if (error.errorType === ErrorTypesEnum.Critical) {
-                return alert("Critical error")
+                return alert(error.displayMessage)
             }
             setError(error)
         }
