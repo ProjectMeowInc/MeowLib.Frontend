@@ -6,6 +6,7 @@ import {ErrorService} from "../../services/ErrorService";
 import {TokenService} from "../../services/TokenService";
 import {UserRolesEnum} from "../../services/models/DTO/IUserModels";
 import {useNavigate} from "react-router-dom";
+import {AlertService} from "../../services/AlertService";
 
 const AuthPage = () => {
 
@@ -13,7 +14,7 @@ const AuthPage = () => {
 
     const [login, setLogin] = useState<string>("")
     const [password, setPassword] = useState<string>("")
-    const [error, setError] = useState<IError | null>(null)
+    const [_, setError] = useState<IError | null>(null)
     const navigate = useNavigate()
 
     async function ClickHandler (login: string, password: string, isLogin: boolean): Promise<void> {
@@ -33,8 +34,10 @@ const AuthPage = () => {
             const token = TokenService.parseToken(response.accessToken)
 
             if(token === null) {
-                return alert("Ошибка авторизации")
+               return AlertService.errorMessage("Ошибка авторизации")
             }
+
+            AlertService.successMessage("Вы успешно авторизовались")
 
             if(token.role === UserRolesEnum.Moderator || token.role === UserRolesEnum.Admin) {
                 return navigate("/admin")
@@ -49,8 +52,13 @@ const AuthPage = () => {
             //TODO: Заменить обработку критических ошибок
 
             if (error.errorType === ErrorTypesEnum.Critical) {
-                return alert(error.displayMessage)
+                return
             }
+
+            if (error.displayMessage !== null) {
+                AlertService.errorMessage(error.displayMessage)
+            }
+
             setError(error)
         }
     }
@@ -77,10 +85,6 @@ const AuthPage = () => {
                    <input onChange={(ctx) => setPassword(ctx.target.value)} className={styles.input} type="password" placeholder={"Введите пароль"}/>
 
                    <hr className={styles.separator}/>
-
-                   {error && (
-                       <p>{error.displayMessage}</p>
-                   )}
 
                    <button onClick={async () => ClickHandler(login, password, isLoginPage)} className={styles.button}>Войти</button>
                </div>
