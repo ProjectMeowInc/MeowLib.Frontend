@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
 import styles from "./authPage.module.css"
 import {UserService} from "../../services/UserService";
-import {ErrorTypesEnum, IError} from "../../services/models/IError";
+import {ErrorTypesEnum} from "../../services/models/IError";
 import {ErrorService} from "../../services/ErrorService";
 import {TokenService} from "../../services/TokenService";
 import {UserRolesEnum} from "../../services/models/DTO/IUserModels";
 import {useNavigate} from "react-router-dom";
+import {AlertService} from "../../services/AlertService";
 
 const AuthPage = () => {
 
@@ -13,7 +14,6 @@ const AuthPage = () => {
 
     const [login, setLogin] = useState<string>("")
     const [password, setPassword] = useState<string>("")
-    const [error, setError] = useState<IError | null>(null)
     const navigate = useNavigate()
 
     async function ClickHandler (login: string, password: string, isLogin: boolean): Promise<void> {
@@ -33,8 +33,10 @@ const AuthPage = () => {
             const token = TokenService.parseToken(response.accessToken)
 
             if(token === null) {
-                return alert("Ошибка авторизации")
+               return AlertService.errorMessage("Ошибка авторизации")
             }
+
+            AlertService.successMessage("Вы успешно авторизовались")
 
             if(token.role === UserRolesEnum.Moderator || token.role === UserRolesEnum.Admin) {
                 return navigate("/admin")
@@ -42,16 +44,15 @@ const AuthPage = () => {
         }
         else {
             const error = await UserService.registration({login, password});
-            if(!error) {
-                return
+            if(error === null) {
+                return AlertService.successMessage("Вы успешно зарегистрировались. Теперь вы можете авторизоваться")
             }
-
-            //TODO: Заменить обработку критических ошибок
 
             if (error.errorType === ErrorTypesEnum.Critical) {
-                return alert(error.displayMessage)
+                return AlertService.errorMessage(error.displayMessage)
             }
-            setError(error)
+
+            AlertService.warningMessage(error.displayMessage)
         }
     }
 
@@ -77,10 +78,6 @@ const AuthPage = () => {
                    <input onChange={(ctx) => setPassword(ctx.target.value)} className={styles.input} type="password" placeholder={"Введите пароль"}/>
 
                    <hr className={styles.separator}/>
-
-                   {error && (
-                       <p>{error.displayMessage}</p>
-                   )}
 
                    <button onClick={async () => ClickHandler(login, password, isLoginPage)} className={styles.button}>Войти</button>
                </div>

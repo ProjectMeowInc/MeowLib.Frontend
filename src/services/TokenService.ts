@@ -17,13 +17,13 @@ export class TokenService {
     static parseToken (tokenString: string): ITokenData | null {
         const token = jwtDecode(tokenString) as object
 
-        if(!("id" in token) || !("login" in token) || !("role" in token)) {
+        if(!("id" in token) || !("login" in token) || !("userRole" in token)) {
             return null
         }
 
         const id = token.id as string
         const login = token.login as string
-        const role = token.role as string
+        const role = token.userRole as string
 
         if(id === null || login === null || role === null) {
             return null

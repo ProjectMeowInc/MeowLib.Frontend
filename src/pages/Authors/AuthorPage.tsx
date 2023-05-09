@@ -6,6 +6,7 @@ import {ErrorService} from "../../services/ErrorService";
 import {IAuthorDTO} from "../../services/models/DTO/IAuthorModels";
 import Preloader from "../../components/preloader/preloader";
 import {TokenService} from "../../services/TokenService";
+import {AlertService} from "../../services/AlertService";
 
 const AuthorPage = () => {
 
@@ -24,11 +25,11 @@ const AuthorPage = () => {
 
         AuthorServices.createAuthor(String(data), tokenData).then(error => {
             if(error === null) {
-                alert("Я это чисто по братски добавил автора")
+                AlertService.successMessage("Автор успешно добавлен")
                 return
             }
 
-            alert(`Ты хуйню сморозил ${error.displayMessage}`)
+            AlertService.errorMessage(error.displayMessage)
         })
     }
 
@@ -37,7 +38,7 @@ const AuthorPage = () => {
             setIsLoading(false)
 
             if (ErrorService.isError(response)) {
-                return  alert(response.displayMessage)
+                return  AlertService.errorMessage(response.displayMessage)
             }
 
             setAuthorsList([...response.data])
