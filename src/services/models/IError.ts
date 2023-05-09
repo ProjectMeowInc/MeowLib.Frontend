@@ -17,6 +17,6 @@ export enum ErrorTypesEnum {
  * Ошибки между сервисами приложения приходят в виде этого интерфейса.
  */
 export interface IError {
-    displayMessage: string | null,
+    displayMessage: string,
     errorType: ErrorTypesEnum
 }
