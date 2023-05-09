@@ -6,27 +6,41 @@ import {ErrorService} from "../../services/ErrorService";
 import {IAuthorDTO} from "../../services/models/DTO/IAuthorModels";
 import Preloader from "../../components/preloader/preloader";
 import {TokenService} from "../../services/TokenService";
-import {IError} from "../../services/models/IError";
 
 const AuthorPage = () => {
 
     const [authorsList, setAuthorsList] = useState<IAuthorDTO[]>([])
     const [isLoading, setIsLoading] = useState<boolean>(true)
-    const token: string | IError = TokenService.getAccessToken()
 
-    if (ErrorService.isError(token)) {
-        return
+
+    function ClickHandler() {
+        const data = prompt("Слышь введи имя эээ")
+
+        const tokenData = TokenService.getAccessToken()
+
+        if (ErrorService.isError(tokenData)) {
+            return alert(tokenData.displayMessage)
+        }
+
+        AuthorServices.createAuthor(String(data), tokenData).then(error => {
+            if(error === null) {
+                alert("Я это чисто по братски добавил автора")
+                return
+            }
+
+            alert(`Ты хуйню сморозил ${error.displayMessage}`)
+        })
     }
 
     useEffect( () => {
         AuthorServices.getAuthors().then(response => {
             setIsLoading(false)
-            if(!ErrorService.isError(response)) {
-                setAuthorsList([...response.data])
+
+            if (ErrorService.isError(response)) {
+                return  alert(response.displayMessage)
             }
-            else {
-                alert(ErrorService.criticalError("Неизвестная критическая ошибка"))
-            }
+
+            setAuthorsList([...response.data])
         })
     }, [])
 
@@ -34,17 +48,7 @@ const AuthorPage = () => {
         <div className={styles.wrapper}>
             <h1 className={styles.header}>Управление авторами</h1>
 
-            <div onClick={() => {
-                const data = prompt("Слышь введи имя эээ")
-                AuthorServices.createAuthor(String(data), token).then(error => {
-                    if(error === null) {
-                        alert("Я это чисто по братски добавил автора")
-                        return
-                    }
-
-                    alert(`Ты хуйню сморозил ${error.displayMessage}`)
-                })
-            }} className={styles.add_button}>
+            <div onClick={ClickHandler} className={styles.add_button}>
                 <p>Нажмите чтобы добавить нового автора</p>
             </div>
 
