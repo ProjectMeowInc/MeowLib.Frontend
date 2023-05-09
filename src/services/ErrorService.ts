@@ -47,9 +47,8 @@ export class ErrorService {
     /**
      * Метод проверяет данные на наличие ошибки
      * @param data Данные необходимые для проверки
-     * @returns boolean
+     * @returns Является ли data IError
      */
-
     static isError(data: any): data is IError {
         if (!("errorType" in data) || !("displayMessage" in data)) {
             return false
