@@ -5,21 +5,27 @@ import {AuthorServices} from "../../services/AuthorServices";
 import {ErrorService} from "../../services/ErrorService";
 import {IAuthorDTO} from "../../services/models/DTO/IAuthorModels";
 import Preloader from "../../components/preloader/preloader";
-import {useCookies} from "react-cookie";
+import {TokenService} from "../../services/TokenService";
+import {IError} from "../../services/models/IError";
 
 const AuthorPage = () => {
 
     const [authorsList, setAuthorsList] = useState<IAuthorDTO[]>([])
     const [isLoading, setIsLoading] = useState<boolean>(true)
-    const [cookie] = useCookies(["token"])
+    const token: string | IError = TokenService.getAccessToken()
 
-    console.log(cookie["token"]);
+    if (ErrorService.isError(token)) {
+        return
+    }
 
     useEffect( () => {
         AuthorServices.getAuthors().then(response => {
             setIsLoading(false)
             if(!ErrorService.isError(response)) {
                 setAuthorsList([...response.data])
+            }
+            else {
+                alert(ErrorService.criticalError("Неизвестная критическая ошибка"))
             }
         })
     }, [])
@@ -30,7 +36,7 @@ const AuthorPage = () => {
 
             <div onClick={() => {
                 const data = prompt("Слышь введи имя эээ")
-                AuthorServices.createAuthor(String(data), cookie["token"]).then(error => {
+                AuthorServices.createAuthor(String(data), token).then(error => {
                     if(error === null) {
                         alert("Я это чисто по братски добавил автора")
                         return
@@ -42,11 +48,11 @@ const AuthorPage = () => {
                 <p>Нажмите чтобы добавить нового автора</p>
             </div>
 
-            {!isLoading
-                ? authorsList.map(author => (
+            {isLoading
+                ? <Preloader/>
+                : authorsList.map(author => (
                     <AuthorListItem key={author.id} id={author.id} name={author.name}/>
                 ))
-                : <Preloader/>
             }
 
         </div>
