@@ -3,7 +3,6 @@ import styles from "./authPage.module.css"
 import {UserService} from "../../services/UserService";
 import {ErrorTypesEnum, IError} from "../../services/models/IError";
 import {ErrorService} from "../../services/ErrorService";
-import {useCookies} from "react-cookie";
 import {TokenService} from "../../services/TokenService";
 import {UserRolesEnum} from "../../services/models/DTO/IUserModels";
 import {useNavigate} from "react-router-dom";
@@ -15,7 +14,6 @@ const AuthPage = () => {
     const [login, setLogin] = useState<string>("")
     const [password, setPassword] = useState<string>("")
     const [error, setError] = useState<IError | null>(null)
-    const [cookie, setCookie] = useCookies(["token"])
     const navigate = useNavigate()
 
     async function ClickHandler (login: string, password: string, isLogin: boolean): Promise<void> {
@@ -23,16 +21,22 @@ const AuthPage = () => {
             const response = await UserService.authorization({login, password})
 
             if(ErrorService.isError(response)) {
-                alert(response.displayMessage)
-                return
+                if(response.errorType === ErrorTypesEnum.Critical) {
+                    return alert(ErrorService.criticalError("Неизвестная ошибка"))
+                }
+                return alert(response.displayMessage)
             }
+
+            TokenService.setAccessToken(response.accessToken)
 
             const token = TokenService.parseToken(response.accessToken)
 
-            setCookie("token", response.accessToken)
+            if(token === null) {
+                return
+            }
 
-            if(token?.role === UserRolesEnum.Moderator || token?.role === UserRolesEnum.Admin) {
-                navigate("/admin")
+            if(token.role === UserRolesEnum.Moderator || token.role === UserRolesEnum.Admin) {
+                return navigate("/admin")
             }
         }
         else{
@@ -44,8 +48,7 @@ const AuthPage = () => {
             //TODO: Сделать обработку критических ошибок
 
             if (error.errorType === ErrorTypesEnum.Critical) {
-                alert("Critical error")
-                return
+                return alert("Critical error")
             }
             setError(error)
         }
