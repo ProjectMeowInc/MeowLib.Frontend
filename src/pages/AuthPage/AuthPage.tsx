@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import styles from "./authPage.module.css"
 import {UserService} from "../../services/UserService";
-import {ErrorTypesEnum, IError} from "../../services/models/IError";
+import {ErrorTypesEnum} from "../../services/models/IError";
 import {ErrorService} from "../../services/ErrorService";
 import {TokenService} from "../../services/TokenService";
 import {UserRolesEnum} from "../../services/models/DTO/IUserModels";
@@ -14,7 +14,6 @@ const AuthPage = () => {
 
     const [login, setLogin] = useState<string>("")
     const [password, setPassword] = useState<string>("")
-    const [_, setError] = useState<IError | null>(null)
     const navigate = useNavigate()
 
     async function ClickHandler (login: string, password: string, isLogin: boolean): Promise<void> {
@@ -45,21 +44,15 @@ const AuthPage = () => {
         }
         else {
             const error = await UserService.registration({login, password});
-            if(!error) {
-                return
+            if(error === null) {
+                return AlertService.successMessage("Вы успешно зарегистрировались. Теперь вы можете авторизоваться")
             }
-
-            //TODO: Заменить обработку критических ошибок
 
             if (error.errorType === ErrorTypesEnum.Critical) {
-                return
+                return AlertService.errorMessage(error.displayMessage)
             }
 
-            if (error.displayMessage !== null) {
-                AlertService.errorMessage(error.displayMessage)
-            }
-
-            setError(error)
+            AlertService.warningMessage(error.displayMessage)
         }
     }
 

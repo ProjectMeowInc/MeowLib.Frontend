@@ -18,8 +18,12 @@ export class AuthorServices {
         try {
             const response = await axios.get<IAuthorDTO[]>("http://localhost:5270/api/authors")
 
+            //Сортировка авторов для вывода от большего к меньшему
+
+            const sortedAuthors = response.data.sort((a, b) => b.id - a.id)
+
             return {
-                data: response.data.sort((a, b) => b.id - a.id)
+                data: sortedAuthors,
             }
         } catch (err: any) {
 
