@@ -27,7 +27,7 @@ export class ErrorService {
      */
     static warningError(displayMessage: string | null): IError {
         return {
-            displayMessage: displayMessage,
+            displayMessage: displayMessage ?? "Неизвестная ошибка",
             errorType: ErrorTypesEnum.Warning
         };
     }
@@ -39,7 +39,7 @@ export class ErrorService {
      */
     static commonError(displayMessage: string | null): IError {
         return {
-            displayMessage: displayMessage,
+            displayMessage: displayMessage ?? "Неизвестная ошибка",
             errorType: ErrorTypesEnum.Error
         };
     }
@@ -50,6 +50,11 @@ export class ErrorService {
      * @returns Является ли data IError
      */
     static isError(data: any): data is IError {
+
+        if(typeof (data) === "string") {
+            return false
+        }
+        // noinspection RedundantIfStatementJS
         if (!("errorType" in data) || !("displayMessage" in data)) {
             return false
         }
