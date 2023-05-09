@@ -1,10 +1,12 @@
 import {ITokenData, UserRolesEnum} from "./models/DTO/IUserModels";
 import jwtDecode from "jwt-decode";
+import Cookies from "js-cookie";
+import {ErrorService} from "./ErrorService";
+import {IError} from "./models/IError";
 
 /**
  * Сервис для работы с токеном
  */
-
 export class TokenService {
 
     /**
@@ -12,7 +14,6 @@ export class TokenService {
      * @param tokenString Строка с токеном
      * @returns Возвращает объект типа ITokenData или null
      */
-
     static parseToken (tokenString: string): ITokenData | null {
         const token = jwtDecode(tokenString) as object
 
@@ -35,5 +36,23 @@ export class TokenService {
             login: String(login),
             role: UserRolesEnum[parsedRole]
         }
+    }
+
+    static getAccessToken (): string | IError {
+        const token = Cookies.get("token")
+
+        if(token === undefined) {
+            return ErrorService.criticalError("Cookie не найден")
+        }
+
+        return token
+    }
+
+    static setAccessToken (token: string): void | IError {
+        if(token.length === 0) {
+            return ErrorService.criticalError("Cookie не найден")
+        }
+
+        Cookies.set("token", token)
     }
 }
