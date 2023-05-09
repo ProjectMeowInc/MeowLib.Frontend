@@ -19,7 +19,7 @@ export class AuthorServices {
             const response = await axios.get<IAuthorDTO[]>("http://localhost:5270/api/authors")
 
             return {
-                data: response.data
+                data: response.data.sort((a, b) => b.id - a.id)
             }
         } catch (err: any) {
 
