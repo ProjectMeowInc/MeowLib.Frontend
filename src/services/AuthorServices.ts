@@ -8,14 +8,12 @@ import {IAuthorDTO} from "./models/DTO/IAuthorModels";
 /**
  * Сервис для работы с авторами
  */
-
 export class AuthorServices {
 
     /**
      * Метод для получения списка авторов
      * @returns Возвращает массив объектов типа IAuthorDTO
      */
-
     static async getAuthors (): Promise<IGetAuthorsResponse | IError> {
         try {
             const response = await axios.get<IAuthorDTO[]>("http://localhost:5270/api/authors")
@@ -49,7 +47,6 @@ export class AuthorServices {
      * @param token Токен пользователя
      * @returns null При успешном срабатывании
      */
-
     static async createAuthor (data: string, token: string): Promise<IError | null> {
         try {
 
