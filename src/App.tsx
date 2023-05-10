@@ -4,6 +4,7 @@ import AuthPage from "./pages/AuthPage/AuthPage";
 import AdminPage from "./pages/AdminPage/AdminPage";
 import AuthorPage from "./pages/Authors/AuthorPage";
 import AdminLayout from "./pages/AdminLayout/AdminLayout";
+import NotFoundPage from "./pages/Error/NotFoundPage/NotFoundPage";
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
                 <Route path={""} element={<AdminPage/>}/>
                 <Route path={"authors"} element={<AuthorPage/>}/>
             </Route>
+            <Route path={"*"} element={<NotFoundPage/>}/>
         </Routes>
   );
 };
