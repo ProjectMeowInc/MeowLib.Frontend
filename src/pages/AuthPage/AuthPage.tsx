@@ -23,9 +23,9 @@ const AuthPage = () => {
             if(ErrorService.isError(response)) {
                 if(response.errorType === ErrorTypesEnum.Critical) {
                     //Пока alert потом можно это логировать
-                    return alert(response.displayMessage)
+                    return AlertService.errorMessage(response.displayMessage)
                 }
-                return alert(response.displayMessage)
+                return AlertService.warningMessage(response.displayMessage)
             }
 
             TokenService.setAccessToken(response.accessToken)
