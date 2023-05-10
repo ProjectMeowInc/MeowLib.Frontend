@@ -13,9 +13,9 @@ export class ErrorService {
      * Для критических ошибок стандартное значение - "Неизвестная критическая ошибка".
      * @returns Модель ошибки.
      */
-    static criticalError(displayMessage: string | null): IError {
+    static criticalError(displayMessage: string | null = null): IError {
         return {
-            displayMessage: displayMessage ?? "Неизвестная критическая ошибка",
+            displayMessage: displayMessage ?? "Неизвестная ошибка. Попробуйте ещё раз.",
             errorType: ErrorTypesEnum.Critical
         };
     }
