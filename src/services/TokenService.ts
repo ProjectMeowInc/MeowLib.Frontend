@@ -38,11 +38,11 @@ export class TokenService {
         }
     }
 
-    static getAccessToken (): string | IError {
+    static getAccessToken (): string | null {
         const token = Cookies.get("token")
 
         if(token === undefined) {
-            return ErrorService.commonError("Ошибка токена")
+            return null
         }
 
         return token
