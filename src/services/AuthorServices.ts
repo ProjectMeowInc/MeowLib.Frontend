@@ -4,6 +4,7 @@ import {ErrorService} from "./ErrorService";
 import {IError} from "./models/IError";
 import {IGetAuthorsResponse} from "./models/responses/IAuthorResponse";
 import {IAuthorDTO} from "./models/DTO/IAuthorModels";
+import {TokenService} from "./TokenService";
 
 /**
  * Сервис для работы с авторами
@@ -31,17 +32,17 @@ export class AuthorServices {
                 const baseErrorResponse = err as AxiosError<IBaseErrorResponse>
 
                 if (baseErrorResponse === null) {
-                    return ErrorService.criticalError("Неизвестная ошибка. Попробуйте ещё раз.")
+                    return ErrorService.criticalError()
                 }
 
                 if (baseErrorResponse.response === undefined) {
-                    return ErrorService.criticalError("Неизвестная ошибка. Попробуйте ещё раз.")
+                    return ErrorService.criticalError()
                 }
 
                 return ErrorService.commonError(baseErrorResponse.response.data.errorMessage)
             }
 
-            return ErrorService.criticalError("Неизвестная ошибка. Попробуйте ещё раз.")
+            return ErrorService.criticalError()
         }
     }
 
@@ -69,21 +70,59 @@ export class AuthorServices {
                 const baseErrorResponse = err as AxiosError<IBaseErrorResponse>
 
                 if (baseErrorResponse === null) {
-                    return ErrorService.criticalError("Неизвестная ошибка. Попробуйте ещё раз.")
+                    return ErrorService.criticalError()
                 }
 
                 if (baseErrorResponse.response === undefined) {
-                    return ErrorService.criticalError("Неизвестная ошибка. Попробуйте ещё раз.")
+                    return ErrorService.criticalError()
                 }
 
                 return ErrorService.commonError(baseErrorResponse.response.data.errorMessage)
             }
 
-            return ErrorService.criticalError("Неизвестная ошибка. Попробуйте ещё раз.")
+            return ErrorService.criticalError()
         }
     }
 
     /**
-     * TODO: Сделать методы для обновления и удаления автора
+     * Метод для обнавления имени автора
+     * @param id автора
+     * @param name Имя автора
+     * @returns Ошибку типа IError или null
      */
+
+    static async updateAuthor (id: number, name: string): Promise<IError | null> {
+        try {
+            await axios.put(`https://localhost:7007/api/authors/${id}`, {
+                name: name
+            }, {
+                headers: {
+                    Authorization: TokenService.getAccessToken()
+                }
+            })
+
+            return null
+        }
+        catch (err: any) {
+            if (err.isAxiosError) {
+                const error = err as AxiosError<IBaseErrorResponse>
+
+                if (error === null) {
+                    return ErrorService.criticalError()
+                }
+
+                if (error.response === undefined) {
+                    return ErrorService.criticalError()
+                }
+
+                return ErrorService.commonError(error.response.data.errorMessage)
+            }
+
+            return ErrorService.criticalError()
+        }
+    }
 }
+
+/**
+ * TODO: Сделать метод для удаления автора
+ */
