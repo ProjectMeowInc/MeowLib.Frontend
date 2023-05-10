@@ -19,8 +19,8 @@ const AuthorPage = () => {
 
         const tokenData = TokenService.getAccessToken()
 
-        if (ErrorService.isError(tokenData)) {
-            return alert(tokenData.displayMessage)
+        if (tokenData === null) {
+            return AlertService.errorMessage("Ошибка токена. Пожалуйста авторизуйтесь заново.")
         }
 
         AuthorServices.createAuthor(String(data), tokenData).then(error => {
