@@ -121,8 +121,33 @@ export class AuthorServices {
             return ErrorService.criticalError()
         }
     }
-}
 
-/**
- * TODO: Сделать метод для удаления автора
- */
+    static async deleteAuthor(id: number): Promise<IError | null> {
+        try {
+            await axios.delete(`https://localhost:7007/api/authors/${id}`, {
+                headers: {
+                    Authorization: TokenService.getAccessToken()
+                }
+            })
+
+            return null
+        }
+        catch (err: any) {
+            if (err.isAxiosError) {
+                const error = err as AxiosError<IBaseErrorResponse>
+
+                if (error === null) {
+                    return ErrorService.criticalError()
+                }
+
+                if (error.response === undefined) {
+                    return ErrorService.criticalError()
+                }
+
+                return ErrorService.commonError(error.response.data.errorMessage)
+            }
+
+            return ErrorService.criticalError()
+        }
+    }
+}
