@@ -3,10 +3,13 @@ import styles from "./authorListItem.module.css"
 import {IAuthorDTO} from "../../services/models/DTO/IAuthorModels";
 import {AuthorServices} from "../../services/AuthorServices";
 import {AlertService} from "../../services/AlertService";
+import {useNavigate} from "react-router-dom";
 
 const AuthorListItem = ({id, name}: IAuthorDTO) => {
 
-    function ClickHandler () {
+    const navigate = useNavigate()
+
+    function UpdateHandler () {
 
         const newName = prompt("Введите имя")
 
@@ -21,7 +24,19 @@ const AuthorListItem = ({id, name}: IAuthorDTO) => {
 
             AlertService.successMessage("Автор был успешно обновлён")
 
-            window.location.reload()
+            navigate(0)
+        })
+    }
+
+    function DeleteHandler () {
+        AuthorServices.deleteAuthor(id).then(err => {
+            if (err !== null) {
+                return AlertService.errorMessage(err.displayMessage)
+            }
+
+            AlertService.successMessage("Автор был успешно удалён")
+
+            navigate(0)
         })
     }
 
@@ -33,8 +48,8 @@ const AuthorListItem = ({id, name}: IAuthorDTO) => {
             </div>
 
             <div className={styles.right_side}>
-                <p onClick={ClickHandler}>Изменить</p>
-                <p>Удалить</p>
+                <p onClick={UpdateHandler}>Изменить</p>
+                <p onClick={DeleteHandler}>Удалить</p>
             </div>
         </div>
     );
