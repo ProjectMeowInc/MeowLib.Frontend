@@ -86,6 +86,8 @@
 .separator {
     border: 1px inset #E5E5E5;
     opacity: 0.3;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .button {
