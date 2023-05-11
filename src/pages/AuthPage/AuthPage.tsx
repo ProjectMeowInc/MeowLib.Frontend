@@ -79,7 +79,7 @@ const AuthPage = () => {
 
                    <hr className={styles.separator}/>
 
-                   <button onClick={async () => ClickHandler(login, password, isLoginPage)} className={styles.button}>Отправть</button>
+                   <button onClick={async () => ClickHandler(login, password, isLoginPage)} className={styles.button}>Отправить</button>
                </div>
 
             </div>
