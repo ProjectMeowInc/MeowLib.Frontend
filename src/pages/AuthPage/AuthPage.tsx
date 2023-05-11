@@ -23,9 +23,9 @@ const AuthPage = () => {
             if(ErrorService.isError(response)) {
                 if(response.errorType === ErrorTypesEnum.Critical) {
                     //Пока alert потом можно это логировать
-                    return alert(response.displayMessage)
+                    return AlertService.errorMessage(response.displayMessage)
                 }
-                return alert(response.displayMessage)
+                return AlertService.warningMessage(response.displayMessage)
             }
 
             TokenService.setAccessToken(response.accessToken)
@@ -79,7 +79,7 @@ const AuthPage = () => {
 
                    <hr className={styles.separator}/>
 
-                   <button onClick={async () => ClickHandler(login, password, isLoginPage)} className={styles.button}>Войти</button>
+                   <button onClick={async () => ClickHandler(login, password, isLoginPage)} className={styles.button}>Отправить</button>
                </div>
 
             </div>

@@ -38,16 +38,25 @@ export class TokenService {
         }
     }
 
-    static getAccessToken (): string | IError {
+    /**
+     * Метод для получения токена из cookie
+     * @returns строку при наличии токена
+     */
+    static getAccessToken (): string | null {
         const token = Cookies.get("token")
 
         if(token === undefined) {
-            return ErrorService.commonError("Ошибка токена")
+            return null
         }
 
         return token
     }
 
+    /**
+     * Метод для установки токена в cookie
+     * @param token автора
+     * @returns null при успешном выполнении и IError при ошибке
+     */
     static setAccessToken (token: string): null | IError {
         if(token.length === 0) {
             return ErrorService.criticalError("Cookie не найден")

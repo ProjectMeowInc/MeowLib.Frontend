@@ -7,20 +7,21 @@ import {IAuthorDTO} from "../../services/models/DTO/IAuthorModels";
 import Preloader from "../../components/preloader/preloader";
 import {TokenService} from "../../services/TokenService";
 import {AlertService} from "../../services/AlertService";
+import {useNavigate} from "react-router-dom";
 
 const AuthorPage = () => {
 
     const [authorsList, setAuthorsList] = useState<IAuthorDTO[]>([])
     const [isLoading, setIsLoading] = useState<boolean>(true)
-
+    const navigate = useNavigate()
 
     function ClickHandler() {
         const data = prompt("Слышь введи имя эээ")
 
         const tokenData = TokenService.getAccessToken()
 
-        if (ErrorService.isError(tokenData)) {
-            return alert(tokenData.displayMessage)
+        if (tokenData === null) {
+            return AlertService.errorMessage("Ошибка токена. Пожалуйста авторизуйтесь заново.")
         }
 
         AuthorServices.createAuthor(String(data), tokenData).then(error => {
@@ -31,6 +32,8 @@ const AuthorPage = () => {
 
             AlertService.errorMessage(error.displayMessage)
         })
+
+        navigate(0)
     }
 
     useEffect( () => {

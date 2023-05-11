@@ -4,6 +4,7 @@
     height: 75px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     box-shadow: 0 0 100px rgba(0, 0, 0, 0.05);
     font-family: Raleway, serif;
     border-radius: 15px;
@@ -13,4 +14,24 @@
 
 .id {
     margin: 0 30px;
+}
+
+.left_side {
+    display: flex;
+}
+
+.right_side {
+    display: flex;
+}
+.right_side p {
+    margin-right: 30px;
+    cursor: pointer;
+}
+
+.right_side p:nth-child(1) {
+    color: #6D5BFD;
+}
+
+.right_side p:nth-child(2) {
+    color: #D645FB;
 }
