@@ -85,7 +85,7 @@ export class AuthorServices {
     }
 
     /**
-     * Метод для обнавления имени автора
+     * Метод для обнавления информации об авторе
      * @param id автора
      * @param name Имя автора
      * @returns Ошибку типа IError или null
@@ -122,6 +122,11 @@ export class AuthorServices {
         }
     }
 
+    /**
+     * Метод для удаления автора
+     * @param id автора
+     * @returns Ошибку или null
+     */
     static async deleteAuthor(id: number): Promise<IError | null> {
         try {
             await axios.delete(`https://localhost:7007/api/authors/${id}`, {
