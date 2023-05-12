@@ -9,9 +9,9 @@ const AdminPage = () => {
                 <p>Книги</p>
             </div>
 
-            <div className={styles.admin_item}>
+            <Link to={"tags"} className={styles.admin_item}>
                 <p>Теги</p>
-            </div>
+            </Link>
 
             <Link to={"authors"} className={styles.admin_item}>
                 <p>Авторы</p>

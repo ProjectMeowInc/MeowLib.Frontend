@@ -8,6 +8,8 @@ import Preloader from "../../components/preloader/preloader";
 import {TokenService} from "../../services/TokenService";
 import {AlertService} from "../../services/AlertService";
 import {useNavigate} from "react-router-dom";
+import {ICreateAuthorRequest} from "../../services/models/requests/IAuthorRequests";
+import {ErrorTypesEnum} from "../../services/models/IError";
 
 const AuthorPage = () => {
 
@@ -16,7 +18,16 @@ const AuthorPage = () => {
     const navigate = useNavigate()
 
     function ClickHandler() {
-        const data = prompt("Слышь введи имя эээ")
+
+        const name = prompt("Введите имя автора")
+
+        if(name === null) {
+            return AlertService.warningMessage("Не указано имя автора")
+        }
+
+        const data: ICreateAuthorRequest = {
+            name: name
+        }
 
         const tokenData = TokenService.getAccessToken()
 
@@ -24,13 +35,15 @@ const AuthorPage = () => {
             return AlertService.errorMessage("Ошибка токена. Пожалуйста авторизуйтесь заново.")
         }
 
-        AuthorServices.createAuthor(String(data), tokenData).then(error => {
-            if(error === null) {
-                AlertService.successMessage("Автор успешно добавлен")
-                return
-            }
+        AuthorServices.createAuthor(data).then(error => {
+            if(error !== null) {
+                if(error.errorType === ErrorTypesEnum.Critical) {
+                    return AlertService.errorMessage(error.displayMessage)
+                }
 
-            AlertService.errorMessage(error.displayMessage)
+                return AlertService.warningMessage(error.displayMessage)
+            }
+            return  AlertService.successMessage("Автор успешно создан")
         })
 
         navigate(0)
@@ -58,9 +71,11 @@ const AuthorPage = () => {
 
             {isLoading
                 ? <Preloader/>
-                : authorsList.map(author => (
-                    <AuthorListItem key={author.id} id={author.id} name={author.name}/>
-                ))
+                : authorsList.length === 0
+                    ? "Здесь пока ничего нет"
+                    : authorsList.map(author => (
+                        <AuthorListItem key={author.id} id={author.id} name={author.name}/>
+                    ))
             }
 
         </div>

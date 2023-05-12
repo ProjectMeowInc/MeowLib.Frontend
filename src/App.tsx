@@ -5,6 +5,7 @@ import AdminPage from "./pages/AdminPage/AdminPage";
 import AuthorPage from "./pages/Authors/AuthorPage";
 import AdminLayout from "./pages/AdminLayout/AdminLayout";
 import NotFoundPage from "./pages/Error/NotFoundPage/NotFoundPage";
+import TagsPage from "./pages/Tags/TagsPage";
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
             <Route path={"/admin"} element={<AdminLayout/>}>
                 <Route path={""} element={<AdminPage/>}/>
                 <Route path={"authors"} element={<AuthorPage/>}/>
+                <Route path={"tags"} element={<TagsPage/>}/>
             </Route>
             <Route path={"*"} element={<NotFoundPage/>}/>
         </Routes>
