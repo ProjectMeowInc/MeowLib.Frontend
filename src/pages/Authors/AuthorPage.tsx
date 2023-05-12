@@ -9,6 +9,7 @@ import {TokenService} from "../../services/TokenService";
 import {AlertService} from "../../services/AlertService";
 import {useNavigate} from "react-router-dom";
 import {ICreateAuthorRequest} from "../../services/models/requests/IAuthorRequests";
+import {ErrorTypesEnum} from "../../services/models/IError";
 
 const AuthorPage = () => {
 
@@ -35,12 +36,14 @@ const AuthorPage = () => {
         }
 
         AuthorServices.createAuthor(data).then(error => {
-            if(error === null) {
-                AlertService.successMessage("Автор успешно добавлен")
-                return
-            }
+            if(error !== null) {
+                if(error.errorType === ErrorTypesEnum.Critical) {
+                    return AlertService.errorMessage(error.displayMessage)
+                }
 
-            AlertService.errorMessage(error.displayMessage)
+                return AlertService.warningMessage(error.displayMessage)
+            }
+            return  AlertService.successMessage("Автор успешно создан")
         })
 
         navigate(0)

@@ -6,6 +6,7 @@ import {TagsService} from "../../services/TagsService";
 import {ErrorService} from "../../services/ErrorService";
 import {AlertService} from "../../services/AlertService";
 import {IUpdateTagRequest} from "../../services/models/requests/ITagRequests";
+import {ErrorTypesEnum} from "../../services/models/IError";
 
 const TagsPageListItem = ({id, name}: ITagsDTO) => {
 
@@ -16,7 +17,10 @@ const TagsPageListItem = ({id, name}: ITagsDTO) => {
     function MouseHandler() {
         TagsService.getTagById(id).then(response => {
             if(ErrorService.isError(response)) {
-                return AlertService.errorMessage("Произошла ошибка")
+                if(response.errorType === ErrorTypesEnum.Error) {
+                    return AlertService.errorMessage(response.displayMessage)
+                }
+                return AlertService.warningMessage(response.displayMessage)
             }
 
             setTooltip(response.description ?? "Описания пока нет")
@@ -35,7 +39,11 @@ const TagsPageListItem = ({id, name}: ITagsDTO) => {
         TagsService.updateTag(id, data).then(error => {
 
             if(error !== null) {
-                return AlertService.errorMessage(error.displayMessage)
+                if(error.errorType === ErrorTypesEnum.Critical) {
+                    return AlertService.errorMessage(error.displayMessage)
+                }
+
+                return AlertService.warningMessage(error.displayMessage)
             }
 
             AlertService.successMessage("Тэг обновлён")
@@ -47,7 +55,11 @@ const TagsPageListItem = ({id, name}: ITagsDTO) => {
     function DeleteHandler () {
         TagsService.deleteTag(id).then(error => {
             if(error !== null) {
-                return AlertService.errorMessage(error.displayMessage)
+                if(error.errorType === ErrorTypesEnum.Critical) {
+                    return AlertService.errorMessage(error.displayMessage)
+                }
+
+                return AlertService.warningMessage(error.displayMessage)
             }
 
             AlertService.successMessage("Тэг удалён")

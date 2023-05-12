@@ -9,6 +9,7 @@ import Preloader from "../../components/preloader/preloader";
 import TagsPageListItem from "../../components/TagsPage/TagsPageListItem";
 import {ITagsDTO} from "../../services/models/DTO/ITagsDTO";
 import {TagsService} from "../../services/TagsService";
+import {ErrorTypesEnum} from "../../services/models/IError";
 
 const TagsPage = () => {
     const [tagList, setTagList] = useState<ITagsDTO[]>([])
@@ -36,12 +37,18 @@ const TagsPage = () => {
         }
 
         TagsService.createTag(data).then(error => {
-            if(error === null) {
-                AlertService.successMessage("Тэг успешно добавлен")
-                return navigate(0)
+            if(error !== null) {
+
+                if(error.errorType === ErrorTypesEnum.Critical) {
+                    return AlertService.errorMessage(error.displayMessage)
+                }
+
+                return AlertService.warningMessage(error.displayMessage)
             }
 
-            AlertService.errorMessage(error.displayMessage)
+            AlertService.successMessage("Тэг успешно добавлен")
+            return navigate(0)
+
         })
     }
 
