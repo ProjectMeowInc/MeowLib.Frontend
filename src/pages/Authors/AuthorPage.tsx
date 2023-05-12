@@ -8,6 +8,7 @@ import Preloader from "../../components/preloader/preloader";
 import {TokenService} from "../../services/TokenService";
 import {AlertService} from "../../services/AlertService";
 import {useNavigate} from "react-router-dom";
+import {ICreateAuthorRequest} from "../../services/models/requests/IAuthorRequests";
 
 const AuthorPage = () => {
 
@@ -16,7 +17,16 @@ const AuthorPage = () => {
     const navigate = useNavigate()
 
     function ClickHandler() {
-        const data = prompt("Слышь введи имя эээ")
+
+        const name = prompt("Введите имя автора")
+
+        if(name === null) {
+            return AlertService.warningMessage("Не указано имя автора")
+        }
+
+        const data: ICreateAuthorRequest = {
+            name: name
+        }
 
         const tokenData = TokenService.getAccessToken()
 
@@ -24,7 +34,7 @@ const AuthorPage = () => {
             return AlertService.errorMessage("Ошибка токена. Пожалуйста авторизуйтесь заново.")
         }
 
-        AuthorServices.createAuthor(String(data), tokenData).then(error => {
+        AuthorServices.createAuthor(data).then(error => {
             if(error === null) {
                 AlertService.successMessage("Автор успешно добавлен")
                 return
