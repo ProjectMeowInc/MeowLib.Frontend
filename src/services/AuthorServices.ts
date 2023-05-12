@@ -5,6 +5,7 @@ import {IError} from "./models/IError";
 import {IGetAuthorsResponse} from "./models/responses/IAuthorResponse";
 import {IAuthorDTO} from "./models/DTO/IAuthorModels";
 import {TokenService} from "./TokenService";
+import {ICreateAuthorRequest} from "./models/requests/IAuthorRequests";
 
 /**
  * Сервис для работы с авторами
@@ -47,19 +48,16 @@ export class AuthorServices {
     }
 
     /**
-     *
+     * Метод для создания автора
      * @param data Данные для запроса
-     * @param token Токен пользователя
      * @returns null При успешном срабатывании
      */
-    static async createAuthor (data: string, token: string): Promise<IError | null> {
+    static async createAuthor (data: ICreateAuthorRequest): Promise<IError | null> {
         try {
 
-            await axios.post("https://localhost:7007/api/authors", {
-                name: data
-            }, {
+            await axios.post("https://localhost:7007/api/authors", data , {
                 headers: {
-                    Authorization: token
+                    Authorization: TokenService.getAccessToken()
                 }
             })
 
