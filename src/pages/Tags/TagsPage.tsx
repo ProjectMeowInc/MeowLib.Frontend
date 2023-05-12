@@ -67,9 +67,11 @@ const TagsPage = () => {
 
             {isLoading
                 ? <Preloader/>
-                : tagList.map(tag => (
-                    <TagsPageListItem key={tag.id} id={tag.id} name={tag.name}/>
-                ))
+                : tagList.length === 0
+                    ? "Здесь пока ничего нет"
+                    : tagList.map(tag => (
+                        <TagsPageListItem key={tag.id} id={tag.id} name={tag.name}/>
+                    ))
             }
         </div>
     );

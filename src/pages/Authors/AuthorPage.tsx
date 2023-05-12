@@ -68,9 +68,11 @@ const AuthorPage = () => {
 
             {isLoading
                 ? <Preloader/>
-                : authorsList.map(author => (
-                    <AuthorListItem key={author.id} id={author.id} name={author.name}/>
-                ))
+                : authorsList.length === 0
+                    ? "Здесь пока ничего нет"
+                    : authorsList.map(author => (
+                        <AuthorListItem key={author.id} id={author.id} name={author.name}/>
+                    ))
             }
 
         </div>
