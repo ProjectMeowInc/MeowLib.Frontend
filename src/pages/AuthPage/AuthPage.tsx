@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import styles from "./authPage.module.css"
 import {UserService} from "../../services/UserService";
 import {ErrorTypesEnum} from "../../services/models/IError";
@@ -7,6 +7,7 @@ import {TokenService} from "../../services/TokenService";
 import {UserRolesEnum} from "../../services/models/DTO/IUserModels";
 import {useNavigate} from "react-router-dom";
 import {AlertService} from "../../services/AlertService";
+import {LoadingContext} from "../../context/LoadingContext";
 
 const AuthPage = () => {
 
@@ -15,9 +16,14 @@ const AuthPage = () => {
     const [login, setLogin] = useState<string>("")
     const [password, setPassword] = useState<string>("")
     const navigate = useNavigate()
+    const {setLoadingPercent, startNewTask} = useContext(LoadingContext)
 
     async function ClickHandler (login: string, password: string, isLogin: boolean): Promise<void> {
         if(isLogin) {
+
+            startNewTask()
+            setLoadingPercent(50)
+
             const response = await UserService.authorization({login, password})
 
             if(ErrorService.isError(response)) {
@@ -37,6 +43,8 @@ const AuthPage = () => {
             }
 
             AlertService.successMessage("Вы успешно авторизовались")
+
+            setLoadingPercent(100)
 
             if(token.role === UserRolesEnum.Moderator || token.role === UserRolesEnum.Admin) {
                 return navigate("/admin")
