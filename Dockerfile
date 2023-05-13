@@ -14,7 +14,6 @@ COPY . ./
 RUN npm run build
 
 # install serve and start server
-RUN npm install -g serve
-RUN serve -s build 
+RUN npm install -g serve 
 
 CMD serve -s build 
