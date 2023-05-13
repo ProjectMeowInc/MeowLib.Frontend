@@ -17,5 +17,4 @@ RUN npm run build
 RUN npm install -g serve
 RUN serve -s build 
 
-
 CMD serve -s build 
