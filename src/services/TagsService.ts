@@ -18,7 +18,7 @@ export class TagsService {
      */
     static async getAllTags(): Promise<IGetTagsResponse | IError> {
         try {
-            const response = await axios.get<ITagsDTO[]>("https://localhost:7007/api/tags")
+            const response = await axios.get<ITagsDTO[]>(process.env.REACT_APP_URL_API + "/tags")
 
             return {
                 data: response.data
@@ -50,7 +50,7 @@ export class TagsService {
      */
     static async getTagById(id: number): Promise<IGetTagResponse | IError> {
         try {
-            const response = await axios.get<IGetTagResponse>(`https://localhost:7007/api/tags/${id}`)
+            const response = await axios.get<IGetTagResponse>(process.env.REACT_APP_URL_API + `/tags/${id}`)
 
             return response.data
         }
@@ -80,7 +80,7 @@ export class TagsService {
      */
     static async createTag(data: ICreateTagRequest): Promise<null | IError> {
         try {
-            await axios.post("https://localhost:7007/api/tags/", data, {
+            await axios.post(process.env.REACT_APP_URL_API + "/tags/", data, {
                 headers: {
                     Authorization: TokenService.getAccessToken()
                 }
@@ -114,7 +114,7 @@ export class TagsService {
      */
     static async deleteTag(id: number): Promise<IError | null> {
         try {
-            await axios.delete(`https://localhost:7007/api/tags/${id}`,{
+            await axios.delete(process.env.REACT_APP_URL_API + `/tags/${id}`,{
                 headers: {
                     Authorization: TokenService.getAccessToken()
                 }
@@ -149,7 +149,7 @@ export class TagsService {
      */
     static async updateTag(id: number, data: IUpdateTagRequest): Promise<IError | null> {
         try {
-            await axios.put(`https://localhost:7007/api/tags/${id}`, data, {
+            await axios.put(process.env.REACT_APP_URL_API + `/tags/${id}`, data, {
                 headers: {
                     Authorization: TokenService.getAccessToken()
                 }

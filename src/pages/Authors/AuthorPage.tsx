@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import AuthorListItem from "../../components/AuthorPage/AuthorListItem";
 import styles from "./authorsPage.module.css"
 import {AuthorServices} from "../../services/AuthorServices";
@@ -7,15 +7,18 @@ import {IAuthorDTO} from "../../services/models/DTO/IAuthorModels";
 import Preloader from "../../components/preloader/preloader";
 import {TokenService} from "../../services/TokenService";
 import {AlertService} from "../../services/AlertService";
-import {useNavigate} from "react-router-dom";
 import {ICreateAuthorRequest} from "../../services/models/requests/IAuthorRequests";
 import {ErrorTypesEnum} from "../../services/models/IError";
+import {RedirectContext} from "../../context/RedirectContext";
+import {LoadingContext} from "../../context/LoadingContext";
 
 const AuthorPage = () => {
 
     const [authorsList, setAuthorsList] = useState<IAuthorDTO[]>([])
     const [isLoading, setIsLoading] = useState<boolean>(true)
-    const navigate = useNavigate()
+    const {delayRedirect} = useContext(RedirectContext)
+
+    const {setLoadingPercent, startNewTask} = useContext(LoadingContext)
 
     function ClickHandler() {
 
@@ -30,6 +33,9 @@ const AuthorPage = () => {
         }
 
         const tokenData = TokenService.getAccessToken()
+
+        startNewTask()
+        setLoadingPercent(25)
 
         if (tokenData === null) {
             return AlertService.errorMessage("Ошибка токена. Пожалуйста авторизуйтесь заново.")
@@ -46,7 +52,9 @@ const AuthorPage = () => {
             return  AlertService.successMessage("Автор успешно создан")
         })
 
-        navigate(0)
+        setLoadingPercent(100)
+
+        delayRedirect(0)
     }
 
     useEffect( () => {
@@ -54,12 +62,16 @@ const AuthorPage = () => {
             setIsLoading(false)
 
             if (ErrorService.isError(response)) {
-                return  AlertService.errorMessage(response.displayMessage)
+                return AlertService.errorMessage(response.displayMessage)
             }
 
             setAuthorsList([...response.data])
         })
+
+
     }, [])
+
+
 
     return (
         <div className={styles.wrapper}>
@@ -72,7 +84,7 @@ const AuthorPage = () => {
             {isLoading
                 ? <Preloader/>
                 : authorsList.length === 0
-                    ? "Здесь пока ничего нет"
+                    ? <p className={styles.empty}>Здесь пока ничего нет</p>
                     : authorsList.map(author => (
                         <AuthorListItem key={author.id} id={author.id} name={author.name}/>
                     ))

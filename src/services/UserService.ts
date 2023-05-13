@@ -4,6 +4,7 @@ import {ILogInRequest, ISignInRequest} from './models/requests/IUserRequests';
 import {ErrorService} from "./ErrorService";
 import {IError} from "./models/IError";
 import {ILoginResponse} from "./models/responses/IUserResponses";
+import {LogService} from "./LogService";
 
 /**
  * Сервис для работы с пользователем.
@@ -16,9 +17,8 @@ export class UserService {
      */
     static async registration (requestData: ISignInRequest): Promise<IError | null> {
         try {
-            await axios.post("http://localhost:5270/api/users/sign-in",
-                requestData)
-                
+            await axios.post(process.env.REACT_APP_URL_API + "/users/sign-in", requestData)
+
             // Если не попали в блок catch - ошибку возвращать не нужно
             return null
         }
@@ -29,11 +29,33 @@ export class UserService {
                 // Если ошибка не приводиться к виду IBaseErrorResponse даже с учётом того, что ошибка - isAxiosError 
                 // возвращаем фатальную ошибку
                 if (baseErrorResponse === null) {
+                    await LogService.sendLog({
+                        errorLog: {
+                            errorModule: "UserService",
+                            message: "baseErrorResponse === null",
+                            additionalInfo: {
+                                method: "registration"
+                            },
+                            isApiError: true
+                        }
+                    })
                     return ErrorService.criticalError("Неизвестная ошибка. Попробуйте ещё раз.")
                 }
     
                 // Если ответ - пустой возвращаем фатальную ошибку.
                 if (baseErrorResponse.response === undefined) {
+
+                    await LogService.sendLog({
+                        errorLog: {
+                            errorModule: "UserService",
+                            message: "baseErrorResponse === undefined",
+                            additionalInfo: {
+                                method: "registration",
+                            },
+                            isApiError: true
+                        }
+                    })
+
                     return ErrorService.criticalError("Неизвестная ошибка. Попробуйте ещё раз.")
                 }
 
@@ -42,6 +64,18 @@ export class UserService {
             }
             // Если ошибка - не isAxiosError
             // возвращаем фатальную ошибку
+
+            await LogService.sendLog({
+                errorLog: {
+                    errorModule: "UserService",
+                    message: "Ошибка не в axios",
+                    additionalInfo: {
+                        method: "registration"
+                    },
+                    isApiError: true
+                }
+            })
+
             return ErrorService.criticalError("Неизвестная ошибка. Попробуйте ещё раз.")
         }
     }
@@ -53,7 +87,7 @@ export class UserService {
      */
     static async authorization (requestData: ILogInRequest): Promise<IError | ILoginResponse> {
         try {
-            const response = await axios.post<ILoginResponse>("http://localhost:5270/api/users/log-in", requestData)
+            const response = await axios.post<ILoginResponse>(process.env.REACT_APP_URL_API + "/users/log-in", requestData)
 
             return response.data
         }

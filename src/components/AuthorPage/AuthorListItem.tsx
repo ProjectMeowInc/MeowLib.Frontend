@@ -4,6 +4,7 @@ import {IAuthorDTO} from "../../services/models/DTO/IAuthorModels";
 import {AuthorServices} from "../../services/AuthorServices";
 import {AlertService} from "../../services/AlertService";
 import {useNavigate} from "react-router-dom";
+import {ErrorTypesEnum} from "../../services/models/IError";
 
 const AuthorListItem = ({id, name}: IAuthorDTO) => {
 
@@ -19,7 +20,10 @@ const AuthorListItem = ({id, name}: IAuthorDTO) => {
 
         AuthorServices.updateAuthor(id, newName).then(err => {
             if (err !== null) {
-                return AlertService.errorMessage(err.displayMessage)
+                if (err.errorType === ErrorTypesEnum.Critical) {
+                    return AlertService.errorMessage(err.displayMessage)
+                }
+                return AlertService.warningMessage(err.displayMessage)
             }
 
             AlertService.successMessage("Автор был успешно обновлён")

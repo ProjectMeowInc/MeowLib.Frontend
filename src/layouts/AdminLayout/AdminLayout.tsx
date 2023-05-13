@@ -36,7 +36,7 @@ const AdminLayout = () => {
         <div className={styles.wrapper}>
             <div className={styles.content}>
                 <div className={styles.header}>
-                    <p className={styles.logo}>MeowLib</p>
+                    <p onClick={() => navigate("/admin")} className={styles.logo}>MeowLib</p>
                     <p className={styles.name}>{adminData && adminData.login}</p>
                 </div>
                 <Outlet/>

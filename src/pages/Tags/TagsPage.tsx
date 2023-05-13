@@ -1,6 +1,5 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import styles from "./tagsPage.module.css"
-import {useNavigate} from "react-router-dom";
 import {AlertService} from "../../services/AlertService";
 import {ICreateTagRequest} from "../../services/models/requests/ITagRequests";
 import {TokenService} from "../../services/TokenService";
@@ -10,11 +9,14 @@ import TagsPageListItem from "../../components/TagsPage/TagsPageListItem";
 import {ITagsDTO} from "../../services/models/DTO/ITagsDTO";
 import {TagsService} from "../../services/TagsService";
 import {ErrorTypesEnum} from "../../services/models/IError";
+import {RedirectContext} from "../../context/RedirectContext";
+import {LoadingContext} from "../../context/LoadingContext";
 
 const TagsPage = () => {
     const [tagList, setTagList] = useState<ITagsDTO[]>([])
     const [isLoading, setIsLoading] = useState<boolean>(true)
-    const navigate = useNavigate()
+    const {delayRedirect} = useContext(RedirectContext)
+    const {setLoadingPercent, startNewTask} = useContext(LoadingContext)
 
     function ClickHandler() {
 
@@ -32,6 +34,9 @@ const TagsPage = () => {
 
         const tokenData = TokenService.getAccessToken()
 
+        startNewTask()
+        setLoadingPercent(25)
+
         if (tokenData === null) {
             return AlertService.errorMessage("Ошибка токена. Пожалуйста авторизуйтесь заново.")
         }
@@ -47,9 +52,9 @@ const TagsPage = () => {
             }
 
             AlertService.successMessage("Тэг успешно добавлен")
-            return navigate(0)
-
         })
+        setLoadingPercent(100)
+        delayRedirect(0)
     }
 
     useEffect( () => {
@@ -75,7 +80,7 @@ const TagsPage = () => {
             {isLoading
                 ? <Preloader/>
                 : tagList.length === 0
-                    ? "Здесь пока ничего нет"
+                    ? <p className={styles.empty}>Здесь пока ничего нет</p>
                     : tagList.map(tag => (
                         <TagsPageListItem key={tag.id} id={tag.id} name={tag.name}/>
                     ))

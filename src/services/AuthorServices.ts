@@ -18,7 +18,7 @@ export class AuthorServices {
      */
     static async getAuthors (): Promise<IGetAuthorsResponse | IError> {
         try {
-            const response = await axios.get<IAuthorDTO[]>("http://localhost:5270/api/authors")
+            const response = await axios.get<IAuthorDTO[]>(process.env.REACT_APP_URL_API + "/authors")
 
             //Сортировка авторов для вывода от большего к меньшему
 
@@ -55,7 +55,7 @@ export class AuthorServices {
     static async createAuthor (data: ICreateAuthorRequest): Promise<IError | null> {
         try {
 
-            await axios.post("https://localhost:7007/api/authors", data , {
+            await axios.post(process.env.REACT_APP_URL_API + "/authors", data , {
                 headers: {
                     Authorization: TokenService.getAccessToken()
                 }
@@ -91,7 +91,7 @@ export class AuthorServices {
 
     static async updateAuthor (id: number, name: string): Promise<IError | null> {
         try {
-            await axios.put(`https://localhost:7007/api/authors/${id}`, {
+            await axios.put(process.env.REACT_APP_URL_API + `/authors/${id}`, {
                 name: name
             }, {
                 headers: {
@@ -127,7 +127,7 @@ export class AuthorServices {
      */
     static async deleteAuthor(id: number): Promise<IError | null> {
         try {
-            await axios.delete(`https://localhost:7007/api/authors/${id}`, {
+            await axios.delete(process.env.REACT_APP_URL_API + `/authors/${id}`, {
                 headers: {
                     Authorization: TokenService.getAccessToken()
                 }
