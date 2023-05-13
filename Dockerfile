@@ -18,4 +18,4 @@ RUN npm install -g serve
 RUN serve -s build 
 
 
-CMD ["npm", "start"]
+CMD serve -s build 
