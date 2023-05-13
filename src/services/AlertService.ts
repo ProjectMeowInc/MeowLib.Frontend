@@ -12,7 +12,7 @@ export class AlertService {
         toast.error(message, {
             position: "top-right",
             autoClose: 3000,
-            hideProgressBar: false,
+            hideProgressBar: true,
             closeOnClick: true,
             pauseOnHover: true,
             draggable: false,
@@ -29,7 +29,7 @@ export class AlertService {
         toast.warning(message, {
             position: "top-right",
             autoClose: 3000,
-            hideProgressBar: false,
+            hideProgressBar: true,
             closeOnClick: true,
             pauseOnHover: true,
             draggable: false,
@@ -46,7 +46,7 @@ export class AlertService {
         toast.success(message, {
             position: "top-right",
             autoClose: 3000,
-            hideProgressBar: false,
+            hideProgressBar: true,
             closeOnClick: true,
             pauseOnHover: true,
             draggable: false,
