@@ -48,6 +48,37 @@ export class AuthorServices {
     }
 
     /**
+     * Метод для получения автора
+     * @param id автора
+     * @returns данные типа IAuthorDTO или ошибку типа IError
+     */
+
+    static async getAuthor(id: number): Promise<IAuthorDTO| IError> {
+        try {
+            const response = await axios.get<IAuthorDTO>(process.env.REACT_APP_URL_API + `/authors/${id}`)
+
+            return response.data
+        }
+        catch (err: any) {
+            if (err.isAxiosError) {
+                const baseErrorResponse = err as AxiosError<IBaseErrorResponse>
+
+                if (baseErrorResponse === null) {
+                    return ErrorService.criticalError()
+                }
+
+                if (baseErrorResponse.response === undefined) {
+                    return ErrorService.criticalError()
+                }
+
+                return ErrorService.commonError(baseErrorResponse.response.data.errorMessage)
+            }
+
+            return ErrorService.criticalError()
+        }
+    }
+
+    /**
      * Метод для создания автора
      * @param data Данные для запроса
      * @returns null При успешном срабатывании
