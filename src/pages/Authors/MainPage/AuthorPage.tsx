@@ -10,18 +10,16 @@ import {Link} from "react-router-dom";
 
 const AuthorPage = () => {
 
-    const [authorsList, setAuthorsList] = useState<IAuthorDTO[]>([])
-    const [isLoading, setIsLoading] = useState<boolean>(true)
+    const [authorsList, setAuthorsList] = useState<IAuthorDTO[] | null>(null)
 
     useEffect( () => {
         AuthorServices.getAuthors().then(response => {
-            setIsLoading(false)
 
             if (ErrorService.isError(response)) {
                 return AlertService.errorMessage(response.displayMessage)
             }
 
-            setAuthorsList([...response.data])
+            setAuthorsList(response.data)
         })
     }, [])
 
@@ -33,13 +31,13 @@ const AuthorPage = () => {
                 <p>Нажмите чтобы добавить нового автора</p>
             </Link>
 
-            {isLoading
+            {authorsList === null
                 ? <Preloader/>
-                : authorsList.length === 0
-                    ? <p className={styles.empty}>Здесь пока ничего нет</p>
-                    : authorsList.map(author => (
+                : authorsList.length !== 0
+                    ? authorsList.map(author => (
                         <AuthorListItem key={author.id} id={author.id} name={author.name}/>
                     ))
+                    : <p className={styles.empty}>Здесь пока ничего нет</p>
             }
 
         </div>

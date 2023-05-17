@@ -1,28 +1,31 @@
 import React, {useContext, useState} from 'react';
 import styles from "./createAuthorPage.module.css"
 import {AlertService} from "../../../services/AlertService";
-import {ICreateAuthorRequest} from "../../../services/models/requests/IAuthorRequests";
 import {TokenService} from "../../../services/TokenService";
 import {AuthorServices} from "../../../services/AuthorServices";
 import {ErrorTypesEnum} from "../../../services/models/IError";
 import {RedirectContext} from "../../../context/RedirectContext";
 import {LoadingContext} from "../../../context/LoadingContext";
 
+interface IAuthorName {
+    name: string
+}
+
 const CreateAuthorPage = () => {
 
-    const [nameAuthor, setNameAuthor] = useState<string | null>(null)
+    const [authorName, setAuthorName] = useState<IAuthorName | null>(null)
 
     const {delayRedirect} = useContext(RedirectContext)
     const {setLoadingPercent, startNewTask} = useContext(LoadingContext)
 
     function ClickHandler() {
 
-        if(nameAuthor === null) {
+        if(authorName === null) {
             return AlertService.warningMessage("Не указано имя автора")
         }
 
-        const data: ICreateAuthorRequest = {
-            name: nameAuthor
+        if (authorName.name === undefined) {
+            return AlertService.warningMessage("Не указано имя автора")
         }
 
         const tokenData = TokenService.getAccessToken()
@@ -34,7 +37,7 @@ const CreateAuthorPage = () => {
             return AlertService.errorMessage("Ошибка токена. Пожалуйста авторизуйтесь заново.")
         }
 
-        AuthorServices.createAuthor(data).then(error => {
+        AuthorServices.createAuthor(authorName).then(error => {
             if(error !== null) {
                 if(error.errorType === ErrorTypesEnum.Critical) {
                     return AlertService.errorMessage(error.displayMessage)
@@ -50,7 +53,11 @@ const CreateAuthorPage = () => {
         delayRedirect(-1)
     }
 
-
+    function UpdateHandler(name: string) {
+        setAuthorName(prevState => {
+            return {...prevState, name: name}
+        })
+    }
 
     return (
         <div>
@@ -60,7 +67,7 @@ const CreateAuthorPage = () => {
                     <img src="/img/profileIcon.png" alt=""/>
                 </div>
                 <div className={styles.form}>
-                    <input className={styles.input} onChange={(ctx) => setNameAuthor(ctx.target.value)} type="text" placeholder={"Введите имя автора"}/>
+                    <input className={styles.input} onChange={(ctx) => UpdateHandler(ctx.target.value)} type="text" placeholder={"Введите имя автора"}/>
                     <button className={styles.button} onClick={ClickHandler}>Создать</button>
                 </div>
             </div>

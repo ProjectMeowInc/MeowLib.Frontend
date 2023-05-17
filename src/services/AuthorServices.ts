@@ -52,7 +52,6 @@ export class AuthorServices {
      * @param id автора
      * @returns данные типа IAuthorDTO или ошибку типа IError
      */
-
     static async getAuthor(id: number): Promise<IAuthorDTO| IError> {
         try {
             const response = await axios.get<IAuthorDTO>(process.env.REACT_APP_URL_API + `/authors/${id}`)
