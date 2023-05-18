@@ -1,8 +1,7 @@
 import {ISendLogRequest} from "./models/requests/ISendLogRequest";
 import {IError} from "./models/IError";
-import axios, {AxiosError} from "axios";
+import axios from "axios";
 import {TokenService} from "./TokenService";
-import {IBaseErrorResponse} from "./models/responses/errors/IBaseErrorResponse";
 import {ErrorService} from "./ErrorService";
 
 /**
@@ -26,20 +25,7 @@ export class LogService {
             return null
         }
         catch (err: any) {
-            if (err.isAxiosError) {
-                const error = err as AxiosError<IBaseErrorResponse>
-
-                if (error === null) {
-                    return ErrorService.criticalError()
-                }
-
-                if (error.response === undefined) {
-                    return ErrorService.criticalError()
-                }
-
-                return ErrorService.commonError(error.response.data.errorMessage)
-            }
-            return ErrorService.criticalError()
+            return ErrorService.returnErrorFromServices(err)
         }
     }
 }

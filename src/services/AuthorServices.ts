@@ -1,5 +1,4 @@
-import axios, {AxiosError} from "axios";
-import {IBaseErrorResponse} from "./models/responses/errors/IBaseErrorResponse";
+import axios from "axios";
 import {ErrorService} from "./ErrorService";
 import {IError} from "./models/IError";
 import {IGetAuthorsResponse} from "./models/responses/IAuthorResponse";
@@ -28,22 +27,7 @@ export class AuthorServices {
                 data: sortedAuthors,
             }
         } catch (err: any) {
-
-            if (err.isAxiosError) {
-                const baseErrorResponse = err as AxiosError<IBaseErrorResponse>
-
-                if (baseErrorResponse === null) {
-                    return ErrorService.criticalError()
-                }
-
-                if (baseErrorResponse.response === undefined) {
-                    return ErrorService.criticalError()
-                }
-
-                return ErrorService.commonError(baseErrorResponse.response.data.errorMessage)
-            }
-
-            return ErrorService.criticalError()
+            return ErrorService.returnErrorFromServices(err)
         }
     }
 
@@ -59,21 +43,7 @@ export class AuthorServices {
             return response.data
         }
         catch (err: any) {
-            if (err.isAxiosError) {
-                const baseErrorResponse = err as AxiosError<IBaseErrorResponse>
-
-                if (baseErrorResponse === null) {
-                    return ErrorService.criticalError()
-                }
-
-                if (baseErrorResponse.response === undefined) {
-                    return ErrorService.criticalError()
-                }
-
-                return ErrorService.commonError(baseErrorResponse.response.data.errorMessage)
-            }
-
-            return ErrorService.criticalError()
+            return ErrorService.returnErrorFromServices(err)
         }
     }
 
@@ -94,21 +64,7 @@ export class AuthorServices {
             return null
         }
         catch (err: any) {
-            if (err.isAxiosError) {
-                const baseErrorResponse = err as AxiosError<IBaseErrorResponse>
-
-                if (baseErrorResponse === null) {
-                    return ErrorService.criticalError()
-                }
-
-                if (baseErrorResponse.response === undefined) {
-                    return ErrorService.criticalError()
-                }
-
-                return ErrorService.commonError(baseErrorResponse.response.data.errorMessage)
-            }
-
-            return ErrorService.criticalError()
+            return ErrorService.returnErrorFromServices(err)
         }
     }
 
@@ -132,21 +88,7 @@ export class AuthorServices {
             return null
         }
         catch (err: any) {
-            if (err.isAxiosError) {
-                const error = err as AxiosError<IBaseErrorResponse>
-
-                if (error === null) {
-                    return ErrorService.criticalError()
-                }
-
-                if (error.response === undefined) {
-                    return ErrorService.criticalError()
-                }
-
-                return ErrorService.commonError(error.response.data.errorMessage)
-            }
-
-            return ErrorService.criticalError()
+            return ErrorService.returnErrorFromServices(err)
         }
     }
 
@@ -166,21 +108,7 @@ export class AuthorServices {
             return null
         }
         catch (err: any) {
-            if (err.isAxiosError) {
-                const error = err as AxiosError<IBaseErrorResponse>
-
-                if (error === null) {
-                    return ErrorService.criticalError()
-                }
-
-                if (error.response === undefined) {
-                    return ErrorService.criticalError()
-                }
-
-                return ErrorService.commonError(error.response.data.errorMessage)
-            }
-
-            return ErrorService.criticalError()
+            return ErrorService.returnErrorFromServices(err)
         }
     }
 }

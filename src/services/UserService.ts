@@ -1,10 +1,8 @@
-import axios, {AxiosError} from "axios"
-import {IBaseErrorResponse} from "./models/responses/errors/IBaseErrorResponse"
+import axios from "axios"
 import {ILogInRequest, ISignInRequest} from './models/requests/IUserRequests';
 import {ErrorService} from "./ErrorService";
 import {IError} from "./models/IError";
 import {ILoginResponse} from "./models/responses/IUserResponses";
-import {LogService} from "./LogService";
 
 /**
  * Сервис для работы с пользователем.
@@ -23,60 +21,7 @@ export class UserService {
             return null
         }
         catch (err: any) {
-            if (err.isAxiosError) {
-                const baseErrorResponse = err as AxiosError<IBaseErrorResponse>
-                
-                // Если ошибка не приводиться к виду IBaseErrorResponse даже с учётом того, что ошибка - isAxiosError 
-                // возвращаем фатальную ошибку
-                if (baseErrorResponse === null) {
-                    await LogService.sendLog({
-                        errorLog: {
-                            errorModule: "UserService",
-                            message: "baseErrorResponse === null",
-                            additionalInfo: {
-                                method: "registration"
-                            },
-                            isApiError: true
-                        }
-                    })
-                    return ErrorService.criticalError("Неизвестная ошибка. Попробуйте ещё раз.")
-                }
-    
-                // Если ответ - пустой возвращаем фатальную ошибку.
-                if (baseErrorResponse.response === undefined) {
-
-                    await LogService.sendLog({
-                        errorLog: {
-                            errorModule: "UserService",
-                            message: "baseErrorResponse === undefined",
-                            additionalInfo: {
-                                method: "registration",
-                            },
-                            isApiError: true
-                        }
-                    })
-
-                    return ErrorService.criticalError("Неизвестная ошибка. Попробуйте ещё раз.")
-                }
-
-                // Если смогли привести к нужному нам виду - можем работать с ней    
-                return ErrorService.commonError(baseErrorResponse.response.data.errorMessage)
-            }
-            // Если ошибка - не isAxiosError
-            // возвращаем фатальную ошибку
-
-            await LogService.sendLog({
-                errorLog: {
-                    errorModule: "UserService",
-                    message: "Ошибка не в axios",
-                    additionalInfo: {
-                        method: "registration"
-                    },
-                    isApiError: true
-                }
-            })
-
-            return ErrorService.criticalError("Неизвестная ошибка. Попробуйте ещё раз.")
+            return ErrorService.returnErrorFromServices(err)
         }
     }
 
@@ -92,21 +37,7 @@ export class UserService {
             return response.data
         }
         catch (err: any) {
-            if (err.isAxiosError) {
-                const baseErrorResponse = err as AxiosError<IBaseErrorResponse>
-
-                if (baseErrorResponse === null) {
-                    return ErrorService.criticalError("Неизвестная ошибка. Попробуйте ещё раз.")
-                }
-
-                if (baseErrorResponse.response === undefined) {
-                    return ErrorService.criticalError("Неизвестная ошибка. Попробуйте ещё раз.")
-                }
-
-                return ErrorService.commonError(baseErrorResponse.response.data.errorMessage)
-            }
-
-            return ErrorService.criticalError("Неизвестная ошибка. Попробуйте ещё раз.")
+            return ErrorService.returnErrorFromServices(err)
         }
     }
 }
