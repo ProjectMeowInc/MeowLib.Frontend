@@ -6,14 +6,11 @@ import {AuthorServices} from "../../../services/AuthorServices";
 import {ErrorTypesEnum} from "../../../services/models/IError";
 import {RedirectContext} from "../../../context/RedirectContext";
 import {LoadingContext} from "../../../context/LoadingContext";
-
-interface IAuthorName {
-    name: string
-}
+import {ICreateAuthorRequest} from "../../../services/models/requests/IAuthorRequests";
 
 const CreateAuthorPage = () => {
 
-    const [authorName, setAuthorName] = useState<IAuthorName | null>(null)
+    const [authorName, setAuthorName] = useState<ICreateAuthorRequest>()
 
     const {delayRedirect} = useContext(RedirectContext)
     const {setLoadingPercent, startNewTask} = useContext(LoadingContext)
@@ -24,7 +21,7 @@ const CreateAuthorPage = () => {
             return AlertService.warningMessage("Не указано имя автора")
         }
 
-        if (authorName.name === undefined) {
+        if (authorName === undefined) {
             return AlertService.warningMessage("Не указано имя автора")
         }
 
@@ -53,7 +50,7 @@ const CreateAuthorPage = () => {
         delayRedirect(-1)
     }
 
-    function UpdateHandler(name: string) {
+    function UpdateNameHandler(name: string) {
         setAuthorName(prevState => {
             return {...prevState, name: name}
         })
@@ -67,7 +64,7 @@ const CreateAuthorPage = () => {
                     <img src="/img/profileIcon.png" alt=""/>
                 </div>
                 <div className={styles.form}>
-                    <input className={styles.input} onChange={(ctx) => UpdateHandler(ctx.target.value)} type="text" placeholder={"Введите имя автора"}/>
+                    <input className={styles.input} onChange={(ctx) => UpdateNameHandler(ctx.target.value)} type="text" placeholder={"Введите имя автора"}/>
                     <button className={styles.button} onClick={ClickHandler}>Создать</button>
                 </div>
             </div>
