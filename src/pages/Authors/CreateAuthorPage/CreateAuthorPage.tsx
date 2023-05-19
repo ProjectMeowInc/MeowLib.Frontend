@@ -10,18 +10,14 @@ import {ICreateAuthorRequest} from "../../../services/models/requests/IAuthorReq
 
 const CreateAuthorPage = () => {
 
-    const [authorName, setAuthorName] = useState<ICreateAuthorRequest>()
+    const [dataRequest, setDataRequest] = useState<ICreateAuthorRequest>()
 
     const {delayRedirect} = useContext(RedirectContext)
     const {setLoadingPercent, startNewTask} = useContext(LoadingContext)
 
     function ClickHandler() {
 
-        if(authorName === null) {
-            return AlertService.warningMessage("Не указано имя автора")
-        }
-
-        if (authorName === undefined) {
+        if (dataRequest === undefined) {
             return AlertService.warningMessage("Не указано имя автора")
         }
 
@@ -34,7 +30,7 @@ const CreateAuthorPage = () => {
             return AlertService.errorMessage("Ошибка токена. Пожалуйста авторизуйтесь заново.")
         }
 
-        AuthorServices.createAuthor(authorName).then(error => {
+        AuthorServices.createAuthor(dataRequest).then(error => {
             if(error !== null) {
                 if(error.errorType === ErrorTypesEnum.Critical) {
                     return AlertService.errorMessage(error.displayMessage)
@@ -51,7 +47,7 @@ const CreateAuthorPage = () => {
     }
 
     function UpdateNameHandler(name: string) {
-        setAuthorName(prevState => {
+        setDataRequest(prevState => {
             return {...prevState, name: name}
         })
     }

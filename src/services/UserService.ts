@@ -1,8 +1,8 @@
 import axios from "axios"
 import {ILogInRequest, ISignInRequest} from './models/requests/IUserRequests';
-import {ErrorService} from "./ErrorService";
 import {IError} from "./models/IError";
 import {ILoginResponse} from "./models/responses/IUserResponses";
+import {AxiosExtend} from "./AxiosExtend";
 
 /**
  * Сервис для работы с пользователем.
@@ -21,7 +21,7 @@ export class UserService {
             return null
         }
         catch (err: any) {
-            return ErrorService.returnErrorFromServices(err)
+            return AxiosExtend.returnErrorFromServices(err)
         }
     }
 
@@ -37,7 +37,7 @@ export class UserService {
             return response.data
         }
         catch (err: any) {
-            return ErrorService.returnErrorFromServices(err)
+            return AxiosExtend.returnErrorFromServices(err)
         }
     }
 }
