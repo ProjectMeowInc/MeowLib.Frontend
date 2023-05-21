@@ -1,11 +1,10 @@
 import {ITagsDTO} from "./models/DTO/ITagsDTO";
 import {IError} from "./models/IError";
-import axios, {AxiosError} from "axios";
-import {IBaseErrorResponse} from "./models/responses/errors/IBaseErrorResponse";
-import {ErrorService} from "./ErrorService";
+import axios from "axios";
 import {ICreateTagRequest, IUpdateTagRequest} from "./models/requests/ITagRequests";
 import {TokenService} from "./TokenService";
 import {IGetTagResponse, IGetTagsResponse} from "./models/responses/IGetTagsResponse";
+import {ErrorService} from "./ErrorService";
 
 /**
  * Сервис для работы с тэгами
@@ -25,21 +24,7 @@ export class TagsService {
             }
         }
         catch (err: any) {
-            if (err.isAxiosError) {
-                const baseErrorResponse = err as AxiosError<IBaseErrorResponse>
-
-                if (baseErrorResponse === null) {
-                    return ErrorService.criticalError()
-                }
-
-                if (baseErrorResponse.response === undefined) {
-                    return ErrorService.criticalError()
-                }
-
-                return ErrorService.commonError(baseErrorResponse.response.data.errorMessage)
-            }
-
-            return ErrorService.criticalError()
+            return ErrorService.toServiceError(err)
         }
     }
 
@@ -55,21 +40,7 @@ export class TagsService {
             return response.data
         }
         catch (err: any) {
-            if (err.isAxiosError) {
-                const baseErrorResponse = err as AxiosError<IBaseErrorResponse>
-
-                if (baseErrorResponse === null) {
-                    return ErrorService.criticalError()
-                }
-
-                if (baseErrorResponse.response === undefined) {
-                    return ErrorService.criticalError()
-                }
-
-                return ErrorService.commonError(baseErrorResponse.response.data.errorMessage)
-            }
-
-            return ErrorService.criticalError()
+            return ErrorService.toServiceError(err)
         }
     }
 
@@ -89,21 +60,7 @@ export class TagsService {
             return  null
         }
         catch (err: any) {
-            if (err.isAxiosError) {
-                const baseErrorResponse = err as AxiosError<IBaseErrorResponse>
-
-                if (baseErrorResponse === null) {
-                    return ErrorService.criticalError()
-                }
-
-                if (baseErrorResponse.response === undefined) {
-                    return ErrorService.criticalError()
-                }
-
-                return ErrorService.commonError(baseErrorResponse.response.data.errorMessage)
-            }
-
-            return ErrorService.criticalError()
+            return ErrorService.toServiceError(err)
         }
     }
 
@@ -123,21 +80,7 @@ export class TagsService {
             return null
         }
         catch (err: any) {
-            if (err.isAxiosError) {
-                const baseErrorResponse = err as AxiosError<IBaseErrorResponse>
-
-                if (baseErrorResponse === null) {
-                    return ErrorService.criticalError()
-                }
-
-                if (baseErrorResponse.response === undefined) {
-                    return ErrorService.criticalError()
-                }
-
-                return ErrorService.commonError(baseErrorResponse.response.data.errorMessage)
-            }
-
-            return ErrorService.criticalError()
+            return ErrorService.toServiceError(err)
         }
     }
 
@@ -158,21 +101,7 @@ export class TagsService {
             return null
         }
         catch (err: any) {
-            if (err.isAxiosError) {
-                const baseErrorResponse = err as AxiosError<IBaseErrorResponse>
-
-                if (baseErrorResponse === null) {
-                    return ErrorService.criticalError()
-                }
-
-                if (baseErrorResponse.response === undefined) {
-                    return ErrorService.criticalError()
-                }
-
-                return ErrorService.commonError(baseErrorResponse.response.data.errorMessage)
-            }
-
-            return ErrorService.criticalError()
+            return ErrorService.toServiceError(err)
         }
     }
 }

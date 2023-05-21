@@ -3,34 +3,11 @@ import styles from "./authorListItem.module.css"
 import {IAuthorDTO} from "../../services/models/DTO/IAuthorModels";
 import {AuthorServices} from "../../services/AuthorServices";
 import {AlertService} from "../../services/AlertService";
-import {useNavigate} from "react-router-dom";
-import {ErrorTypesEnum} from "../../services/models/IError";
+import {Link, useNavigate} from "react-router-dom";
 
 const AuthorListItem = ({id, name}: IAuthorDTO) => {
 
     const navigate = useNavigate()
-
-    function UpdateHandler () {
-
-        const newName = prompt("Введите имя")
-
-        if (newName === null) {
-            return AlertService.warningMessage("Вы не указали имя автора")
-        }
-
-        AuthorServices.updateAuthor(id, newName).then(err => {
-            if (err !== null) {
-                if (err.errorType === ErrorTypesEnum.Critical) {
-                    return AlertService.errorMessage(err.displayMessage)
-                }
-                return AlertService.warningMessage(err.displayMessage)
-            }
-
-            AlertService.successMessage("Автор был успешно обновлён")
-
-            navigate(0)
-        })
-    }
 
     function DeleteHandler () {
         AuthorServices.deleteAuthor(id).then(err => {
@@ -52,7 +29,7 @@ const AuthorListItem = ({id, name}: IAuthorDTO) => {
             </div>
 
             <div className={styles.right_side}>
-                <p onClick={UpdateHandler}>Изменить</p>
+                <Link to={`${id}/edit`}>Изменить</Link>
                 <p onClick={DeleteHandler}>Удалить</p>
             </div>
         </div>

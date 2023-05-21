@@ -1,3 +1,3 @@
 export interface ICreateAuthorRequest {
-    name: string
+    name: string | undefined
 }
