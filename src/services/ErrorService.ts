@@ -1,4 +1,6 @@
 import {ErrorTypesEnum, IError} from "./models/IError";
+import {AxiosError} from "axios";
+import {IBaseErrorResponse} from "./models/responses/errors/IBaseErrorResponse";
 
 /**
  * Класс для удобного создания ошибок
@@ -60,5 +62,23 @@ export class ErrorService {
         }
 
         return true
+    }
+
+    static toServiceError(err: any): IError {
+        if (err.isAxiosError) {
+            const baseErrorResponse = err as AxiosError<IBaseErrorResponse>
+
+            if (baseErrorResponse === null) {
+                return ErrorService.criticalError()
+            }
+
+            if (baseErrorResponse.response === undefined) {
+                return ErrorService.criticalError()
+            }
+
+            return ErrorService.commonError(baseErrorResponse.response.data.errorMessage)
+        }
+
+        return ErrorService.criticalError()
     }
 }

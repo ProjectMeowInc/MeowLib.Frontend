@@ -2,7 +2,7 @@ import {ISendLogRequest} from "./models/requests/ISendLogRequest";
 import {IError} from "./models/IError";
 import axios from "axios";
 import {TokenService} from "./TokenService";
-import {AxiosExtend} from "./AxiosExtend";
+import {ErrorService} from "./ErrorService";
 
 /**
  * Сервис для логирования в тг
@@ -25,7 +25,7 @@ export class LogService {
             return null
         }
         catch (err: any) {
-            return AxiosExtend.returnErrorFromServices(err)
+            return ErrorService.toServiceError(err)
         }
     }
 }

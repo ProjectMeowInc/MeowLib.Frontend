@@ -15,7 +15,7 @@ const CreateAuthorPage = () => {
     const {delayRedirect} = useContext(RedirectContext)
     const {setLoadingPercent, startNewTask} = useContext(LoadingContext)
 
-    function ClickHandler() {
+    function SubmitHandler() {
 
         if (requestData === undefined) {
             return AlertService.warningMessage("Не все поля указаны")
@@ -65,7 +65,7 @@ const CreateAuthorPage = () => {
                 </div>
                 <div className={styles.form}>
                     <input className={styles.input} onChange={(ctx) => UpdateNameHandler(ctx.target.value)} type="text" placeholder={"Введите имя автора"}/>
-                    <button className={styles.button} onClick={ClickHandler}>Создать</button>
+                    <button className={styles.button} onClick={SubmitHandler}>Создать</button>
                 </div>
             </div>
         </div>

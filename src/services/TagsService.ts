@@ -4,7 +4,7 @@ import axios from "axios";
 import {ICreateTagRequest, IUpdateTagRequest} from "./models/requests/ITagRequests";
 import {TokenService} from "./TokenService";
 import {IGetTagResponse, IGetTagsResponse} from "./models/responses/IGetTagsResponse";
-import {AxiosExtend} from "./AxiosExtend";
+import {ErrorService} from "./ErrorService";
 
 /**
  * Сервис для работы с тэгами
@@ -24,7 +24,7 @@ export class TagsService {
             }
         }
         catch (err: any) {
-            return AxiosExtend.returnErrorFromServices(err)
+            return ErrorService.toServiceError(err)
         }
     }
 
@@ -40,7 +40,7 @@ export class TagsService {
             return response.data
         }
         catch (err: any) {
-            return AxiosExtend.returnErrorFromServices(err)
+            return ErrorService.toServiceError(err)
         }
     }
 
@@ -60,7 +60,7 @@ export class TagsService {
             return  null
         }
         catch (err: any) {
-            return AxiosExtend.returnErrorFromServices(err)
+            return ErrorService.toServiceError(err)
         }
     }
 
@@ -80,7 +80,7 @@ export class TagsService {
             return null
         }
         catch (err: any) {
-            return AxiosExtend.returnErrorFromServices(err)
+            return ErrorService.toServiceError(err)
         }
     }
 
@@ -101,7 +101,7 @@ export class TagsService {
             return null
         }
         catch (err: any) {
-            return AxiosExtend.returnErrorFromServices(err)
+            return ErrorService.toServiceError(err)
         }
     }
 }

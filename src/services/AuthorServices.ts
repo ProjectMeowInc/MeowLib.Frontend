@@ -4,7 +4,7 @@ import {IGetAuthorsResponse} from "./models/responses/IAuthorResponse";
 import {IAuthorDTO} from "./models/DTO/IAuthorModels";
 import {TokenService} from "./TokenService";
 import {ICreateAuthorRequest} from "./models/requests/IAuthorRequests";
-import {AxiosExtend} from "./AxiosExtend";
+import {ErrorService} from "./ErrorService";
 
 /**
  * Сервис для работы с авторами
@@ -27,7 +27,7 @@ export class AuthorServices {
                 data: sortedAuthors,
             }
         } catch (err: any) {
-            return AxiosExtend.returnErrorFromServices(err)
+            return ErrorService.toServiceError(err)
         }
     }
 
@@ -43,7 +43,7 @@ export class AuthorServices {
             return response.data
         }
         catch (err: any) {
-            return AxiosExtend.returnErrorFromServices(err)
+            return ErrorService.toServiceError(err)
         }
     }
 
@@ -64,7 +64,7 @@ export class AuthorServices {
             return null
         }
         catch (err: any) {
-            return AxiosExtend.returnErrorFromServices(err)
+            return ErrorService.toServiceError(err)
         }
     }
 
@@ -88,7 +88,7 @@ export class AuthorServices {
             return null
         }
         catch (err: any) {
-            return AxiosExtend.returnErrorFromServices(err)
+            return ErrorService.toServiceError(err)
         }
     }
 
@@ -108,7 +108,7 @@ export class AuthorServices {
             return null
         }
         catch (err: any) {
-            return AxiosExtend.returnErrorFromServices(err)
+            return ErrorService.toServiceError(err)
         }
     }
 }

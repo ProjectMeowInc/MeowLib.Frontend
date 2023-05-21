@@ -2,7 +2,7 @@ import axios from "axios"
 import {ILogInRequest, ISignInRequest} from './models/requests/IUserRequests';
 import {IError} from "./models/IError";
 import {ILoginResponse} from "./models/responses/IUserResponses";
-import {AxiosExtend} from "./AxiosExtend";
+import {ErrorService} from "./ErrorService";
 
 /**
  * Сервис для работы с пользователем.
@@ -21,7 +21,7 @@ export class UserService {
             return null
         }
         catch (err: any) {
-            return AxiosExtend.returnErrorFromServices(err)
+            return ErrorService.toServiceError(err)
         }
     }
 
@@ -37,7 +37,7 @@ export class UserService {
             return response.data
         }
         catch (err: any) {
-            return AxiosExtend.returnErrorFromServices(err)
+            return ErrorService.toServiceError(err)
         }
     }
 }
