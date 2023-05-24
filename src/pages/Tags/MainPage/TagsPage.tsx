@@ -12,7 +12,7 @@ const TagsPage = () => {
     const [tagList, setTagList] = useState<ITagsDTO[]>([])
     const [isLoading, setIsLoading] = useState<boolean>(true)
 
-    useEffect( () => {
+    useEffect(() => {
         TagsService.getAllTags().then(response => {
             setIsLoading(false)
 
