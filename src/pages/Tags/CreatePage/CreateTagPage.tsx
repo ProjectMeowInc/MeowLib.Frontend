@@ -42,7 +42,7 @@ const CreateTagPage = () => {
             <div className={styles.placeholders}>
                 <input onChange={(ctx) => setTagName(ctx.target.value)} className={styles.input} type="text" placeholder={'Введите название тэга'}/>
                 <textarea onChange={(ctx) => setTagDescription(ctx.target.value)} className={styles.textarea} name="tag_description" placeholder={"Введите описание тэга"}/>
-                <button onClick={() => SubmitHandler()} className={styles.button}>Создать</button>
+                <button onClick={SubmitHandler} className={styles.button}>Создать</button>
             </div>
         </div>
     );
