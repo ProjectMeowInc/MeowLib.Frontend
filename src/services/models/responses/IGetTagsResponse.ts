@@ -13,5 +13,5 @@ export interface IGetTagsResponse {
 export interface IGetTagResponse {
     id: number,
     name: string,
-    description?: string
+    description: string | null
 }
