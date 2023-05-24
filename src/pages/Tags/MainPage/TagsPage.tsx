@@ -1,23 +1,16 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from "./tagsPage.module.css"
 import {AlertService} from "../../../services/AlertService";
-import {ICreateTagRequest} from "../../../services/models/requests/ITagRequests";
-import {TokenService} from "../../../services/TokenService";
 import {ErrorService} from "../../../services/ErrorService";
 import Preloader from "../../../components/preloader/preloader";
 import TagsPageListItem from "../../../components/TagsPage/TagsPageListItem";
 import {ITagsDTO} from "../../../services/models/DTO/ITagsDTO";
 import {TagsService} from "../../../services/TagsService";
-import {ErrorTypesEnum} from "../../../services/models/IError";
-import {RedirectContext} from "../../../context/RedirectContext";
-import {LoadingContext} from "../../../context/LoadingContext";
 import {Link} from "react-router-dom";
 
 const TagsPage = () => {
     const [tagList, setTagList] = useState<ITagsDTO[]>([])
     const [isLoading, setIsLoading] = useState<boolean>(true)
-    const {delayRedirect} = useContext(RedirectContext)
-    const {setLoadingPercent, startNewTask} = useContext(LoadingContext)
 
     useEffect( () => {
         TagsService.getAllTags().then(response => {
