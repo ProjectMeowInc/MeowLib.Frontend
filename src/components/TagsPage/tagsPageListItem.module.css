@@ -28,8 +28,9 @@
     cursor: pointer;
 }
 
-.right_side p:nth-child(1) {
+a:nth-child(1) {
     color: #6D5BFD;
+    margin-right: 20px;
 }
 
 .right_side p:nth-child(2) {
