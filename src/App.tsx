@@ -10,6 +10,7 @@ import LoadingLayout from "./layouts/LoadingLayout/LoadingLayout";
 import CreateAuthorPage from "./pages/Authors/CreateAuthorPage/CreateAuthorPage";
 import UpdateAuthorPage from "./pages/Authors/UpdateAuthorPage/UpdateAuthorPage";
 import CreateTagPage from "./pages/Tags/CreatePage/CreateTagPage";
+import UpdateTagPage from "./pages/Tags/UpdatePage/UpdateTagPage";
 
 const App = () => {
   return (
@@ -26,7 +27,7 @@ const App = () => {
                     <Route path={"tags"}>
                         <Route path={""} element={<TagsPage/>}/>
                         <Route path={"new"} element={<CreateTagPage/>}/>
-                        <Route path={":id/edit"}/>
+                        <Route path={":id/edit"} element={<UpdateTagPage/>}/>
                     </Route>
                 </Route>
                 <Route path={"*"} element={<NotFoundPage/>}/>
