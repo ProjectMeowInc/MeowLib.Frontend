@@ -5,7 +5,6 @@ import {ITagsDTO} from "../../services/models/DTO/ITagsDTO";
 import {TagsService} from "../../services/TagsService";
 import {ErrorService} from "../../services/ErrorService";
 import {AlertService} from "../../services/AlertService";
-import {IUpdateTagRequest} from "../../services/models/requests/ITagRequests";
 import {ErrorTypesEnum} from "../../services/models/IError";
 
 const TagsPageListItem = ({id, name}: ITagsDTO) => {
