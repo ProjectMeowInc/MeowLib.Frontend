@@ -5,10 +5,11 @@ import AdminPage from "./pages/AdminPage/AdminPage";
 import AuthorPage from "./pages/Authors/MainPage/AuthorPage";
 import AdminLayout from "./layouts/AdminLayout/AdminLayout";
 import NotFoundPage from "./pages/Error/NotFoundPage/NotFoundPage";
-import TagsPage from "./pages/Tags/TagsPage";
+import TagsPage from "./pages/Tags/MainPage/TagsPage";
 import LoadingLayout from "./layouts/LoadingLayout/LoadingLayout";
 import CreateAuthorPage from "./pages/Authors/CreateAuthorPage/CreateAuthorPage";
 import UpdateAuthorPage from "./pages/Authors/UpdateAuthorPage/UpdateAuthorPage";
+import CreateTagPage from "./pages/Tags/CreatePage/CreateTagPage";
 
 const App = () => {
   return (
@@ -22,7 +23,11 @@ const App = () => {
                         <Route path={"new"} element={<CreateAuthorPage/>}/>
                         <Route path={":id/edit"} element={<UpdateAuthorPage/>}/>
                     </Route>
-                    <Route path={"tags"} element={<TagsPage/>}/>
+                    <Route path={"tags"}>
+                        <Route path={""} element={<TagsPage/>}/>
+                        <Route path={"new"} element={<CreateTagPage/>}/>
+                        <Route path={":id/edit"}/>
+                    </Route>
                 </Route>
                 <Route path={"*"} element={<NotFoundPage/>}/>
             </Route>
