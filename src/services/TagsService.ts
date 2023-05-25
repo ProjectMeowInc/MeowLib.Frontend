@@ -86,7 +86,6 @@ export class TagsService {
 
     /**
      * Метод для удаления тега
-     * @param id тэга
      * @param data данные на обновление
      * @returns ошибку или null
      */
