@@ -51,7 +51,7 @@ const UpdateTagPage = () => {
             return AlertService.warningMessage("Произошла ошибка")
         }
 
-        const err = await TagsService.updateTag(parseInt(params.id) ,tagData)
+        const err= await TagsService.updateTag(parseInt(params.id), tagData)
             if (err !== null) {
                 if (err.errorType === ErrorTypesEnum.Critical) {
                     return AlertService.errorMessage(err.displayMessage)
