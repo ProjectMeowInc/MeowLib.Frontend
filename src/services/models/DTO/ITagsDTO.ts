@@ -3,5 +3,6 @@
  */
 export interface ITagsDTO {
     id: number,
-    name: string
+    name: string | null
+    description: string | null
 }

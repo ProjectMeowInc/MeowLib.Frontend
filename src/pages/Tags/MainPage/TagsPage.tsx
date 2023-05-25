@@ -37,7 +37,7 @@ const TagsPage = () => {
                 : tagList.length === 0
                     ? <p className={styles.empty}>Здесь пока ничего нет</p>
                     : tagList.map(tag => (
-                        <TagsPageListItem key={tag.id} id={tag.id} name={tag.name}/>
+                        <TagsPageListItem key={tag.id} id={tag.id} name={tag.name} description={tag.description}/>
                     ))
             }
         </div>
