@@ -1,7 +1,8 @@
 /**
  * Интерфейс описывающий возвращаемое значение тэга
  */
-export interface ITagsDTO {
+export interface ITagDTO {
     id: number,
-    name: string
+    name: string | null
+    description: string | null
 }

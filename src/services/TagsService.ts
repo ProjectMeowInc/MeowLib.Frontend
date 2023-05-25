@@ -1,4 +1,4 @@
-import {ITagsDTO} from "./models/DTO/ITagsDTO";
+import {ITagDTO} from "./models/DTO/ITagDTO";
 import {IError} from "./models/IError";
 import axios from "axios";
 import {ICreateTagRequest, IUpdateTagRequest} from "./models/requests/ITagRequests";
@@ -17,7 +17,7 @@ export class TagsService {
      */
     static async getAllTags(): Promise<IGetTagsResponse | IError> {
         try {
-            const response = await axios.get<ITagsDTO[]>(process.env.REACT_APP_URL_API + "/tags")
+            const response = await axios.get<ITagDTO[]>(process.env.REACT_APP_URL_API + "/tags")
 
             return {
                 data: response.data
