@@ -7,11 +7,11 @@ import {ErrorTypesEnum} from "../../../services/models/IError";
 import {RedirectContext} from "../../../context/RedirectContext";
 import {ErrorService} from "../../../services/ErrorService";
 import Preloader from "../../../components/preloader/preloader";
-import {ITagsDTO} from "../../../services/models/DTO/ITagsDTO";
+import {ITagDTO} from "../../../services/models/DTO/ITagDTO";
 
 const UpdateTagPage = () => {
 
-    const [tagData, setTagData] = useState<ITagsDTO | null>(null)
+    const [tagData, setTagData] = useState<ITagDTO | null>(null)
     const {delayRedirect} = useContext(RedirectContext)
     const params = useParams()
 
@@ -40,7 +40,7 @@ const UpdateTagPage = () => {
 
     }, [])
 
-    function SubmitHandler () {
+    async function SubmitHandler () {
 
 
         if (params.id === undefined) {
@@ -51,12 +51,7 @@ const UpdateTagPage = () => {
             return AlertService.warningMessage("Произошла ошибка")
         }
 
-        const data = {
-            name: tagData.name,
-            description: tagData.description ?? null
-        }
-
-        TagsService.updateTag(parseInt(params.id), data).then(err => {
+        const err = await TagsService.updateTag(tagData)
             if (err !== null) {
                 if (err.errorType === ErrorTypesEnum.Critical) {
                     return AlertService.errorMessage(err.displayMessage)
@@ -67,13 +62,15 @@ const UpdateTagPage = () => {
 
             AlertService.successMessage("Успешно обновлена информация о тэге")
             return delayRedirect(-1)
-        })
     }
 
-    function UpdateInformationHandler(name: string | null, description: string | null) {
+    function UpdateInformationHandler(data: ITagDTO) {
 
         if (tagData !== null && tagData.id !== undefined) {
-            setTagData({...tagData, name: name, description: description})
+            console.log(data)
+            setTagData(prevState => {
+                return {...prevState,id: data.id, name: data.name, description: data.description}
+            })
         }
     }
 
@@ -88,12 +85,12 @@ const UpdateTagPage = () => {
             <h1 className={styles.caption}>Обновление информации о тэге</h1>
             <div className={styles.placeholders}>
                 <input
-                    onBlur={(ctx) => UpdateInformationHandler(ctx.target.value, tagData.description)}
+                    onChange={(ctx) => UpdateInformationHandler({...tagData, name: ctx.target.value})}
                     className={styles.input}
                     type="text"
                     placeholder={tagData.name ?? "Введите название тэга"}/>
                 <textarea
-                    onBlur={(ctx) => UpdateInformationHandler(tagData.name, ctx.target.value)}
+                    onChange={(ctx) => UpdateInformationHandler({...tagData, description: ctx.target.value})}
                     className={styles.textarea}
                     name="tag_description"
                     placeholder={tagData.description ?? "Введите описание тега"}/>

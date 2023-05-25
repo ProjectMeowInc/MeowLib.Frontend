@@ -4,12 +4,12 @@ import {AlertService} from "../../../services/AlertService";
 import {ErrorService} from "../../../services/ErrorService";
 import Preloader from "../../../components/preloader/preloader";
 import TagsPageListItem from "../../../components/TagsPage/TagsPageListItem";
-import {ITagsDTO} from "../../../services/models/DTO/ITagsDTO";
+import {ITagDTO} from "../../../services/models/DTO/ITagDTO";
 import {TagsService} from "../../../services/TagsService";
 import {Link} from "react-router-dom";
 
 const TagsPage = () => {
-    const [tagList, setTagList] = useState<ITagsDTO[]>([])
+    const [tagList, setTagList] = useState<ITagDTO[]>([])
     const [isLoading, setIsLoading] = useState<boolean>(true)
 
     useEffect(() => {
