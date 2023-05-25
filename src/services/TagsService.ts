@@ -86,12 +86,13 @@ export class TagsService {
 
     /**
      * Метод для удаления тега
+     * @param id тэга
      * @param data данные на обновление
      * @returns ошибку или null
      */
-    static async updateTag(data: IUpdateTagRequest): Promise<IError | null> {
+    static async updateTag(id: number, data: IUpdateTagRequest): Promise<IError | null> {
         try {
-            await axios.put(process.env.REACT_APP_URL_API + `/tags/${data.id}`, data, {
+            await axios.put(process.env.REACT_APP_URL_API + `/tags/${id}`, data, {
                 headers: {
                     Authorization: TokenService.getAccessToken()
                 }

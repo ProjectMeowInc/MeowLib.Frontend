@@ -51,7 +51,7 @@ const UpdateTagPage = () => {
             return AlertService.warningMessage("Произошла ошибка")
         }
 
-        const err = await TagsService.updateTag(tagData)
+        const err = await TagsService.updateTag(parseInt(params.id) ,tagData)
             if (err !== null) {
                 if (err.errorType === ErrorTypesEnum.Critical) {
                     return AlertService.errorMessage(err.displayMessage)
@@ -64,13 +64,10 @@ const UpdateTagPage = () => {
             return delayRedirect(-1)
     }
 
-    function UpdateInformationHandler(data: ITagDTO) {
+    function UpdateInformationHandler(updateTagData: ITagDTO) {
 
         if (tagData !== null && tagData.id !== undefined) {
-            console.log(data)
-            setTagData(prevState => {
-                return {...prevState,id: data.id, name: data.name, description: data.description}
-            })
+            setTagData({...tagData, name: updateTagData.name, description: updateTagData.description})
         }
     }
 
