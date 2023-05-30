@@ -5,24 +5,24 @@ import {Link} from "react-router-dom";
 const AdminPage = () => {
     return (
         <div className={styles.admin_items}>
-            <div className={styles.admin_item}>
-                <p>Книги</p>
-            </div>
+            <Link to={"books"} className={styles.admin_item}>
+                <p className={styles.a}>Книги</p>
+            </Link>
 
             <Link to={"tags"} className={styles.admin_item}>
-                <p>Теги</p>
+                <p className={styles.a}>Теги</p>
             </Link>
 
             <Link to={"authors"} className={styles.admin_item}>
-                <p>Авторы</p>
+                <p className={styles.a}>Авторы</p>
             </Link>
 
             <div className={styles.admin_item}>
-                <p>Пользователи</p>
+                <p className={styles.a}>Пользователи</p>
             </div>
 
             <div className={styles.admin_item}>
-                <p>Модерация</p>
+                <p className={styles.a}>Модерация</p>
             </div>
         </div>
     );
