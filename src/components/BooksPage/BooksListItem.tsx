@@ -12,7 +12,7 @@ const BooksListItem = ({id, name, description}: IBookDTO) => {
                 return AlertService.errorMessage(err.displayMessage)
             }
 
-            AlertService.successMessage("Книга был успешно удалён")
+            AlertService.successMessage("Книга была успешно удалена")
         })
     }
 
