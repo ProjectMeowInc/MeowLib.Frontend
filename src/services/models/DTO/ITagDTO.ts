@@ -1,3 +1,5 @@
+import {IBook} from "./IBookDTO";
+
 /**
  * Интерфейс описывающий врзвращаемое значение тэга
  */
@@ -5,7 +7,7 @@ export interface  ITag {
     id: number
     name: string
     description: string
-    books: string[]
+    books: IBook[]
 }
 
 /**

@@ -27,8 +27,13 @@
     font-weight: 300;
     font-size: 36px;
     cursor: pointer;
-    transition: .4s all;
+    transition: .6s all;
     text-decoration: none;
+}
+
+.a {
+    text-decoration: none;
+    color: white;
 }
 
 .admin_item:hover {

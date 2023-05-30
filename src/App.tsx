@@ -11,6 +11,7 @@ import CreateAuthorPage from "./pages/Authors/CreateAuthorPage/CreateAuthorPage"
 import UpdateAuthorPage from "./pages/Authors/UpdateAuthorPage/UpdateAuthorPage";
 import CreateTagPage from "./pages/Tags/CreatePage/CreateTagPage";
 import UpdateTagPage from "./pages/Tags/UpdatePage/UpdateTagPage";
+import MainBooksPage from "./pages/Books/MainPage/MainBooksPage";
 
 const App = () => {
   return (
@@ -28,6 +29,11 @@ const App = () => {
                         <Route path={""} element={<TagsPage/>}/>
                         <Route path={"new"} element={<CreateTagPage/>}/>
                         <Route path={":id/edit"} element={<UpdateTagPage/>}/>
+                    </Route>
+                    <Route path={"books"}>
+                        <Route path={""} element={<MainBooksPage/>}/>
+                        <Route path={"new"}/>
+                        <Route path={":id/edit"}/>
                     </Route>
                 </Route>
                 <Route path={"*"} element={<NotFoundPage/>}/>
