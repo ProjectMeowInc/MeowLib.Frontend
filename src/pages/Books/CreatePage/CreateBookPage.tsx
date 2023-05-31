@@ -13,7 +13,7 @@ const CreateBookPage = () => {
     async function SubmitHandler(): Promise<void> {
 
         if (bookData === undefined) {
-            return AlertService.warningMessage("Не все данные указаны")
+            return AlertService.warningMessage("Заполните поля")
         }
 
         const err = await BookService.createBook(bookData)
