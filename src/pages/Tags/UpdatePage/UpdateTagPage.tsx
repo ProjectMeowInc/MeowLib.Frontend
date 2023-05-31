@@ -52,16 +52,17 @@ const UpdateTagPage = () => {
         }
 
         const err= await TagsService.updateTag(parseInt(params.id), tagData)
-            if (err !== null) {
-                if (err.errorType === ErrorTypesEnum.Critical) {
-                    return AlertService.errorMessage(err.displayMessage)
-                }
 
-                AlertService.warningMessage(err.displayMessage)
+        if (err !== null) {
+            if (err.errorType === ErrorTypesEnum.Critical) {
+                return AlertService.errorMessage(err.displayMessage)
             }
 
-            AlertService.successMessage("Успешно обновлена информация о тэге")
-            return delayRedirect(-1)
+            AlertService.warningMessage(err.displayMessage)
+        }
+
+        AlertService.successMessage("Успешно обновлена информация о тэге")
+        return delayRedirect(-1)
     }
 
     function UpdateInformationHandler(updateTagData: ITagDTO) {
