@@ -4,6 +4,7 @@ import axios from "axios";
 import {TokenService} from "./TokenService";
 import {ErrorService} from "./ErrorService";
 import {IBooksResponse} from "./models/responses/IBookResponse";
+import {ICreateBookRequest} from "./models/requests/IBookRequests";
 
 /**
  * Сервис для работы с книгами
@@ -34,7 +35,7 @@ export class BookService {
      * @param data данные книги
      * @returns IError или null
      */
-    static async createBook(data: IBookDTO): Promise<IError | null> {
+    static async createBook(data: ICreateBookRequest): Promise<IError | null> {
         try {
             await axios.post(process.env.REACT_APP_URL_API + "/books", data, {
                 headers: {
