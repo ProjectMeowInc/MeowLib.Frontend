@@ -12,6 +12,7 @@ import UpdateAuthorPage from "./pages/Authors/UpdateAuthorPage/UpdateAuthorPage"
 import CreateTagPage from "./pages/Tags/CreatePage/CreateTagPage";
 import UpdateTagPage from "./pages/Tags/UpdatePage/UpdateTagPage";
 import MainBooksPage from "./pages/Books/MainPage/MainBooksPage";
+import CreateBookPage from "./pages/Books/CreatePage/CreateBookPage";
 
 const App = () => {
   return (
@@ -32,7 +33,7 @@ const App = () => {
                     </Route>
                     <Route path={"books"}>
                         <Route path={""} element={<MainBooksPage/>}/>
-                        <Route path={"new"}/>
+                        <Route path={"new"} element={<CreateBookPage/>}/>
                         <Route path={":id/edit"}/>
                     </Route>
                 </Route>
