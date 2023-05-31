@@ -32,7 +32,7 @@ const MainBooksPage = () => {
             <h1 className={styles.header}>Управление авторами</h1>
 
             <Link to={"new"} className={styles.add_button}>
-                <p>Нажмите чтобы добавить нового автора</p>
+                <p>Нажмите чтобы добавить новую книгу</p>
             </Link>
 
             {bookList === null
