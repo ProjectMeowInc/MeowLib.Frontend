@@ -10,6 +10,7 @@ import {Link} from "react-router-dom";
 
 const TagsPage = () => {
     const [tagList, setTagList] = useState<ITagDTO[]>([])
+    const [displayTagList, setDisplayTagList] = useState<ITagDTO[]>([])
     const [isLoading, setIsLoading] = useState<boolean>(true)
 
     useEffect(() => {
@@ -17,12 +18,31 @@ const TagsPage = () => {
             setIsLoading(false)
 
             if (ErrorService.isError(response)) {
-                return  AlertService.errorMessage(response.displayMessage)
+                return AlertService.errorMessage(response.displayMessage)
             }
 
-            setTagList([...response.data])
+            setTagList(response.data)
+            setDisplayTagList(response.data)
         })
     }, [])
+
+    function SearchHandler(name: string) {
+        if (displayTagList === undefined) {
+            return
+        }
+
+        if (name.length === 0) {
+            setDisplayTagList(tagList)
+        }
+
+        setDisplayTagList(tagList.filter(tag => tag.name?.includes(name)))
+    }
+
+    if (isLoading) {
+        return (
+            <Preloader/>
+        )
+    }
 
     return (
         <div className={styles.wrapper}>
@@ -32,11 +52,11 @@ const TagsPage = () => {
                 <p>Нажмите чтобы добавить нового тэга</p>
             </Link>
 
-            {isLoading
-                ? <Preloader/>
-                : tagList.length === 0
+            <input className={styles.search} onChange={ctx => SearchHandler(ctx.target.value)} type="text" placeholder={"Введите название тэга"}/>
+
+            {displayTagList.length === 0
                     ? <p className={styles.empty}>Здесь пока ничего нет</p>
-                    : tagList.map(tag => (
+                    : displayTagList.map(tag => (
                         <TagsPageListItem key={tag.id} id={tag.id} name={tag.name} description={tag.description}/>
                     ))
             }
