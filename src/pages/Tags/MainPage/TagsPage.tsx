@@ -38,12 +38,6 @@ const TagsPage = () => {
         setDisplayTagList(tagList.filter(tag => tag.name?.includes(name)))
     }
 
-    if (isLoading) {
-        return (
-            <Preloader/>
-        )
-    }
-
     return (
         <div className={styles.wrapper}>
             <h1 className={styles.header}>Управление тэгами</h1>
@@ -54,7 +48,9 @@ const TagsPage = () => {
 
             <input className={styles.search} onChange={ctx => SearchHandler(ctx.target.value)} type="text" placeholder={"Введите название тэга"}/>
 
-            {displayTagList.length === 0
+            {displayTagList === null
+                ? <Preloader/>
+                : displayTagList.length === 0
                     ? <p className={styles.empty}>Здесь пока ничего нет</p>
                     : displayTagList.map(tag => (
                         <TagsPageListItem key={tag.id} id={tag.id} name={tag.name} description={tag.description}/>
