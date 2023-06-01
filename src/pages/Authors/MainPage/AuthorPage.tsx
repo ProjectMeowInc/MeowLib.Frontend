@@ -37,7 +37,6 @@ const AuthorPage = () => {
         }
 
         return setAuthorsList(searchResult)
-
     }
 
     return (
