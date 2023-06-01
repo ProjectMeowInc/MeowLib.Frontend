@@ -7,6 +7,8 @@ import {IAuthorDTO} from "../../../services/models/DTO/IAuthorModels";
 import Preloader from "../../../components/preloader/preloader";
 import {AlertService} from "../../../services/AlertService";
 import {Link} from "react-router-dom";
+import {ISearchAuthorRequest} from "../../../services/models/requests/IAuthorRequests";
+import {ErrorTypesEnum} from "../../../services/models/IError";
 
 const AuthorPage = () => {
 
@@ -23,6 +25,21 @@ const AuthorPage = () => {
         })
     }, [])
 
+    async function SearchHandler(data: ISearchAuthorRequest) {
+
+        const searchResult = await AuthorServices.searchAuthorWithParams(data)
+
+        if (ErrorService.isError(searchResult)) {
+            if (searchResult.errorType === ErrorTypesEnum.Critical) {
+                return AlertService.errorMessage(searchResult.displayMessage)
+            }
+            return AlertService.warningMessage(searchResult.displayMessage)
+        }
+
+        return setAuthorsList(searchResult)
+
+    }
+
     return (
         <div className={styles.wrapper}>
             <h1 className={styles.header}>Управление авторами</h1>
@@ -30,6 +47,10 @@ const AuthorPage = () => {
             <Link to={"new"} className={styles.add_button}>
                 <p>Нажмите чтобы добавить нового автора</p>
             </Link>
+
+            <input onChange={ctx => {
+                SearchHandler({name: ctx.target.value})
+            }} className={styles.search} type="text" placeholder={"Введите имя автора"}/>
 
             {authorsList === null
                 ? <Preloader/>

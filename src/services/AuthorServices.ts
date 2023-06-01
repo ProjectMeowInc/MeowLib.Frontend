@@ -3,7 +3,7 @@ import {IError} from "./models/IError";
 import {IGetAuthorsResponse} from "./models/responses/IAuthorResponse";
 import {IAuthorDTO} from "./models/DTO/IAuthorModels";
 import {TokenService} from "./TokenService";
-import {ICreateAuthorRequest} from "./models/requests/IAuthorRequests";
+import {ICreateAuthorRequest, ISearchAuthorRequest} from "./models/requests/IAuthorRequests";
 import {ErrorService} from "./ErrorService";
 
 /**
@@ -106,6 +106,26 @@ export class AuthorServices {
             })
 
             return null
+        }
+        catch (err: any) {
+            return ErrorService.toServiceError(err)
+        }
+    }
+
+    /**
+     * Метод для поиска авторов по имнени
+     * @param data имя / часть имени автора
+     * @returns Массив из IAuthorDTO или ошибку в формате IError
+     */
+    static async searchAuthorWithParams(data: ISearchAuthorRequest): Promise<IAuthorDTO[] | IError> {
+        try {
+            const response = await axios.post(process.env.REACT_APP_URL_API + "/authors/get-with-params", data, {
+                headers: {
+                    Authorization: TokenService.getAccessToken()
+                }
+            })
+
+            return response.data
         }
         catch (err: any) {
             return ErrorService.toServiceError(err)
