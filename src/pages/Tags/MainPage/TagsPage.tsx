@@ -25,9 +25,6 @@ const TagsPage = () => {
     }, [])
 
     function SearchHandler(name: string) {
-        if (displayTagList === undefined) {
-            return
-        }
 
         if (name.length === 0) {
             setDisplayTagList(tagList)
