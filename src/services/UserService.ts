@@ -3,6 +3,7 @@ import {ILogInRequest, ISignInRequest} from './models/requests/IUserRequests';
 import {IError} from "./models/IError";
 import {ILoginResponse} from "./models/responses/IUserResponses";
 import {ErrorService} from "./ErrorService";
+import {IUserDTO} from "./models/DTO/IUserModels";
 
 /**
  * Сервис для работы с пользователем.
@@ -33,6 +34,21 @@ export class UserService {
     static async authorization (requestData: ILogInRequest): Promise<IError | ILoginResponse> {
         try {
             const response = await axios.post<ILoginResponse>(process.env.REACT_APP_URL_API + "/users/log-in", requestData)
+
+            return response.data
+        }
+        catch (err: any) {
+            return ErrorService.toServiceError(err)
+        }
+    }
+
+    /**
+     * Метод для получения всех пользователей
+     * @returns Возвращает ошибку или массив с пользователями
+     */
+    static async getUsers(): Promise<IUserDTO[] | IError> {
+        try {
+            const response = await axios.get<IUserDTO[]>(process.env.REACT_APP_URL_API + "/users")
 
             return response.data
         }
