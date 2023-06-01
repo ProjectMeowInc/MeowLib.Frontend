@@ -17,9 +17,9 @@ const AdminPage = () => {
                 <p className={styles.a}>Авторы</p>
             </Link>
 
-            <div className={styles.admin_item}>
+            <Link to={"users"} className={styles.admin_item}>
                 <p className={styles.a}>Пользователи</p>
-            </div>
+            </Link>
 
             <div className={styles.admin_item}>
                 <p className={styles.a}>Модерация</p>
