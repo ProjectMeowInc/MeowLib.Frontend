@@ -11,11 +11,9 @@ import {Link} from "react-router-dom";
 const TagsPage = () => {
     const [tagList, setTagList] = useState<ITagDTO[]>([])
     const [displayTagList, setDisplayTagList] = useState<ITagDTO[] | null>(null)
-    const [isLoading, setIsLoading] = useState<boolean>(true)
 
     useEffect(() => {
         TagsService.getAllTags().then(response => {
-            setIsLoading(false)
 
             if (ErrorService.isError(response)) {
                 return AlertService.errorMessage(response.displayMessage)
