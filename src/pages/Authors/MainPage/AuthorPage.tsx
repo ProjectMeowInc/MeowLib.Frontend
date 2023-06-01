@@ -27,18 +27,17 @@ const AuthorPage = () => {
 
     async function SearchHandler(data: ISearchAuthorRequest) {
 
-        if (data !== undefined) {
-            const response = await AuthorServices.searchAuthorWithParams(data)
+        const searchResult = await AuthorServices.searchAuthorWithParams(data)
 
-            if (ErrorService.isError(response)) {
-                if (response.errorType === ErrorTypesEnum.Critical) {
-                    return AlertService.errorMessage(response.displayMessage)
-                }
-                return AlertService.warningMessage(response.displayMessage)
+        if (ErrorService.isError(searchResult)) {
+            if (searchResult.errorType === ErrorTypesEnum.Critical) {
+                return AlertService.errorMessage(searchResult.displayMessage)
             }
-
-            return setAuthorsList(response)
+            return AlertService.warningMessage(searchResult.displayMessage)
         }
+
+        return setAuthorsList(searchResult)
+
     }
 
     return (
