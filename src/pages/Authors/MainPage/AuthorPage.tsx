@@ -33,11 +33,10 @@ const AuthorPage = () => {
             if (searchResult.errorType === ErrorTypesEnum.Critical) {
                 return AlertService.errorMessage(searchResult.displayMessage)
             }
-            return AlertService.warningMessage(searchResult.displayMessage)
+            return
         }
 
         return setAuthorsList(searchResult)
-
     }
 
     return (
