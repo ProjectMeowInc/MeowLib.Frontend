@@ -16,3 +16,12 @@ export interface ITokenData {
     login: string,
     role: UserRolesEnum
 }
+
+/**
+ * Интерфейс описывающий DTO пользователя
+ */
+export interface IUserDTO {
+    id: number
+    login: string
+    role: UserRolesEnum
+}
