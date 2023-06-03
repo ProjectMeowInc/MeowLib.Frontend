@@ -1,6 +1,7 @@
 import {ErrorTypesEnum, IError} from "./models/IError";
 import {AxiosError} from "axios";
 import {IBaseErrorResponse} from "./models/responses/errors/IBaseErrorResponse";
+import {LogService} from "./LogService";
 
 /**
  * Класс для удобного создания ошибок
@@ -64,11 +65,18 @@ export class ErrorService {
         return true
     }
 
-    static toServiceError(err: any): IError {
+    static toServiceError(err: any, serviceName: string): IError {
         if (err.isAxiosError) {
             const baseErrorResponse = err as AxiosError<IBaseErrorResponse>
 
             if (baseErrorResponse === null) {
+                LogService.sendLog({
+                    errorLog: {
+                        errorModule: serviceName,
+                        message: err.toString(),
+                        isApiError: true
+                    }
+                })
                 return ErrorService.criticalError()
             }
 
@@ -78,6 +86,13 @@ export class ErrorService {
 
             return ErrorService.commonError(baseErrorResponse.response.data.errorMessage)
         }
+        LogService.sendLog({
+            errorLog: {
+                errorModule: serviceName,
+                message: err.toString(),
+                isApiError: false
+            }
+        })
 
         return ErrorService.criticalError()
     }
