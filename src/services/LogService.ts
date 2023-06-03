@@ -25,7 +25,7 @@ export class LogService {
             return null
         }
         catch (err: any) {
-            return ErrorService.toServiceError(err)
+            return ErrorService.toServiceError(err,"LogService")
         }
     }
 }

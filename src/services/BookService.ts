@@ -26,7 +26,7 @@ export class BookService {
             return response.data
         }
         catch (err: any) {
-            return ErrorService.toServiceError(err)
+            return ErrorService.toServiceError(err,"BookService")
         }
     }
 
@@ -46,7 +46,7 @@ export class BookService {
             return null
         }
         catch (err: any) {
-            return ErrorService.toServiceError(err)
+            return ErrorService.toServiceError(err, "BookService")
         }
     }
 
@@ -66,7 +66,7 @@ export class BookService {
             return null
         }
         catch (err: any) {
-            return ErrorService.toServiceError(err)
+            return ErrorService.toServiceError(err, "BookService")
         }
     }
 
@@ -87,7 +87,7 @@ export class BookService {
             return null
         }
         catch (err: any) {
-            return ErrorService.toServiceError(err)
+            return ErrorService.toServiceError(err, "BookService")
         }
     }
 }

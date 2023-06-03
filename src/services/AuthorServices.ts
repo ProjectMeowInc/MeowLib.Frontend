@@ -27,7 +27,7 @@ export class AuthorServices {
                 data: sortedAuthors,
             }
         } catch (err: any) {
-            return ErrorService.toServiceError(err)
+            return ErrorService.toServiceError(err,"AuthorService")
         }
     }
 
@@ -43,7 +43,7 @@ export class AuthorServices {
             return response.data
         }
         catch (err: any) {
-            return ErrorService.toServiceError(err)
+            return ErrorService.toServiceError(err, "AuthorService")
         }
     }
 
@@ -64,7 +64,7 @@ export class AuthorServices {
             return null
         }
         catch (err: any) {
-            return ErrorService.toServiceError(err)
+            return ErrorService.toServiceError(err,"AuthorService")
         }
     }
 
@@ -88,7 +88,7 @@ export class AuthorServices {
             return null
         }
         catch (err: any) {
-            return ErrorService.toServiceError(err)
+            return ErrorService.toServiceError(err, "AuthorService")
         }
     }
 
@@ -108,7 +108,7 @@ export class AuthorServices {
             return null
         }
         catch (err: any) {
-            return ErrorService.toServiceError(err)
+            return ErrorService.toServiceError(err, "AuthorService")
         }
     }
 
@@ -128,7 +128,7 @@ export class AuthorServices {
             return response.data
         }
         catch (err: any) {
-            return ErrorService.toServiceError(err)
+            return ErrorService.toServiceError(err, "AuthorService")
         }
     }
 }
