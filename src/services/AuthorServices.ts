@@ -64,7 +64,7 @@ export class AuthorServices {
             return null
         }
         catch (err: any) {
-            return ErrorService.toServiceError(err,"AuthorService")
+            return ErrorService.toServiceError(err, "AuthorService")
         }
     }
 
