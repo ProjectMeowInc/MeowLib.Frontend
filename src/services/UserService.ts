@@ -22,7 +22,7 @@ export class UserService {
             return null
         }
         catch (err: any) {
-            return ErrorService.toServiceError(err)
+            return ErrorService.toServiceError(err, "UserService")
         }
     }
 
@@ -38,7 +38,7 @@ export class UserService {
             return response.data
         }
         catch (err: any) {
-            return ErrorService.toServiceError(err)
+            return ErrorService.toServiceError(err, "UserService")
         }
     }
 
@@ -53,7 +53,7 @@ export class UserService {
             return response.data
         }
         catch (err: any) {
-            return ErrorService.toServiceError(err)
+            return ErrorService.toServiceError(err, "UserService")
         }
     }
 }

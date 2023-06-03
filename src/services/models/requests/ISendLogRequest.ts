@@ -5,7 +5,7 @@ export interface ISendLogRequest {
     errorLog: {
         errorModule: string
         message: string
-        additionalInfo?: object
         isApiError: boolean
+        additionalInfo?: object
     }
 }

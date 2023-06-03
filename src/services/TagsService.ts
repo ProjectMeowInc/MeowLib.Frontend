@@ -24,7 +24,7 @@ export class TagsService {
             }
         }
         catch (err: any) {
-            return ErrorService.toServiceError(err)
+            return ErrorService.toServiceError(err, "TagService")
         }
     }
 
@@ -40,7 +40,7 @@ export class TagsService {
             return response.data
         }
         catch (err: any) {
-            return ErrorService.toServiceError(err)
+            return ErrorService.toServiceError(err, "TagService")
         }
     }
 
@@ -60,7 +60,7 @@ export class TagsService {
             return  null
         }
         catch (err: any) {
-            return ErrorService.toServiceError(err)
+            return ErrorService.toServiceError(err, "TagService")
         }
     }
 
@@ -80,7 +80,7 @@ export class TagsService {
             return null
         }
         catch (err: any) {
-            return ErrorService.toServiceError(err)
+            return ErrorService.toServiceError(err, "TagService")
         }
     }
 
@@ -101,7 +101,7 @@ export class TagsService {
             return null
         }
         catch (err: any) {
-            return ErrorService.toServiceError(err)
+            return ErrorService.toServiceError(err, "TagService")
         }
     }
 }
