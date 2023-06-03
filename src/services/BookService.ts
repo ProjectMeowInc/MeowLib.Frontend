@@ -26,7 +26,7 @@ export class BookService {
             return response.data
         }
         catch (err: any) {
-            return ErrorService.toServiceError(err,"BookService")
+            return ErrorService.toServiceError(err, "BookService")
         }
     }
 
