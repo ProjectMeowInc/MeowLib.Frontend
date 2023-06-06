@@ -12,6 +12,8 @@ const UserPageListItem = ({id, login, role}: IUserDTO) => {
                 <p>{login}</p>
             </div>
 
+            <p>{role}</p>
+
             <div className={styles.right_side}>
                 <Link to={`${id}/edit`}>Изменить</Link>
                 <p>Удалить</p>

@@ -14,6 +14,7 @@ import UpdateTagPage from "./pages/Tags/UpdatePage/UpdateTagPage";
 import MainBooksPage from "./pages/Books/MainPage/MainBooksPage";
 import CreateBookPage from "./pages/Books/CreatePage/CreateBookPage";
 import UsersPage from "./pages/Users/MainPage/UsersPage";
+import UpdateUserPage from "./pages/Users/UpdatePage/UpdateUserPage";
 
 const App = () => {
   return (
@@ -39,6 +40,7 @@ const App = () => {
                     </Route>
                     <Route path={"users"}>
                         <Route path={""} element={<UsersPage/>}/>
+                        <Route path={":id/edit"} element={<UpdateUserPage/>}/>
                     </Route>
                 </Route>
                 <Route path={"*"} element={<NotFoundPage/>}/>
