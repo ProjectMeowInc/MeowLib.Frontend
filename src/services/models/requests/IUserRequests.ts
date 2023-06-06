@@ -13,3 +13,12 @@ export interface ILogInRequest {
     login: string,
     password: string
 }
+
+/**
+ * Интерфейс описывает запрос на обновление информации о пользователе
+ */
+export interface IUpdateUserInfoRequest {
+    login?: string
+    password?: string
+    role?: string
+}
