@@ -27,7 +27,7 @@ const UpdateUserPage = () => {
 
     async function SubmitHandler() {
 
-        if (!params.id) {
+        if (params.id === undefined) {
             return delayRedirect(404)
         }
 
