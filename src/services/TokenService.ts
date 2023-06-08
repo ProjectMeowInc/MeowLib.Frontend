@@ -18,7 +18,7 @@ export class TokenService {
      * @param tokenString Строка с токеном
      * @returns Возвращает объект типа ITokenData или null
      */
-    static parseToken (tokenString: string): ITokenData | null {
+    static parseToken(tokenString: string): ITokenData | null {
         const token = jwtDecode(tokenString) as object
 
         if(!("id" in token) || !("login" in token) || !("userRole" in token) || !("exp" in token)) {
@@ -44,7 +44,11 @@ export class TokenService {
         }
     }
 
-    static async updateAuth(): Promise<ILoginResponse | IError> {
+    /**
+     * Метод для обновления access token
+     * @returns ILoginResponse или IError
+     */
+    static async updateAuthAsync(): Promise<ILoginResponse | IError> {
         try {
 
             const refreshToken = this.getRefreshToken()
@@ -79,12 +83,12 @@ export class TokenService {
      * Метод для получения токена из cookie
      * @returns строку при наличии токена
      */
-    static async getAccessToken (): Promise<string | null> {
+    static async getAccessToken(): Promise<string | null> {
         const token = Cookies.get("AccessToken")
 
         if(token === undefined) {
 
-            const updateResult = await this.updateAuth()
+            const updateResult = await this.updateAuthAsync()
 
             if (ErrorService.isError(updateResult)) {
                 if (ErrorService.isActionError(updateResult)) {
@@ -116,7 +120,7 @@ export class TokenService {
         const currentTime = Date.now() / 1000;
 
         if (currentTime - decodedAccessToken.exp > 0) {
-            const updateResult = await this.updateAuth()
+            const updateResult = await this.updateAuthAsync()
 
             if (ErrorService.isError(updateResult)) {
                 if (ErrorService.isActionError(updateResult)) {
@@ -142,6 +146,9 @@ export class TokenService {
         return token
     }
 
+    /**
+     * Метод для получения refresh токена
+     */
     static getRefreshToken(): string | null {
 
         const token = Cookies.get("RefreshToken")
