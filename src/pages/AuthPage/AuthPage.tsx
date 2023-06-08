@@ -8,6 +8,7 @@ import {useNavigate} from "react-router-dom";
 import {AlertService} from "../../services/AlertService";
 import {LoadingContext} from "../../context/LoadingContext";
 import {AuthService} from "../../services/AuthService";
+import {RedirectService} from "../../services/RedirectService";
 
 const AuthPage = () => {
 
@@ -28,7 +29,6 @@ const AuthPage = () => {
 
             if(ErrorService.isError(result)) {
                 if(result.errorType === ErrorTypesEnum.Critical) {
-                    //Пока alert потом можно это логировать
                     return AlertService.errorMessage(result.displayMessage)
                 }
                 return AlertService.warningMessage(result.displayMessage)
@@ -37,9 +37,9 @@ const AuthPage = () => {
             TokenService.setAccessToken(result.accessToken)
             TokenService.setRefreshToken(result.refreshToken)
 
-            const token = TokenService.parseToken(result.accessToken)
+            const accessToken = TokenService.parseAccessToken(result.accessToken)
 
-            if(token === null) {
+            if(accessToken === null) {
                return AlertService.errorMessage("Ошибка авторизации")
             }
 
@@ -47,8 +47,8 @@ const AuthPage = () => {
 
             setLoadingPercent(100)
 
-            if(token.userRole === UserRolesEnum.Moderator || token.userRole === UserRolesEnum.Admin) {
-                return navigate("/admin")
+            if(accessToken.userRole === UserRolesEnum.Moderator || accessToken.userRole === UserRolesEnum.Admin) {
+                return RedirectService.customRedirect("/admin")
             }
         }
         else {

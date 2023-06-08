@@ -3,7 +3,7 @@ import jwtDecode from "jwt-decode";
 import Cookies from "js-cookie";
 import {ErrorService} from "./ErrorService";
 import {ErrorTypesEnum, ErrorWithAction, IError, IErrorWithAction} from "./models/IError";
-import {ITokenData} from "./models/DTO/ITokenModels";
+import {IAccessTokenData} from "./models/DTO/ITokenModels";
 import axios from "axios";
 import {ILoginResponse} from "./models/responses/IAuthResponses";
 import {AlertService} from "./AlertService";
@@ -18,7 +18,7 @@ export class TokenService {
      * @param tokenString Строка с токеном
      * @returns Возвращает объект типа ITokenData или null
      */
-    static parseToken(tokenString: string): ITokenData | null {
+    static parseAccessToken(tokenString: string): IAccessTokenData | null {
         const token = jwtDecode(tokenString) as object
 
         if(!("id" in token) || !("login" in token) || !("userRole" in token) || !("exp" in token)) {
@@ -45,7 +45,7 @@ export class TokenService {
     }
 
     /**
-     * Метод для обновления access token
+     * Метод для обновления access и refresh токена
      * @returns ILoginResponse или IError
      */
     static async updateAuthAsync(): Promise<ILoginResponse | IError> {
@@ -65,8 +65,6 @@ export class TokenService {
         }
         catch (err: any) {
 
-            console.log(err)
-
             if (err.isAxiosError) {
                 if (err.response.status === 401) {
                     const error: IErrorWithAction = new ErrorWithAction("redirect", "Пожалуйста авторизуйтесь снова", ErrorTypesEnum.Critical, )
@@ -80,7 +78,7 @@ export class TokenService {
     }
 
     /**
-     * Метод для получения токена из cookie
+     * Метод для получения access токена
      * @returns строку при наличии токена
      */
     static async getAccessToken(): Promise<string | null> {
@@ -111,7 +109,7 @@ export class TokenService {
             return updateResult.accessToken
         }
 
-        const decodedAccessToken = this.parseToken(token)
+        const decodedAccessToken = this.parseAccessToken(token)
 
         if (decodedAccessToken === null) {
             return null
@@ -148,6 +146,7 @@ export class TokenService {
 
     /**
      * Метод для получения refresh токена
+     * @returns возвращает refresh токен
      */
     static getRefreshToken(): string | null {
 
@@ -160,6 +159,10 @@ export class TokenService {
         return token
     }
 
+    /**
+     * Метод для установки refresh токена в cookie
+      * @param token refresh токен
+     */
     static setRefreshToken(token: string): void {
         Cookies.set("RefreshToken", token)
     }

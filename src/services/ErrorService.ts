@@ -68,7 +68,7 @@ export class ErrorService {
     /**
      * Метод для проверки действия в ошибке
      * @param data предпологаемая ошибка
-     * @returns возвращает boolean
+     * @returns является ли data IErrorWithAction
      */
     static isActionError(data: IError): data is IErrorWithAction {
         // noinspection RedundantIfStatementJS

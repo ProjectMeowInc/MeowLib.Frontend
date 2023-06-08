@@ -21,7 +21,7 @@ export class AuthService {
             return null
         }
         catch (err: any) {
-            return ErrorService.toServiceError(err, "UserService")
+            return ErrorService.toServiceError(err, "AuthService")
         }
     }
 

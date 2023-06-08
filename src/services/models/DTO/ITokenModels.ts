@@ -1,9 +1,9 @@
 import {UserRolesEnum} from "./IUserModels";
 
 /**
- * Интерфейс описывающий информацию хранащуюся в токене.
+ * Интерфейс описывающий информацию хранящуюся в access токене.
  */
-export interface ITokenData {
+export interface IAccessTokenData {
     id: number
     login: string
     userRole: UserRolesEnum

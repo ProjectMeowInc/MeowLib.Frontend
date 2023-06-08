@@ -4,16 +4,17 @@ import {Outlet, useNavigate} from "react-router-dom";
 import {TokenService} from "../../services/TokenService";
 import {UserRolesEnum} from "../../services/models/DTO/IUserModels";
 import {AlertService} from "../../services/AlertService";
-import {ITokenData} from "../../services/models/DTO/ITokenModels";
+import {IAccessTokenData} from "../../services/models/DTO/ITokenModels";
+import {RedirectService} from "../../services/RedirectService";
 
 const AdminLayout = () => {
 
     const navigate = useNavigate()
-    const [adminData, setAdminData] = useState<ITokenData | null>(null)
-
-    let token: string;
+    const [adminData, setAdminData] = useState<IAccessTokenData | null>(null)
 
     useEffect(() => {
+
+        let accessToken: string;
 
         async function fetchData(): Promise<void> {
             const result = await TokenService.getAccessToken()
@@ -22,20 +23,19 @@ const AdminLayout = () => {
                 return
             }
 
-            token = result
+            accessToken = result
         }
 
         fetchData().then(() => {
-            const tokenData = TokenService.parseToken(token)
+            const tokenData = TokenService.parseAccessToken(accessToken)
 
             if(tokenData === null) {
                 AlertService.errorMessage("Ошибка токена. Пожалуйста авторизуйтесь заново.")
-                return navigate("/login")
+                return RedirectService.redirectToLogin()
             }
 
             if(tokenData.userRole !== UserRolesEnum.Admin && tokenData.userRole !== UserRolesEnum.Moderator) {
-                //TODO: В будущем сделать редирект на indexPage
-                return navigate("/login")
+                return RedirectService.redirectToLogin()
             }
 
             setAdminData(tokenData)
