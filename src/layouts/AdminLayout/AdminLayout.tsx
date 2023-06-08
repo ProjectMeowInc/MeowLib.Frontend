@@ -2,34 +2,44 @@ import React, {useEffect, useState} from 'react';
 import styles from "./adminLayout.module.css";
 import {Outlet, useNavigate} from "react-router-dom";
 import {TokenService} from "../../services/TokenService";
-import {ITokenData, UserRolesEnum} from "../../services/models/DTO/IUserModels";
+import {UserRolesEnum} from "../../services/models/DTO/IUserModels";
 import {AlertService} from "../../services/AlertService";
+import {ITokenData} from "../../services/models/DTO/ITokenModels";
 
 const AdminLayout = () => {
 
     const navigate = useNavigate()
     const [adminData, setAdminData] = useState<ITokenData | null>(null)
 
+    let token: string;
+
     useEffect(() => {
-        let token = TokenService.getAccessToken()
 
-        if(token === null) {
-            return navigate("/login")
+        async function fetchData(): Promise<void> {
+            const result = await TokenService.getAccessToken()
+
+            if (result === null) {
+                return
+            }
+
+            token = result
         }
 
-        const tokenData = TokenService.parseToken(token)
+        fetchData().then(() => {
+            const tokenData = TokenService.parseToken(token)
 
-        if(tokenData === null) {
-            AlertService.errorMessage("Ошибка токена. Пожалуйста авторизуйтесь заново.")
-            return navigate("/login")
-        }
+            if(tokenData === null) {
+                AlertService.errorMessage("Ошибка токена. Пожалуйста авторизуйтесь заново.")
+                return navigate("/login")
+            }
 
-        if(tokenData.role !== UserRolesEnum.Admin && tokenData.role !== UserRolesEnum.Moderator) {
-            //TODO: В будущем сделать редирект на indexPage
-            return navigate("/login")
-        }
+            if(tokenData.userRole !== UserRolesEnum.Admin && tokenData.userRole !== UserRolesEnum.Moderator) {
+                //TODO: В будущем сделать редирект на indexPage
+                return navigate("/login")
+            }
 
-        setAdminData(tokenData)
+            setAdminData(tokenData)
+        })
     }, [navigate])
 
     return (
