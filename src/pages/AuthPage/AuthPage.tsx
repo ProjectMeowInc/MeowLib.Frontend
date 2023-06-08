@@ -4,7 +4,6 @@ import {ErrorTypesEnum} from "../../services/models/IError";
 import {ErrorService} from "../../services/ErrorService";
 import {TokenService} from "../../services/TokenService";
 import {UserRolesEnum} from "../../services/models/DTO/IUserModels";
-import {useNavigate} from "react-router-dom";
 import {AlertService} from "../../services/AlertService";
 import {LoadingContext} from "../../context/LoadingContext";
 import {AuthService} from "../../services/AuthService";
@@ -16,7 +15,6 @@ const AuthPage = () => {
 
     const [login, setLogin] = useState<string>("")
     const [password, setPassword] = useState<string>("")
-    const navigate = useNavigate()
     const {setLoadingPercent, startNewTask} = useContext(LoadingContext)
 
     async function ClickHandler (login: string, password: string, isLogin: boolean): Promise<void> {
