@@ -18,7 +18,7 @@ export class LogService {
         try {
             await axios.post(process.env.REACT_APP_URL_API + "/logs", data, {
                 headers: {
-                    Authorization: TokenService.getAccessToken()
+                    Authorization: await TokenService.getAccessToken()
                 }
             })
 

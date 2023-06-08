@@ -19,7 +19,7 @@ export class BookService {
         try {
             const response = await axios.get<IBooksResponse>(process.env.REACT_APP_URL_API + "/books", {
                 headers: {
-                    Authorization: TokenService.getAccessToken()
+                    Authorization: await TokenService.getAccessToken()
                 }
             })
 
@@ -39,7 +39,7 @@ export class BookService {
         try {
             await axios.post(process.env.REACT_APP_URL_API + "/books", data, {
                 headers: {
-                    Authorization: TokenService.getAccessToken()
+                    Authorization: await TokenService.getAccessToken()
                 }
             })
 
@@ -59,7 +59,7 @@ export class BookService {
         try {
             await axios.delete(process.env.REACT_APP_URL_API + `/books/${id}`, {
                 headers: {
-                    Authorization: TokenService.getAccessToken()
+                    Authorization: await TokenService.getAccessToken()
                 }
             })
 
@@ -80,7 +80,7 @@ export class BookService {
         try {
             await axios.put(process.env.REACT_APP_URL_API + `/books/${id}/info`, data, {
                 headers: {
-                    Authorization: TokenService.getAccessToken()
+                    Authorization: await TokenService.getAccessToken()
                 }
             })
 
