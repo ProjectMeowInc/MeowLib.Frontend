@@ -1,6 +1,5 @@
 import React, {useContext, useState} from 'react';
 import styles from "./authPage.module.css"
-import {UserService} from "../../services/UserService";
 import {ErrorTypesEnum} from "../../services/models/IError";
 import {ErrorService} from "../../services/ErrorService";
 import {TokenService} from "../../services/TokenService";
@@ -8,6 +7,7 @@ import {UserRolesEnum} from "../../services/models/DTO/IUserModels";
 import {useNavigate} from "react-router-dom";
 import {AlertService} from "../../services/AlertService";
 import {LoadingContext} from "../../context/LoadingContext";
+import {AuthService} from "../../services/AuthService";
 
 const AuthPage = () => {
 
@@ -24,19 +24,20 @@ const AuthPage = () => {
             startNewTask()
             setLoadingPercent(50)
 
-            const response = await UserService.authorization({login, password})
+            const result = await AuthService.authorizationAsync({login, password, isLongSession: true})
 
-            if(ErrorService.isError(response)) {
-                if(response.errorType === ErrorTypesEnum.Critical) {
+            if(ErrorService.isError(result)) {
+                if(result.errorType === ErrorTypesEnum.Critical) {
                     //Пока alert потом можно это логировать
-                    return AlertService.errorMessage(response.displayMessage)
+                    return AlertService.errorMessage(result.displayMessage)
                 }
-                return AlertService.warningMessage(response.displayMessage)
+                return AlertService.warningMessage(result.displayMessage)
             }
 
-            TokenService.setAccessToken(response.accessToken)
+            TokenService.setAccessToken(result.accessToken)
+            TokenService.setRefreshToken(result.refreshToken)
 
-            const token = TokenService.parseToken(response.accessToken)
+            const token = TokenService.parseToken(result.accessToken)
 
             if(token === null) {
                return AlertService.errorMessage("Ошибка авторизации")
@@ -46,12 +47,12 @@ const AuthPage = () => {
 
             setLoadingPercent(100)
 
-            if(token.role === UserRolesEnum.Moderator || token.role === UserRolesEnum.Admin) {
+            if(token.userRole === UserRolesEnum.Moderator || token.userRole === UserRolesEnum.Admin) {
                 return navigate("/admin")
             }
         }
         else {
-            const error = await UserService.registration({login, password});
+            const error = await AuthService.registrationAsync({login, password});
             if(error === null) {
                 return AlertService.successMessage("Вы успешно зарегистрировались. Теперь вы можете авторизоваться")
             }
