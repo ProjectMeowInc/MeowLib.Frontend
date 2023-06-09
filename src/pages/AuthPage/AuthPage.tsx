@@ -8,7 +8,6 @@ import {AlertService} from "../../services/AlertService";
 import {LoadingContext} from "../../context/LoadingContext";
 import {AuthService} from "../../services/AuthService";
 import {RedirectService} from "../../services/RedirectService";
-import {set} from "js-cookie";
 
 const AuthPage = () => {
 
