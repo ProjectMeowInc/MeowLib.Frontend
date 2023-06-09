@@ -25,7 +25,7 @@ const CreateAuthorPage = () => {
             return AlertService.warningMessage("Не указано имя автора")
         }
 
-        const tokenData = TokenService.getAccessToken()
+        const tokenData = TokenService.getAccessTokenAsync()
 
         startNewTask()
         setLoadingPercent(25)

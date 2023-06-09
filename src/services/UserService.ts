@@ -35,7 +35,7 @@ export class UserService {
         try {
             const response = await axios.put<IUserDTO>(process.env.REACT_APP_URL_API + `/users/${id}`, data, {
                 headers: {
-                    Authorization: await TokenService.getAccessToken()
+                    Authorization: await TokenService.getAccessTokenAsync()
                 }
             })
 

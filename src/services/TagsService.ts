@@ -53,7 +53,7 @@ export class TagsService {
         try {
             await axios.post(process.env.REACT_APP_URL_API + "/tags/", data, {
                 headers: {
-                    Authorization: await TokenService.getAccessToken()
+                    Authorization: await TokenService.getAccessTokenAsync()
                 }
             })
 
@@ -73,7 +73,7 @@ export class TagsService {
         try {
             await axios.delete(process.env.REACT_APP_URL_API + `/tags/${id}`,{
                 headers: {
-                    Authorization: await TokenService.getAccessToken()
+                    Authorization: await TokenService.getAccessTokenAsync()
                 }
             })
 
@@ -94,7 +94,7 @@ export class TagsService {
         try {
             await axios.put(process.env.REACT_APP_URL_API + `/tags/${id}`, data, {
                 headers: {
-                    Authorization: await TokenService.getAccessToken()
+                    Authorization: await TokenService.getAccessTokenAsync()
                 }
             })
 

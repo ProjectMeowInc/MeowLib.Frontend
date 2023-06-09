@@ -17,7 +17,7 @@ const AdminLayout = () => {
         let accessToken: string;
 
         async function fetchData(): Promise<void> {
-            const result = await TokenService.getAccessToken()
+            const result = await TokenService.getAccessTokenAsync()
 
             if (result === null) {
                 return
@@ -27,18 +27,18 @@ const AdminLayout = () => {
         }
 
         fetchData().then(() => {
-            const tokenData = TokenService.parseAccessToken(accessToken)
+            const accessTokenData = TokenService.parseAccessToken(accessToken)
 
-            if(tokenData === null) {
+            if(accessTokenData === null) {
                 AlertService.errorMessage("Ошибка токена. Пожалуйста авторизуйтесь заново.")
                 return RedirectService.redirectToLogin()
             }
 
-            if(tokenData.userRole !== UserRolesEnum.Admin && tokenData.userRole !== UserRolesEnum.Moderator) {
+            if(accessTokenData.userRole !== UserRolesEnum.Admin && accessTokenData.userRole !== UserRolesEnum.Moderator) {
                 return RedirectService.redirectToLogin()
             }
 
-            setAdminData(tokenData)
+            setAdminData(accessTokenData)
         })
     }, [navigate])
 

@@ -81,7 +81,7 @@ export class TokenService {
      * Метод для получения access токена
      * @returns строку при наличии токена
      */
-    static async getAccessToken(): Promise<string | null> {
+    static async getAccessTokenAsync(): Promise<string | null> {
         const token = Cookies.get("AccessToken")
 
         if(token === undefined) {

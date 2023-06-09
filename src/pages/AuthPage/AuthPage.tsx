@@ -35,9 +35,9 @@ const AuthPage = () => {
             TokenService.setAccessToken(result.accessToken)
             TokenService.setRefreshToken(result.refreshToken)
 
-            const accessToken = TokenService.parseAccessToken(result.accessToken)
+            const accessTokenData = TokenService.parseAccessToken(result.accessToken)
 
-            if(accessToken === null) {
+            if(accessTokenData === null) {
                return AlertService.errorMessage("Ошибка авторизации")
             }
 
@@ -45,7 +45,7 @@ const AuthPage = () => {
 
             setLoadingPercent(100)
 
-            if(accessToken.userRole === UserRolesEnum.Moderator || accessToken.userRole === UserRolesEnum.Admin) {
+            if(accessTokenData.userRole === UserRolesEnum.Moderator || accessTokenData.userRole === UserRolesEnum.Admin) {
                 return RedirectService.customRedirect("/admin")
             }
         }
