@@ -15,6 +15,7 @@ const AuthPage = () => {
 
     const [login, setLogin] = useState<string>("")
     const [password, setPassword] = useState<string>("")
+    const [isLongSession, setIsLongSession] = useState<boolean>(false)
     const {setLoadingPercent, startNewTask} = useContext(LoadingContext)
 
     async function ClickHandler (login: string, password: string, isLogin: boolean): Promise<void> {
@@ -23,7 +24,7 @@ const AuthPage = () => {
             startNewTask()
             setLoadingPercent(50)
 
-            const result = await AuthService.authorizationAsync({login, password, isLongSession: true})
+            const result = await AuthService.authorizationAsync({login, password, isLongSession})
 
             if(ErrorService.isError(result)) {
                 if(result.errorType === ErrorTypesEnum.Critical) {
@@ -85,6 +86,11 @@ const AuthPage = () => {
                    <input onChange={(ctx) => setPassword(ctx.target.value)} className={styles.input} type="password" placeholder={"Введите пароль"}/>
 
                    <hr className={styles.separator}/>
+
+                   <label className={styles.label}>
+                       <input onClick={() => setIsLongSession(prevState => !prevState)} type="checkbox"/>
+                       <p>Запомнить меня</p>
+                   </label>
 
                    <button onClick={async () => ClickHandler(login, password, isLoginPage)} className={styles.button}>Отправить</button>
                </div>
