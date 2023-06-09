@@ -1,4 +1,4 @@
-import {ErrorTypesEnum, IError} from "./models/IError";
+import {ErrorTypesEnum, IError, IErrorWithAction} from "./models/IError";
 import {AxiosError} from "axios";
 import {IBaseErrorResponse} from "./models/responses/errors/IBaseErrorResponse";
 import {LogService} from "./LogService";
@@ -54,11 +54,25 @@ export class ErrorService {
      */
     static isError(data: any): data is IError {
 
-        if(typeof (data) === "string") {
+        if(typeof(data) === "string") {
             return false
         }
         // noinspection RedundantIfStatementJS
         if (!("errorType" in data) || !("displayMessage" in data)) {
+            return false
+        }
+
+        return true
+    }
+
+    /**
+     * Метод для проверки действия в ошибке
+     * @param data предпологаемая ошибка
+     * @returns является ли data IErrorWithAction
+     */
+    static isActionError(data: IError): data is IErrorWithAction {
+        // noinspection RedundantIfStatementJS
+        if (!(("action") in data)) {
             return false
         }
 

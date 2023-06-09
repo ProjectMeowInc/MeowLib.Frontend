@@ -2,34 +2,44 @@ import React, {useEffect, useState} from 'react';
 import styles from "./adminLayout.module.css";
 import {Outlet, useNavigate} from "react-router-dom";
 import {TokenService} from "../../services/TokenService";
-import {ITokenData, UserRolesEnum} from "../../services/models/DTO/IUserModels";
+import {UserRolesEnum} from "../../services/models/DTO/IUserModels";
 import {AlertService} from "../../services/AlertService";
+import {IAccessTokenData} from "../../services/models/DTO/ITokenModels";
+import {RedirectService} from "../../services/RedirectService";
 
 const AdminLayout = () => {
 
     const navigate = useNavigate()
-    const [adminData, setAdminData] = useState<ITokenData | null>(null)
+    const [adminData, setAdminData] = useState<IAccessTokenData | null>(null)
 
     useEffect(() => {
-        let token = TokenService.getAccessToken()
 
-        if(token === null) {
-            return navigate("/login")
+        let accessToken: string;
+
+        async function fetchData(): Promise<void> {
+            const result = await TokenService.getAccessTokenAsync()
+
+            if (result === null) {
+                return
+            }
+
+            accessToken = result
         }
 
-        const tokenData = TokenService.parseToken(token)
+        fetchData().then(() => {
+            const accessTokenData = TokenService.parseAccessToken(accessToken)
 
-        if(tokenData === null) {
-            AlertService.errorMessage("Ошибка токена. Пожалуйста авторизуйтесь заново.")
-            return navigate("/login")
-        }
+            if(accessTokenData === null) {
+                AlertService.errorMessage("Ошибка токена. Пожалуйста авторизуйтесь заново.")
+                return RedirectService.redirectToLogin()
+            }
 
-        if(tokenData.role !== UserRolesEnum.Admin && tokenData.role !== UserRolesEnum.Moderator) {
-            //TODO: В будущем сделать редирект на indexPage
-            return navigate("/login")
-        }
+            if(accessTokenData.userRole !== UserRolesEnum.Admin && accessTokenData.userRole !== UserRolesEnum.Moderator) {
+                return RedirectService.redirectToLogin()
+            }
 
-        setAdminData(tokenData)
+            setAdminData(accessTokenData)
+        })
     }, [navigate])
 
     return (

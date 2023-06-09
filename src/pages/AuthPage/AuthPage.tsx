@@ -1,13 +1,13 @@
 import React, {useContext, useState} from 'react';
 import styles from "./authPage.module.css"
-import {UserService} from "../../services/UserService";
 import {ErrorTypesEnum} from "../../services/models/IError";
 import {ErrorService} from "../../services/ErrorService";
 import {TokenService} from "../../services/TokenService";
 import {UserRolesEnum} from "../../services/models/DTO/IUserModels";
-import {useNavigate} from "react-router-dom";
 import {AlertService} from "../../services/AlertService";
 import {LoadingContext} from "../../context/LoadingContext";
+import {AuthService} from "../../services/AuthService";
+import {RedirectService} from "../../services/RedirectService";
 
 const AuthPage = () => {
 
@@ -15,7 +15,6 @@ const AuthPage = () => {
 
     const [login, setLogin] = useState<string>("")
     const [password, setPassword] = useState<string>("")
-    const navigate = useNavigate()
     const {setLoadingPercent, startNewTask} = useContext(LoadingContext)
 
     async function ClickHandler (login: string, password: string, isLogin: boolean): Promise<void> {
@@ -24,21 +23,21 @@ const AuthPage = () => {
             startNewTask()
             setLoadingPercent(50)
 
-            const response = await UserService.authorization({login, password})
+            const result = await AuthService.authorizationAsync({login, password, isLongSession: true})
 
-            if(ErrorService.isError(response)) {
-                if(response.errorType === ErrorTypesEnum.Critical) {
-                    //Пока alert потом можно это логировать
-                    return AlertService.errorMessage(response.displayMessage)
+            if(ErrorService.isError(result)) {
+                if(result.errorType === ErrorTypesEnum.Critical) {
+                    return AlertService.errorMessage(result.displayMessage)
                 }
-                return AlertService.warningMessage(response.displayMessage)
+                return AlertService.warningMessage(result.displayMessage)
             }
 
-            TokenService.setAccessToken(response.accessToken)
+            TokenService.setAccessToken(result.accessToken)
+            TokenService.setRefreshToken(result.refreshToken)
 
-            const token = TokenService.parseToken(response.accessToken)
+            const accessTokenData = TokenService.parseAccessToken(result.accessToken)
 
-            if(token === null) {
+            if(accessTokenData === null) {
                return AlertService.errorMessage("Ошибка авторизации")
             }
 
@@ -46,12 +45,12 @@ const AuthPage = () => {
 
             setLoadingPercent(100)
 
-            if(token.role === UserRolesEnum.Moderator || token.role === UserRolesEnum.Admin) {
-                return navigate("/admin")
+            if(accessTokenData.userRole === UserRolesEnum.Moderator || accessTokenData.userRole === UserRolesEnum.Admin) {
+                return RedirectService.customRedirect("/admin")
             }
         }
         else {
-            const error = await UserService.registration({login, password});
+            const error = await AuthService.registrationAsync({login, password});
             if(error === null) {
                 return AlertService.successMessage("Вы успешно зарегистрировались. Теперь вы можете авторизоваться")
             }

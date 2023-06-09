@@ -10,8 +10,9 @@ export interface ISignInRequest {
  *  Интерфес описывает запрос на логин
  */
 export interface ILogInRequest {
-    login: string,
+    login: string
     password: string
+    isLongSession: boolean
 }
 
 /**

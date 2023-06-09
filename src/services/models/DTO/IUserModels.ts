@@ -9,15 +9,6 @@ export enum UserRolesEnum {
 }
 
 /**
- * Интерфейс описывающий информацию хранащуюся в токене.
- */
-export interface ITokenData {
-    id: number,
-    login: string,
-    role: UserRolesEnum
-}
-
-/**
  * Интерфейс описывающий DTO пользователя
  */
 export interface IUserDTO {

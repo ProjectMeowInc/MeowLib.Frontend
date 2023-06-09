@@ -57,7 +57,7 @@ export class AuthorServices {
 
             await axios.post(process.env.REACT_APP_URL_API + "/authors", data , {
                 headers: {
-                    Authorization: TokenService.getAccessToken()
+                    Authorization: await TokenService.getAccessTokenAsync()
                 }
             })
 
@@ -81,7 +81,7 @@ export class AuthorServices {
                 name: name
             }, {
                 headers: {
-                    Authorization: TokenService.getAccessToken()
+                    Authorization: await TokenService.getAccessTokenAsync()
                 }
             })
 
@@ -101,7 +101,7 @@ export class AuthorServices {
         try {
             await axios.delete(process.env.REACT_APP_URL_API + `/authors/${id}`, {
                 headers: {
-                    Authorization: TokenService.getAccessToken()
+                    Authorization: await TokenService.getAccessTokenAsync()
                 }
             })
 
@@ -121,7 +121,7 @@ export class AuthorServices {
         try {
             const response = await axios.post(process.env.REACT_APP_URL_API + "/authors/get-with-params", data, {
                 headers: {
-                    Authorization: TokenService.getAccessToken()
+                    Authorization: await TokenService.getAccessTokenAsync()
                 }
             })
 
