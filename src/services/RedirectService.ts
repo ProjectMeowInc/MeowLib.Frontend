@@ -7,7 +7,7 @@ export class RedirectService {
      * Метод для редиректа по конкретному пути
      * @param path абсолютный путь для редиректа
      */
-    static customRedirect(path: string): void {
+    static redirect(path: string): void {
         window.location.href = `http://localhost:3000${path}`
     }
 
@@ -15,7 +15,7 @@ export class RedirectService {
      * Метод для редиректа на страницу авторизации
      */
     static redirectToLogin(): void {
-        this.customRedirect("/login")
+        this.redirect("/login")
     }
 
     /**
@@ -23,5 +23,24 @@ export class RedirectService {
      */
     static reloadPage(): void {
         window.location.reload()
+    }
+
+    /**
+     * Метод для редиректа с задержкой в 3с
+     * @param path путь до страницы
+     */
+    static delayRedirect(path: string): void {
+        setTimeout(() => {
+            this.redirect(path)
+        }, 3000)
+    }
+
+    /**
+     * Метод для перезагрузки страницы с задержкой в 3с
+     */
+    static delayReloadPage(): void {
+        setTimeout(() => {
+            this.reloadPage()
+        }, 3000)
     }
 }
