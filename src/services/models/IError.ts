@@ -57,7 +57,7 @@ export class ErrorWithAction implements IErrorWithAction {
         switch (this.action) {
             case "redirect":
                 if (this.param !== undefined) {
-                    return RedirectService.customRedirect(this.param)
+                    return RedirectService.redirect(this.param)
                 }
 
                 RedirectService.redirectToLogin()
