@@ -47,7 +47,7 @@ const AuthPage = () => {
             setLoadingPercent(100)
 
             if(accessTokenData.userRole === UserRolesEnum.Moderator || accessTokenData.userRole === UserRolesEnum.Admin) {
-                return RedirectService.customRedirect("/admin")
+                return RedirectService.redirect("/admin")
             }
         }
         else {
