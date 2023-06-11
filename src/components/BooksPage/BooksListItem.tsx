@@ -4,6 +4,7 @@ import styles from "./booksListItem.module.css";
 import {Link} from "react-router-dom";
 import {IBookDTO} from "../../services/models/DTO/IBookDTO";
 import {BookService} from "../../services/BookService";
+import {RedirectService} from "../../services/RedirectService";
 
 const BooksListItem = ({id, name, description}: IBookDTO) => {
     function DeleteHandler () {
@@ -11,6 +12,8 @@ const BooksListItem = ({id, name, description}: IBookDTO) => {
             if (err !== null) {
                 return AlertService.errorMessage(err.displayMessage)
             }
+
+            RedirectService.delayReloadPage()
 
             return AlertService.successMessage("Книга была успешно удалена")
         })
