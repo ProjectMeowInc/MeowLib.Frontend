@@ -15,6 +15,7 @@ import MainBooksPage from "./pages/Books/MainPage/MainBooksPage";
 import CreateBookPage from "./pages/Books/CreatePage/CreateBookPage";
 import UsersPage from "./pages/Users/MainPage/UsersPage";
 import UpdateUserPage from "./pages/Users/UpdatePage/UpdateUserPage";
+import UpdateBooksPage from "./pages/Books/UpdatePage/UpdateBooksPage";
 
 const App = () => {
   return (
@@ -34,12 +35,12 @@ const App = () => {
                         <Route path={":id/edit"} element={<UpdateTagPage/>}/>
                     </Route>
                     <Route path={"books"}>
-                        <Route path={""} element={<MainBooksPage/>}/>
+                        <Route index element={<MainBooksPage/>}/>
                         <Route path={"new"} element={<CreateBookPage/>}/>
-                        <Route path={":id/edit"}/>
+                        <Route path={":id/edit"} element={<UpdateBooksPage/>}/>
                     </Route>
                     <Route path={"users"}>
-                        <Route path={""} element={<UsersPage/>}/>
+                        <Route index element={<UsersPage/>}/>
                         <Route path={":id/edit"} element={<UpdateUserPage/>}/>
                     </Route>
                 </Route>
