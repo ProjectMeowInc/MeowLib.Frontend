@@ -22,7 +22,7 @@ const CreateTagPage = () => {
             description: tagDescription
         }
 
-        TagsService.createTag(data).then(err => {
+        TagsService.createTagAsync(data).then(err => {
             if (err === null) {
                 AlertService.successMessage("Тэг успешно создан")
                 return delayRedirect(-1)

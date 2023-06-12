@@ -14,7 +14,7 @@ const TagsPageListItem = ({id, name}: ITagDTO) => {
     const navigate = useNavigate()
 
     function MouseHandler() {
-        TagsService.getTagById(id).then(response => {
+        TagsService.getTagByIdAsync(id).then(response => {
             if(ErrorService.isError(response)) {
                 if(response.errorType === ErrorTypesEnum.Error) {
                     return AlertService.errorMessage(response.displayMessage)
@@ -28,7 +28,7 @@ const TagsPageListItem = ({id, name}: ITagDTO) => {
 
 
     function DeleteHandler () {
-        TagsService.deleteTag(id).then(error => {
+        TagsService.deleteTagAsync(id).then(error => {
             if(error !== null) {
                 if(error.errorType === ErrorTypesEnum.Critical) {
                     return AlertService.errorMessage(error.displayMessage)

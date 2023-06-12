@@ -22,7 +22,7 @@ const UpdateAuthorPage = () => {
             return navigate("/NotFound")
         }
 
-        AuthorServices.getAuthor(parseInt(params.id)).then(response => {
+        AuthorServices.getAuthorAsync(parseInt(params.id)).then(response => {
             if (ErrorService.isError(response)) {
 
                 if (response.errorType === ErrorTypesEnum.Critical) {
@@ -56,7 +56,7 @@ const UpdateAuthorPage = () => {
             return AlertService.errorMessage("Неожиданное поведение")
         }
 
-        AuthorServices.updateAuthor(author.id, author.name).then(err => {
+        AuthorServices.updateAuthorAsync(author.id, author.name).then(err => {
             if (err !== null) {
                 if (err.errorType === ErrorTypesEnum.Critical) {
                     return AlertService.errorMessage(err.displayMessage)

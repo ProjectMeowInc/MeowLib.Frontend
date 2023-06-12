@@ -15,7 +15,7 @@ export class AuthorServices {
      * Метод для получения списка авторов
      * @returns Возвращает массив объектов типа IAuthorDTO
      */
-    static async getAuthors (): Promise<IGetAuthorsResponse | IError> {
+    static async getAuthorsAsync(): Promise<IGetAuthorsResponse | IError> {
         try {
             const response = await axios.get<IAuthorDTO[]>(process.env.REACT_APP_URL_API + "/authors")
 
@@ -36,7 +36,7 @@ export class AuthorServices {
      * @param id автора
      * @returns данные типа IAuthorDTO или ошибку типа IError
      */
-    static async getAuthor(id: number): Promise<IAuthorDTO| IError> {
+    static async getAuthorAsync(id: number): Promise<IAuthorDTO| IError> {
         try {
             const response = await axios.get<IAuthorDTO>(process.env.REACT_APP_URL_API + `/authors/${id}`)
 
@@ -52,7 +52,7 @@ export class AuthorServices {
      * @param data Данные для запроса
      * @returns null При успешном срабатывании
      */
-    static async createAuthor (data: ICreateAuthorRequest): Promise<IError | null> {
+    static async createAuthorAsync(data: ICreateAuthorRequest): Promise<IError | null> {
         try {
 
             await axios.post(process.env.REACT_APP_URL_API + "/authors", data , {
@@ -75,7 +75,7 @@ export class AuthorServices {
      * @returns Ошибку типа IError или null
      */
 
-    static async updateAuthor (id: number, name: string): Promise<IError | null> {
+    static async updateAuthorAsync(id: number, name: string): Promise<IError | null> {
         try {
             await axios.put(process.env.REACT_APP_URL_API + `/authors/${id}`, {
                 name: name
@@ -97,7 +97,7 @@ export class AuthorServices {
      * @param id автора
      * @returns Ошибку или null
      */
-    static async deleteAuthor(id: number): Promise<IError | null> {
+    static async deleteAuthorAsync(id: number): Promise<IError | null> {
         try {
             await axios.delete(process.env.REACT_APP_URL_API + `/authors/${id}`, {
                 headers: {
@@ -117,7 +117,7 @@ export class AuthorServices {
      * @param data имя / часть имени автора
      * @returns Массив из IAuthorDTO или ошибку в формате IError
      */
-    static async searchAuthorWithParams(data: ISearchAuthorRequest): Promise<IAuthorDTO[] | IError> {
+    static async searchAuthorWithParamsAsync(data: ISearchAuthorRequest): Promise<IAuthorDTO[] | IError> {
         try {
             const response = await axios.post(process.env.REACT_APP_URL_API + "/authors/get-with-params", data, {
                 headers: {

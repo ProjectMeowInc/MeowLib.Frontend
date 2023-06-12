@@ -14,7 +14,7 @@ const MainBooksPage = () => {
     const [bookList, setBookList] = useState<IBooksResponse | null>(null)
 
     useEffect(() => {
-        BookService.getBooks().then(response => {
+        BookService.getBooksAsync().then(response => {
             if (ErrorService.isError(response)) {
                 if (response.errorType === ErrorTypesEnum.Critical) {
                     return AlertService.errorMessage(response.displayMessage)

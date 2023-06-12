@@ -15,7 +15,7 @@ const AuthorPage = () => {
     const [authorsList, setAuthorsList] = useState<IAuthorDTO[] | null>(null)
 
     useEffect( () => {
-        AuthorServices.getAuthors().then(response => {
+        AuthorServices.getAuthorsAsync().then(response => {
 
             if (ErrorService.isError(response)) {
                 return AlertService.errorMessage(response.displayMessage)
@@ -27,7 +27,7 @@ const AuthorPage = () => {
 
     async function SearchHandler(data: ISearchAuthorRequest) {
 
-        const searchResult = await AuthorServices.searchAuthorWithParams(data)
+        const searchResult = await AuthorServices.searchAuthorWithParamsAsync(data)
 
         if (ErrorService.isError(searchResult)) {
             if (searchResult.errorType === ErrorTypesEnum.Critical) {

@@ -84,7 +84,7 @@ export class ErrorService {
             const baseErrorResponse = err as AxiosError<IBaseErrorResponse>
 
             if (baseErrorResponse === null) {
-                LogService.sendLog({
+                LogService.sendLogAsync({
                     errorLog: {
                         errorModule: serviceName,
                         message: err.toString(),
@@ -100,7 +100,7 @@ export class ErrorService {
 
             return ErrorService.commonError(baseErrorResponse.response.data.errorMessage)
         }
-        LogService.sendLog({
+        LogService.sendLogAsync({
             errorLog: {
                 errorModule: serviceName,
                 message: err.toString(),

@@ -15,7 +15,7 @@ export class TagsService {
      * Метод для получения списка тэгов
      * @returns данные в виде IGetTagsResponse или ошибку
      */
-    static async getAllTags(): Promise<IGetTagsResponse | IError> {
+    static async getAllTagsAsync(): Promise<IGetTagsResponse | IError> {
         try {
             const response = await axios.get<ITagDTO[]>(process.env.REACT_APP_URL_API + "/tags")
 
@@ -33,7 +33,7 @@ export class TagsService {
      * @param id тэга
      * @returns данные в виде IGetTagResponse или ошибку
      */
-    static async getTagById(id: number): Promise<IGetTagResponse | IError> {
+    static async getTagByIdAsync(id: number): Promise<IGetTagResponse | IError> {
         try {
             const response = await axios.get<IGetTagResponse>(process.env.REACT_APP_URL_API + `/tags/${id}`)
 
@@ -49,7 +49,7 @@ export class TagsService {
      * @param data данные о тэге
      * @returns ошибку или null
      */
-    static async createTag(data: ICreateTagRequest): Promise<null | IError> {
+    static async createTagAsync(data: ICreateTagRequest): Promise<null | IError> {
         try {
             await axios.post(process.env.REACT_APP_URL_API + "/tags/", data, {
                 headers: {
@@ -69,7 +69,7 @@ export class TagsService {
      * @param id тэга
      * @returns ошибку или null
      */
-    static async deleteTag(id: number): Promise<IError | null> {
+    static async deleteTagAsync(id: number): Promise<IError | null> {
         try {
             await axios.delete(process.env.REACT_APP_URL_API + `/tags/${id}`,{
                 headers: {
@@ -90,7 +90,7 @@ export class TagsService {
      * @param data данные на обновление
      * @returns ошибку или null
      */
-    static async updateTag(id: number, data: IUpdateTagRequest): Promise<IError | null> {
+    static async updateTagAsync(id: number, data: IUpdateTagRequest): Promise<IError | null> {
         try {
             await axios.put(process.env.REACT_APP_URL_API + `/tags/${id}`, data, {
                 headers: {

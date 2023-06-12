@@ -16,7 +16,7 @@ const CreateBookPage = () => {
             return AlertService.warningMessage("Заполните поля")
         }
 
-        const err = await BookService.createBook(bookData)
+        const err = await BookService.createBookAsync(bookData)
 
         if (err !== null) {
             if (err.errorType === ErrorTypesEnum.Critical) {

@@ -10,7 +10,7 @@ const AuthorListItem = ({id, name}: IAuthorDTO) => {
     const navigate = useNavigate()
 
     function DeleteHandler () {
-        AuthorServices.deleteAuthor(id).then(err => {
+        AuthorServices.deleteAuthorAsync(id).then(err => {
             if (err !== null) {
                 return AlertService.errorMessage(err.displayMessage)
             }

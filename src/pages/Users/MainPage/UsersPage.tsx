@@ -14,7 +14,7 @@ const UsersPage = () => {
     const [userList, setUserList] = useState<IUserDTO[] | null>(null)
 
     useEffect(() => {
-        UserService.getUsers().then(response => {
+        UserService.getUsersAsync().then(response => {
             if (ErrorService.isError(response)) {
                 if (response.errorType === ErrorTypesEnum.Critical) {
                     return AlertService.errorMessage(response.displayMessage)
