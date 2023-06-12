@@ -43,4 +43,11 @@ export class RedirectService {
             this.reloadPage()
         }, 3000)
     }
+
+    /**
+     * Метод для редипекта на страницу с 404 кодом
+     */
+    static redirectToNotFoundPage(): void {
+        this.redirect("/404-not-found")
+    }
 }
