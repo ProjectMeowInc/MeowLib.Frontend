@@ -16,8 +16,7 @@ const UpdateBooksPage = () => {
     useEffect(() => {
 
         if (params.id === undefined) {
-            AlertService.warningMessage("Не найдено")
-            return RedirectService.delayRedirect("404-not-found")
+            return RedirectService.redirectToNotFoundPage()
         }
 
         BookService.getBookAsync(parseInt(params.id)).then(response => {
@@ -36,22 +35,23 @@ const UpdateBooksPage = () => {
     async function SubmitHandlerAsync () {
 
         if (params.id === undefined) {
-            AlertService.warningMessage("Не найдено")
-            return RedirectService.delayRedirect("404-not-found")
+            return RedirectService.redirectToNotFoundPage()
         }
+
+        //Чтобы не ругался анализатор
 
         if (bookData == null) {
             return
         }
 
-        const response = await BookService.updateBook(parseInt(params.id), bookData)
+        const updateBookResult = await BookService.updateBook(parseInt(params.id), bookData)
 
-        if (ErrorService.isError(response)) {
-            if (response.errorType === ErrorTypesEnum.Critical) {
-                return AlertService.errorMessage(response.displayMessage)
+        if (ErrorService.isError(updateBookResult)) {
+            if (updateBookResult.errorType === ErrorTypesEnum.Critical) {
+                return AlertService.errorMessage(updateBookResult.displayMessage)
             }
 
-            return AlertService.warningMessage(response.displayMessage)
+            return AlertService.warningMessage(updateBookResult.displayMessage)
         }
 
         AlertService.successMessage("Книга успешно обновлена")
