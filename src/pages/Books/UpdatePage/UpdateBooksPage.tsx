@@ -44,7 +44,7 @@ const UpdateBooksPage = () => {
             return
         }
 
-        const updateBookResult = await BookService.updateBook(parseInt(params.id), bookData)
+        const updateBookResult = await BookService.updateBookAsync(parseInt(params.id), bookData)
 
         if (ErrorService.isError(updateBookResult)) {
             if (updateBookResult.errorType === ErrorTypesEnum.Critical) {

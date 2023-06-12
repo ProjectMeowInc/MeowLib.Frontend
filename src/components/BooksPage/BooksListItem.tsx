@@ -8,7 +8,7 @@ import {RedirectService} from "../../services/RedirectService";
 
 const BooksListItem = ({id, name, description}: IBookDTO) => {
     function DeleteHandler () {
-        BookService.deleteBook(id).then(err => {
+        BookService.deleteBookAsync(id).then(err => {
             if (err !== null) {
                 return AlertService.errorMessage(err.displayMessage)
             }

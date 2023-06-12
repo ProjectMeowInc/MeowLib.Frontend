@@ -14,7 +14,7 @@ export class LogService {
      * @param data тело ошибки
      * @returns null при успехе или ошибка
      */
-    static async sendLog(data: ISendLogRequest): Promise<IError | null> {
+    static async sendLogAsync(data: ISendLogRequest): Promise<IError | null> {
         try {
             await axios.post(process.env.REACT_APP_URL_API + "/logs", data, {
                 headers: {

@@ -13,7 +13,7 @@ const TagsPage = () => {
     const [displayTagList, setDisplayTagList] = useState<ITagDTO[] | null>(null)
 
     useEffect(() => {
-        TagsService.getAllTags().then(response => {
+        TagsService.getAllTagsAsync().then(response => {
 
             if (ErrorService.isError(response)) {
                 return AlertService.errorMessage(response.displayMessage)

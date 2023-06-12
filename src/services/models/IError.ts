@@ -68,7 +68,7 @@ export class ErrorWithAction implements IErrorWithAction {
                 break;
 
             default:
-                LogService.sendLog({
+                LogService.sendLogAsync({
                     errorLog: {
                         errorModule: "IError",
                         message: "Произошла хуйня: Неизвестное действие",

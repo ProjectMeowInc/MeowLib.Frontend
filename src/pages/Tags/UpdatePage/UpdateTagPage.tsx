@@ -22,7 +22,7 @@ const UpdateTagPage = () => {
             return navigate("/404NotFound")
         }
 
-        TagsService.getTagById(parseInt(params.id)).then(response => {
+        TagsService.getTagByIdAsync(parseInt(params.id)).then(response => {
             if (ErrorService.isError(response)) {
                 if (response.errorType === ErrorTypesEnum.Critical) {
                     return AlertService.errorMessage(response.displayMessage)
@@ -51,7 +51,7 @@ const UpdateTagPage = () => {
             return AlertService.warningMessage("Произошла ошибка")
         }
 
-        const err= await TagsService.updateTag(parseInt(params.id), tagData)
+        const err= await TagsService.updateTagAsync(parseInt(params.id), tagData)
 
         if (err !== null) {
             if (err.errorType === ErrorTypesEnum.Critical) {

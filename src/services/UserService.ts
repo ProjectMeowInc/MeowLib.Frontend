@@ -14,7 +14,7 @@ export class UserService {
      * Метод для получения всех пользователей
      * @returns Возвращает ошибку или массив с пользователями
      */
-    static async getUsers(): Promise<IUserDTO[] | IError> {
+    static async getUsersAsync(): Promise<IUserDTO[] | IError> {
         try {
             const response = await axios.get<IUserDTO[]>(process.env.REACT_APP_URL_API + "/users")
 
@@ -31,7 +31,7 @@ export class UserService {
      * @param data нформация мольхлователя
      * @returns Возвращает IUserDTO или IError
      */
-    static async updateUser(id: number, data: IUpdateUserInfoRequest): Promise<IUserDTO | IError> {
+    static async updateUserAsync(id: number, data: IUpdateUserInfoRequest): Promise<IUserDTO | IError> {
         try {
             const response = await axios.put<IUserDTO>(process.env.REACT_APP_URL_API + `/users/${id}`, data, {
                 headers: {

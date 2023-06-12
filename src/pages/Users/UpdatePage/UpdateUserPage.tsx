@@ -35,7 +35,7 @@ const UpdateUserPage = () => {
             return AlertService.warningMessage("Вы не указали изменения")
         }
 
-        const result = UserService.updateUser(parseInt(params.id), userData)
+        const result = UserService.updateUserAsync(parseInt(params.id), userData)
 
         if (ErrorService.isError(result)) {
             if (result.errorType === ErrorTypesEnum.Critical) {

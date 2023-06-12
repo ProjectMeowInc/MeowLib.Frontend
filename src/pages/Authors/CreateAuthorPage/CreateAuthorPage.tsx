@@ -34,7 +34,7 @@ const CreateAuthorPage = () => {
             return AlertService.errorMessage("Ошибка токена. Пожалуйста авторизуйтесь заново.")
         }
 
-        AuthorServices.createAuthor(requestData).then(error => {
+        AuthorServices.createAuthorAsync(requestData).then(error => {
             if(error !== null) {
                 if(error.errorType === ErrorTypesEnum.Critical) {
                     return AlertService.errorMessage(error.displayMessage)
