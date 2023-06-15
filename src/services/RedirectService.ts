@@ -45,9 +45,18 @@ export class RedirectService {
     }
 
     /**
-     * Метод для редипекта на страницу с 404 кодом
+     * Метод для редиректа на страницу с 404 кодом
      */
     static redirectToNotFoundPage(): void {
         this.redirect("/404")
+    }
+
+    /**
+     * Метод для редиректа на предидущую страницу с задержкой в 3с
+     */
+    static delayRedirectToPrevPage(): void {
+        setTimeout(() => {
+            window.history.back()
+        }, 3000)
     }
 }
