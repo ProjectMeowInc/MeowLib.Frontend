@@ -4,6 +4,7 @@
     font-family: Ubuntu, serif;
     margin-left: 60px;
     margin-top: 50px;
+    text-align: center;
 }
 
 .input {
@@ -18,7 +19,6 @@
 
 .input:focus {
     outline: none;
-
 }
 
 .textarea {
@@ -61,4 +61,40 @@
     font-weight: 500;
     font-size: 14px;
     cursor: pointer;
+}
+
+.main__block {
+    display: flex;
+    width: 90%;
+    margin: 50px auto 0 auto;
+    justify-content: space-between;
+}
+
+.chapters {
+    width: 55%;
+    font-family: Ubuntu, serif;
+    min-height: 70vh;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+    border-radius: 20px;
+    margin-bottom: 30px;
+}
+
+.create__chapter {
+    margin: 20px auto 0 auto;
+    width: 95%;
+    height: 70px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: black;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+    transition: .4s all;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.create__chapter:hover {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }

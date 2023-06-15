@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useParams} from "react-router-dom";
+import {useParams, Link} from "react-router-dom";
 import Preloader from "../../../components/preloader/preloader";
 import styles from "./updateBooksPage.module.css";
 import {IUpdateBookRequest} from "../../../services/models/requests/IBookRequests";
@@ -71,18 +71,24 @@ const UpdateBooksPage = () => {
     return (
         <div>
             <h1 className={styles.caption}>Обновление информации о книге</h1>
-            <div className={styles.placeholders}>
-                <input
-                    onChange={(ctx) => UpdateInformationHandler({...bookData, name: ctx.target.value})}
-                    className={styles.input}
-                    type="text"
-                    placeholder={bookData.name ?? "Введите название тэга"}/>
-                <textarea
-                    onChange={(ctx) => UpdateInformationHandler({...bookData, description: ctx.target.value})}
-                    className={styles.textarea}
-                    name="tag_description"
-                    placeholder={bookData.description ?? "Введите описание тега"}/>
-                <button onClick={SubmitHandlerAsync} className={styles.button}>Сохранить</button>
+
+            <div className={styles.main__block}>
+                <div className={styles.placeholders}>
+                    <input
+                        onChange={(ctx) => UpdateInformationHandler({...bookData, name: ctx.target.value})}
+                        className={styles.input}
+                        type="text"
+                        placeholder={bookData.name ?? "Введите название тэга"}/>
+                    <textarea
+                        onChange={(ctx) => UpdateInformationHandler({...bookData, description: ctx.target.value})}
+                        className={styles.textarea}
+                        name="tag_description"
+                        placeholder={bookData.description ?? "Введите описание тега"}/>
+                    <button onClick={SubmitHandlerAsync} className={styles.button}>Сохранить</button>
+                </div>
+                <div className={styles.chapters}>
+                    <Link className={styles.create__chapter} to={"chapter/new"}>Создать главу</Link>
+                </div>
             </div>
         </div>
     );
