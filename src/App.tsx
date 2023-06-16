@@ -17,6 +17,7 @@ import UsersPage from "./pages/Users/MainPage/UsersPage";
 import UpdateUserPage from "./pages/Users/UpdatePage/UpdateUserPage";
 import UpdateBooksPage from "./pages/Books/UpdatePage/UpdateBooksPage";
 import CreateChapterPage from "./pages/Chapters/CreatePage/CreateChapterPage";
+import UpdateChapterPage from "./pages/Chapters/UpdatePage/UpdateChapterPage";
 
 const App = () => {
   return (
@@ -41,6 +42,7 @@ const App = () => {
                         <Route path={":id/edit"}>
                             <Route index element={<UpdateBooksPage/>}/>
                             <Route path={"chapter/new"} element={<CreateChapterPage/>}/>
+                            <Route path={"chapters/:chapterId/edit"} element={<UpdateChapterPage/>}/>
                         </Route>
                     </Route>
                     <Route path={"users"}>
