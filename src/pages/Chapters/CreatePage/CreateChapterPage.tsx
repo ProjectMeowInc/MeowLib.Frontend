@@ -41,7 +41,8 @@ const CreateChapterPage = () => {
             return AlertService.warningMessage(createChapterResult.displayMessage)
         }
 
-        return AlertService.successMessage("Главва успешно создана")
+        AlertService.successMessage("Глава успешно создана")
+        return RedirectService.delayRedirectToPrevPage()
     }
 
     return (
