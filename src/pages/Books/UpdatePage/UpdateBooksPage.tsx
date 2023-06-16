@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useParams, Link} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import Preloader from "../../../components/preloader/preloader";
 import styles from "./updateBooksPage.module.css";
 import {IUpdateBookRequest} from "../../../services/models/requests/IBookRequests";
@@ -8,10 +8,14 @@ import {RedirectService} from "../../../services/RedirectService";
 import {AlertService} from "../../../services/AlertService";
 import {ErrorService} from "../../../services/ErrorService";
 import {ErrorTypesEnum} from "../../../services/models/IError";
+import {IGetChapters} from "../../../services/models/responses/IChapterResponses";
+import {ChapterService} from "../../../services/ChapterService";
+import ChapterListItem from "../../../components/BooksPage/ChapterListItem/ChapterListItem";
 
 const UpdateBooksPage = () => {
     const [bookData, setBookData] = useState<IUpdateBookRequest | null>(null)
     const params = useParams()
+    const [chapters, setChapters] = useState<IGetChapters | null>(null)
 
     useEffect(() => {
 
@@ -29,6 +33,18 @@ const UpdateBooksPage = () => {
             }
 
             setBookData({...bookData, name: response.name, description: response.description})
+        })
+
+        ChapterService.getChaptersAsync(parseInt(params.id)).then(getChaptersResult => {
+            if (ErrorService.isError(getChaptersResult)) {
+                if (getChaptersResult.errorType === ErrorTypesEnum.Critical) {
+                    return AlertService.errorMessage(getChaptersResult.displayMessage)
+                }
+
+                return AlertService.warningMessage(getChaptersResult.displayMessage)
+            }
+
+            setChapters(getChaptersResult)
         })
     }, [])
 
@@ -88,6 +104,13 @@ const UpdateBooksPage = () => {
                 </div>
                 <div className={styles.chapters}>
                     <Link className={styles.create__chapter} to={"chapter/new"}>Создать главу</Link>
+                    {
+                        chapters !== null
+                            ? chapters.items.map(chapter => (
+                                <ChapterListItem id={chapter.id} name={chapter.name} releaseDate={chapter.releaseDate}/>
+                            ))
+                            : "Здесь пока ничего нет"
+                    }
                 </div>
             </div>
         </div>
