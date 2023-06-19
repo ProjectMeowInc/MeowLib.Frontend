@@ -10,8 +10,8 @@ import {ErrorTypesEnum} from "../../../services/models/IError";
 
 const CreateChapterPage = () => {
 
-    const params = useParams()
     const [chapterData, setChapterData] = useState<ICreateChapterRequest | null>(null)
+    const params = useParams()
 
     function ChangeHandler(data: ICreateChapterRequest): void {
         setChapterData({
