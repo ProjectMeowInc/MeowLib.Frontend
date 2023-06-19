@@ -4,7 +4,7 @@
 export interface IChapterDTO {
     id: number
     name: string
-    releaseDate: string
+    releaseDate: Date
 }
 
 /**
