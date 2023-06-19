@@ -6,3 +6,10 @@ export interface IChapterDTO {
     name: string
     releaseDate: string
 }
+
+/**
+ * Интерфейс описывающий главу
+ */
+export interface IChapter extends IChapterDTO {
+    text: string
+}
