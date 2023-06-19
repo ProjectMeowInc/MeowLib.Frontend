@@ -3,8 +3,8 @@ import {ICreateChapterRequest, IUpdateChapterRequest} from "./models/requests/IC
 import {ErrorService} from "./ErrorService";
 import axios from "axios";
 import {TokenService} from "./TokenService";
-import {IGetChapters} from "./models/responses/IChapterResponses";
-import {IChapter} from "./models/DTO/IChapterDTO";
+import {IGetChaptersResponse} from "./models/responses/IChapterResponses";
+import {IChapter, IChapterDTO} from "./models/DTO/IChapterDTO";
 
 /**
  * Сервис для работы с главами
@@ -36,15 +36,15 @@ export class ChapterService {
      * @param bookId id книги
      * @returns IGetChapters или IError
      */
-    static async getChaptersAsync(bookId: number): Promise<IGetChapters | IError> {
+    static async getChaptersAsync(bookId: number): Promise<IChapterDTO[] | IError> {
         try {
-            const response = await axios.get(process.env.REACT_APP_URL_API + `/books/${bookId}/chapters`, {
+            const response = await axios.get<IGetChaptersResponse>(process.env.REACT_APP_URL_API + `/books/${bookId}/chapters`, {
                 headers: {
                     Authorization: await TokenService.getAccessTokenAsync()
                 }
             })
 
-            return response.data
+            return response.data.items
         }
         catch (err: any) {
             return ErrorService.toServiceError(err, "ChapterService")
