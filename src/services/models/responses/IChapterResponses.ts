@@ -1,8 +1,8 @@
 import {IChapterDTO} from "../DTO/IChapterDTO";
 
 /**
- * Интерфейс описывающий приходящие главы
+ * Интерфейс описывающий возвращаемый список глав
  */
-export interface IGetChapters {
+export interface IGetChaptersResponse {
     items: IChapterDTO[]
 }
