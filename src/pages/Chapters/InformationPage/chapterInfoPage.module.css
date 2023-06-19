@@ -1,0 +1,18 @@
+.main {
+    font-family: Ubuntu, serif;
+    width: 90%;
+    margin: 30px auto;
+}
+
+.date {
+    font-size: 18px;
+    margin-top: 20px;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.chapter_text {
+    width: 40%;
+    font-size: 18px;
+    margin-top: 50px;
+    word-wrap: break-word;
+}

@@ -1,0 +1,38 @@
+.wrapper {
+    font-family: Ubuntu, serif;
+    height: 50vh;
+    margin: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.textarea {
+    width: 30%;
+    height: 30vh;
+    background-color: #E8F0FE;
+    border: none;
+    border-radius: 5px;
+    padding-top: 7px;
+    padding-left: 7px;
+    font-size: 16px;
+    resize: none;
+}
+
+.textarea:focus {
+    outline: none;
+}
+
+.button {
+    width: 20%;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    border-radius: 7px;
+    color: white;
+    background-color: #6D5BFD;
+    cursor: pointer;
+}

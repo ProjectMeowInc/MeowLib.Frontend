@@ -1,8 +1,10 @@
 import {IError} from "./models/IError";
-import {ICreateChapterRequest, IUpdateChapterTextRequest} from "./models/requests/IChapterRequests";
+import {ICreateChapterRequest, IUpdateChapterRequest} from "./models/requests/IChapterRequests";
 import {ErrorService} from "./ErrorService";
 import axios from "axios";
 import {TokenService} from "./TokenService";
+import {IGetChaptersResponse} from "./models/responses/IChapterResponses";
+import {IChapter, IChapterDTO} from "./models/DTO/IChapterDTO";
 
 /**
  * Сервис для работы с главами
@@ -30,21 +32,79 @@ export class ChapterService {
     }
 
     /**
-     * Метод для обновления текста для главы
+     * Метод для получения списка книг
+     * @param bookId id книги
+     * @returns IGetChapters или IError
+     */
+    static async getChaptersAsync(bookId: number): Promise<IChapterDTO[] | IError> {
+        try {
+            const response = await axios.get<IGetChaptersResponse>(process.env.REACT_APP_URL_API + `/books/${bookId}/chapters`, {
+                headers: {
+                    Authorization: await TokenService.getAccessTokenAsync()
+                }
+            })
+
+            return response.data.items
+        }
+        catch (err: any) {
+            return ErrorService.toServiceError(err, "ChapterService")
+        }
+    }
+
+    /**
+     * Метод для обновления текста главы
      * @param bookId id книги
      * @param chapterId id главы
-     * @param chapterData данные для обновления
-     * @returns null при успешном выполнении или IError при ошибке
+     * @param data данные необходимые для обновления книги
+     * @returns IError или null
      */
-    static async updateChapterAsync(bookId: number, chapterId: number, chapterData: IUpdateChapterTextRequest): Promise<IError | null> {
+    static async updateChapterTextAsync(bookId: number, chapterId: number, data: IUpdateChapterRequest): Promise<IError| null>  {
         try {
-            await axios.put(process.env.REACT_APP_URL_API + `/books/${bookId}/${chapterId}/text`, chapterData, {
+            await axios.put(process.env.REACT_APP_URL_API + `/books/${bookId}/chapters/${chapterId}/text`, data, {
                 headers: {
                     Authorization: await TokenService.getAccessTokenAsync()
                 }
             })
 
             return null
+        }
+        catch (err: any) {
+            return ErrorService.toServiceError(err, "ChapterService")
+        }
+    }
+
+    /**
+     * Метод для удаления главы
+     * @param bookId id книги
+     * @param chapterId id главы
+     * @returns IError или null
+     */
+    static async deleteChapterAsync(bookId: number, chapterId: number): Promise<IError | null> {
+        try {
+            await axios.delete(process.env.REACT_APP_URL_API + `/books/${bookId}/chapters/${chapterId}`, {
+                headers: {
+                    Authorization: await TokenService.getAccessTokenAsync()
+                }
+            })
+
+            return null
+        }
+        catch (err: any) {
+            return ErrorService.toServiceError(err, "ChapterService")
+        }
+    }
+
+    /**
+     * Метод для получения главы
+     * @param bookId id книги
+     * @param chapterId id главы
+     * @returns IChapter или null
+     */
+    static async getChapterAsync(bookId: number, chapterId: number): Promise<IChapter | IError> {
+        try {
+            const response = await axios.get(process.env.REACT_APP_URL_API + `/books/${bookId}/chapters/${chapterId}`)
+
+            return response.data
         }
         catch (err: any) {
             return ErrorService.toServiceError(err, "ChapterService")

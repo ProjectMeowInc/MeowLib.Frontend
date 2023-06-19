@@ -1,5 +1,6 @@
 import {IAuthorDTO} from "../DTO/IAuthorModels";
 import {ITag} from "../DTO/ITagDTO";
+import {IBookDTO} from "../DTO/IBookDTO";
 
 /**
  * Интерфейс описывающий возвращаемое занчение книги
@@ -16,5 +17,5 @@ interface IBookResponse {
  * Интерфейс описывающий возвращаемое значение книг
  */
 export interface IBooksResponse {
-    items: IBookResponse[]
+    items: IBookDTO[]
 }

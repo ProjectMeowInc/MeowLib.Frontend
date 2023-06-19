@@ -16,6 +16,9 @@ import CreateBookPage from "./pages/Books/CreatePage/CreateBookPage";
 import UsersPage from "./pages/Users/MainPage/UsersPage";
 import UpdateUserPage from "./pages/Users/UpdatePage/UpdateUserPage";
 import UpdateBooksPage from "./pages/Books/UpdatePage/UpdateBooksPage";
+import CreateChapterPage from "./pages/Chapters/CreatePage/CreateChapterPage";
+import UpdateChapterPage from "./pages/Chapters/UpdatePage/UpdateChapterPage";
+import ChapterInfoPage from "./pages/Chapters/InformationPage/ChapterInfoPage";
 
 const App = () => {
   return (
@@ -37,7 +40,12 @@ const App = () => {
                     <Route path={"books"}>
                         <Route index element={<MainBooksPage/>}/>
                         <Route path={"new"} element={<CreateBookPage/>}/>
-                        <Route path={":id/edit"} element={<UpdateBooksPage/>}/>
+                        <Route path={":id/edit"}>
+                            <Route index element={<UpdateBooksPage/>}/>
+                            <Route path={"chapter/new"} element={<CreateChapterPage/>}/>
+                            <Route path={"chapters/:chapterId/edit"} element={<UpdateChapterPage/>}/>
+                            <Route path={"chapters/:chapterId/info"} element={<ChapterInfoPage/>} />
+                        </Route>
                     </Route>
                     <Route path={"users"}>
                         <Route index element={<UsersPage/>}/>
