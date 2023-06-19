@@ -10,23 +10,23 @@ import {ErrorTypesEnum} from "../../../services/models/IError";
 const ChapterListItem = ({id, name, releaseDate}: IChapterDTO) => {
 
     const params = useParams()
-    const bookId = params.id
 
     async function DeleteHandler(): Promise<void> {
 
+        const bookId = params.id
+
         if (bookId === undefined) {
-            AlertService.errorMessage("Книга не найдена")
             return RedirectService.redirectToNotFoundPage()
         }
 
-        const deleteChapterResult = await ChapterService.deleteChapterAsync(parseInt(bookId), id)
+        const deleteChapterError = await ChapterService.deleteChapterAsync(parseInt(bookId), id)
 
-        if (deleteChapterResult !== null) {
-            if (deleteChapterResult.errorType === ErrorTypesEnum.Critical) {
-                return AlertService.errorMessage(deleteChapterResult.displayMessage)
+        if (deleteChapterError !== null) {
+            if (deleteChapterError.errorType === ErrorTypesEnum.Critical) {
+                return AlertService.errorMessage(deleteChapterError.displayMessage)
             }
 
-            return AlertService.warningMessage(deleteChapterResult.displayMessage)
+            return AlertService.warningMessage(deleteChapterError.displayMessage)
         }
 
         AlertService.successMessage("Глава успено удалена")
@@ -38,7 +38,7 @@ const ChapterListItem = ({id, name, releaseDate}: IChapterDTO) => {
             <div className={styles.main_block__wrapper}>
                 <p>{id}</p>
                 <Link to={`chapters/${id}/info`}>{name}</Link>
-                <p>{releaseDate}</p>
+                <p>{releaseDate.toLocaleString()}</p>
                 <div className={styles.buttons}>
                     <Link to={`chapters/${id}/edit`} className={styles.change}>Изменить</Link>
                     <p onClick={DeleteHandler} className={styles.delete}>Удалить</p>
