@@ -8,14 +8,14 @@ import {RedirectService} from "../../../services/RedirectService";
 import {AlertService} from "../../../services/AlertService";
 import {ErrorService} from "../../../services/ErrorService";
 import {ErrorTypesEnum} from "../../../services/models/IError";
-import {IGetChapters} from "../../../services/models/responses/IChapterResponses";
 import {ChapterService} from "../../../services/ChapterService";
 import ChapterListItem from "../../../components/BooksPage/ChapterListItem/ChapterListItem";
+import {IChapterDTO} from "../../../services/models/DTO/IChapterDTO";
 
 const UpdateBooksPage = () => {
     const [bookData, setBookData] = useState<IUpdateBookRequest | null>(null)
+    const [chapters, setChapters] = useState<IChapterDTO[] | null>(null)
     const params = useParams()
-    const [chapters, setChapters] = useState<IGetChapters | null>(null)
 
     useEffect(() => {
 
@@ -106,7 +106,7 @@ const UpdateBooksPage = () => {
                     <Link className={styles.create__chapter} to={"chapter/new"}>Создать главу</Link>
                     {
                         chapters !== null
-                            ? chapters.items.map(chapter => (
+                            ? chapters.map(chapter => (
                                 <ChapterListItem id={chapter.id} name={chapter.name} releaseDate={chapter.releaseDate}/>
                             ))
                             : "Здесь пока ничего нет"
