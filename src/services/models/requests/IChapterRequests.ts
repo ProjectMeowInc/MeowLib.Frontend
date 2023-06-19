@@ -9,6 +9,6 @@ export interface ICreateChapterRequest {
 /**
  * Интерфейс описывающий данные необходимые для обновления главы
  */
-export interface IUpdateChapterRequest {
+export interface IUpdateChapterTextRequest {
     text: string
 }
