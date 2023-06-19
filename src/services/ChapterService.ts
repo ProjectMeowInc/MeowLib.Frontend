@@ -4,6 +4,7 @@ import {ErrorService} from "./ErrorService";
 import axios from "axios";
 import {TokenService} from "./TokenService";
 import {IGetChapters} from "./models/responses/IChapterResponses";
+import {IChapter} from "./models/DTO/IChapterDTO";
 
 /**
  * Сервис для работы с главами
@@ -66,6 +67,44 @@ export class ChapterService {
             })
 
             return null
+        }
+        catch (err: any) {
+            return ErrorService.toServiceError(err, "ChapterService")
+        }
+    }
+
+    /**
+     * Метод для удаления главы
+     * @param bookId id книги
+     * @param chapterId id главы
+     * @returns IError или null
+     */
+    static async deleteChapterAsync(bookId: number, chapterId: number): Promise<IError | null> {
+        try {
+            await axios.delete(process.env.REACT_APP_URL_API + `/books/${bookId}/chapters/${chapterId}`, {
+                headers: {
+                    Authorization: await TokenService.getAccessTokenAsync()
+                }
+            })
+
+            return null
+        }
+        catch (err: any) {
+            return ErrorService.toServiceError(err, "ChapterService")
+        }
+    }
+
+    /**
+     * Метод для получения главы
+     * @param bookId id книги
+     * @param chapterId id главы
+     * @returns IChapter или null
+     */
+    static async getChapterAsync(bookId: number, chapterId: number): Promise<IChapter | IError> {
+        try {
+            const response = await axios.get(process.env.REACT_APP_URL_API + `/books/${bookId}/chapters/${chapterId}`)
+
+            return response.data
         }
         catch (err: any) {
             return ErrorService.toServiceError(err, "ChapterService")
