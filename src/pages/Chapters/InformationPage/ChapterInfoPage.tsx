@@ -47,10 +47,12 @@ const ChapterInfoPage = () => {
         )
     }
 
+    const createDate = new Date(chapterData.releaseDate)
+
     return (
         <div className={styles.main}>
             <h1>{chapterData.name}</h1>
-            <p className={styles.date}>Дата создания: {chapterData.releaseDate}</p>
+            <p className={styles.date}>Дата создания: {createDate.toLocaleString()}</p>
             <p className={styles.chapter_text}>{chapterData.text}</p>
         </div>
     );
