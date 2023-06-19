@@ -14,10 +14,10 @@ const ChapterInfoPage = () => {
     const [chapterData, setChapterData] = useState<IChapter | null>(null)
     const params = useParams();
 
-    const bookId = params.id
-    const chapterId = params.chapterId
-
     useEffect(() => {
+
+        const bookId = params.id
+        const chapterId = params.chapterId
 
         if (bookId === undefined) {
             return RedirectService.redirectToNotFoundPage
