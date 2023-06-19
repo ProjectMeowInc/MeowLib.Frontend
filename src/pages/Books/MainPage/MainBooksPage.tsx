@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import styles from "./mainPage.module.css";
 import {Link} from "react-router-dom";
 import Preloader from "../../../components/preloader/preloader";
-import BooksListItem from "../../../components/BooksPage/BookListItem/BooksListItem";
+import BooksListItem from "../../../components/BooksPage/BooksListItem";
 import {IBooksResponse} from "../../../services/models/responses/IBookResponse";
 import {BookService} from "../../../services/BookService";
 import {ErrorService} from "../../../services/ErrorService";

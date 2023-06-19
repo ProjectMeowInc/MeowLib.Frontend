@@ -28,6 +28,11 @@
     cursor: pointer;
 }
 
+a:nth-child(1) {
+    color: #6D5BFD;
+    margin-right: 20px;
+}
+
 .right_side p:nth-child(2) {
     color: #D645FB;
 }
