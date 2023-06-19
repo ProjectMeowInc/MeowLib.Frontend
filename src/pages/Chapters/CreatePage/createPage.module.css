@@ -1,0 +1,53 @@
+.new_chapter {
+    width: 50%;
+    margin-top: 50px;
+    font-family: Ubuntu, serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 60vh;
+}
+
+.input {
+    width: 60%;
+    height: 50px;
+    background-color: #E8F0FE;
+    border: none;
+    border-radius: 5px;
+    padding-left: 7px;
+    font-size: 16px;
+}
+
+.input:focus {
+    outline: none;
+}
+
+.textarea {
+    width: 60%;
+    height: 30vh;
+    background-color: #E8F0FE;
+    border: none;
+    border-radius: 5px;
+    padding-top: 7px;
+    padding-left: 7px;
+    font-size: 16px;
+    resize: none;
+}
+
+.textarea:focus {
+    outline: none;
+}
+
+.button {
+    width: 35%;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    border-radius: 7px;
+    color: white;
+    background-color: #6D5BFD;
+    cursor: pointer;
+}

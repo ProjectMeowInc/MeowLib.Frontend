@@ -54,6 +54,10 @@ export class ErrorService {
      */
     static isError(data: any): data is IError {
 
+        if (data === null) {
+            return false
+        }
+
         if(typeof(data) === "string") {
             return false
         }
