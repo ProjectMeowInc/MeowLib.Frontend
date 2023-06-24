@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import styles from "./updateChapterPage.module.css";
-import {IUpdateChapterRequest} from "../../../services/models/requests/IChapterRequests";
+import {IUpdateChapterTextRequest} from "../../../services/models/requests/IChapterRequests";
 import {ChapterService} from "../../../services/ChapterService";
 import {useParams} from "react-router-dom";
 import {RedirectService} from "../../../services/RedirectService";
@@ -10,7 +10,7 @@ import {ErrorTypesEnum} from "../../../services/models/IError";
 
 const UpdateChapterPage = () => {
 
-    const [chapterData, setChapterData] = useState<IUpdateChapterRequest | null>(null)
+    const [chapterData, setChapterData] = useState<IUpdateChapterTextRequest | null>(null)
     const params = useParams()
 
     function ChangeHandler(text: string): void {
