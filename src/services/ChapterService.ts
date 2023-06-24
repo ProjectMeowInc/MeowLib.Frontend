@@ -1,5 +1,5 @@
 import {IError} from "./models/IError";
-import {ICreateChapterRequest, IUpdateChapterRequest} from "./models/requests/IChapterRequests";
+import {ICreateChapterRequest, IUpdateChapterTextRequest} from "./models/requests/IChapterRequests";
 import {ErrorService} from "./ErrorService";
 import axios from "axios";
 import {TokenService} from "./TokenService";
@@ -58,7 +58,7 @@ export class ChapterService {
      * @param data данные необходимые для обновления книги
      * @returns IError или null
      */
-    static async updateChapterTextAsync(bookId: number, chapterId: number, data: IUpdateChapterRequest): Promise<IError| null>  {
+    static async updateChapterTextAsync(bookId: number, chapterId: number, data: IUpdateChapterTextRequest): Promise<IError| null>  {
         try {
             await axios.put(process.env.REACT_APP_URL_API + `/books/${bookId}/chapters/${chapterId}/text`, data, {
                 headers: {
