@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Link, useParams} from "react-router-dom";
 import Preloader from "../../../components/preloader/preloader";
 import styles from "./updateBooksPage.module.css";
@@ -11,11 +11,17 @@ import {ErrorTypesEnum} from "../../../services/models/IError";
 import {ChapterService} from "../../../services/ChapterService";
 import ChapterListItem from "../../../components/BooksPage/ChapterListItem/ChapterListItem";
 import {IChapterDTO} from "../../../services/models/DTO/IChapterDTO";
+import {TagsService} from "../../../services/TagsService";
+import TagList from "../../../components/BooksPage/TagList/TagList";
+import {IGetTagsResponse} from "../../../services/models/responses/IGetTagsResponse";
+import {TagsContext} from "../../../context/TagsContext";
 
 const UpdateBooksPage = () => {
     const [bookData, setBookData] = useState<IUpdateBookRequest | null>(null)
     const [chapters, setChapters] = useState<IChapterDTO[] | null>(null)
+    const [tags, setTags] = useState<IGetTagsResponse | null>(null)
     const params = useParams()
+    const {updateTags, setUpdateTags} = useContext(TagsContext)
 
     useEffect(() => {
 
@@ -32,6 +38,10 @@ const UpdateBooksPage = () => {
                 return AlertService.warningMessage(response.displayMessage)
             }
 
+            response.tags.map(tag => {
+                setUpdateTags([...updateTags, tag.id])
+            })
+
             setBookData({...bookData, name: response.name, description: response.description})
         })
 
@@ -46,6 +56,18 @@ const UpdateBooksPage = () => {
 
             setChapters(getChaptersResult)
         })
+
+        TagsService.getAllTagsAsync().then(getTagsResult => {
+            if (ErrorService.isError(getTagsResult)) {
+                if (getTagsResult.errorType === ErrorTypesEnum.Critical) {
+                    return AlertService.errorMessage(getTagsResult.displayMessage)
+                }
+
+                return AlertService.warningMessage(getTagsResult.displayMessage)
+            }
+
+            setTags(getTagsResult)
+        })
     }, [])
 
     async function SubmitHandlerAsync () {
@@ -54,9 +76,23 @@ const UpdateBooksPage = () => {
             return RedirectService.redirectToNotFoundPage()
         }
 
+        const updateBookTagsResult = await BookService.updateTagsBook(parseInt(params.id), {
+            tags: updateTags
+        })
+
+        if (ErrorService.isError(updateBookTagsResult)) {
+            if (updateBookTagsResult.errorType === ErrorTypesEnum.Critical) {
+                return AlertService.errorMessage(updateBookTagsResult.displayMessage)
+            }
+
+            return AlertService.warningMessage(updateBookTagsResult.displayMessage)
+        }
+
+        AlertService.successMessage("Данные о книге были обновлены")
+
         //Чтобы не ругался анализатор
 
-        if (bookData == null) {
+        if (bookData === null) {
             return
         }
 
@@ -78,7 +114,7 @@ const UpdateBooksPage = () => {
         setBookData({...bookData, name: updateBookData.name, description: updateBookData.description})
     }
 
-    if (bookData === null) {
+    if (bookData === null || tags === null) {
         return (
             <Preloader/>
         )
@@ -100,6 +136,7 @@ const UpdateBooksPage = () => {
                         className={styles.textarea}
                         name="tag_description"
                         placeholder={bookData.description ?? "Введите описание тега"}/>
+                    <TagList data={tags?.data}/>
                     <button onClick={SubmitHandlerAsync} className={styles.button}>Сохранить</button>
                 </div>
                 <div className={styles.chapters}>
