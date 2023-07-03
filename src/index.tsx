@@ -8,17 +8,20 @@ import {Tooltip} from "react-tooltip";
 import 'react-tooltip/dist/react-tooltip.css'
 import {RedirectContextProvider} from "./context/RedirectContext";
 import {LoadingContextProvider} from "./context/LoadingContext";
+import {TagContextProvider} from "./context/TagsContext";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
     <BrowserRouter>
-        <RedirectContextProvider>
-            <LoadingContextProvider>
-                <App/>
-            </LoadingContextProvider>
-        </RedirectContextProvider>
+        <TagContextProvider>
+            <RedirectContextProvider>
+                <LoadingContextProvider>
+                    <App/>
+                </LoadingContextProvider>
+            </RedirectContextProvider>
+        </TagContextProvider>
         <ToastContainer/>
         <Tooltip id={"my-tooltip"}/>
     </BrowserRouter>
