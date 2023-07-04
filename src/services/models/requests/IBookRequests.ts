@@ -13,3 +13,10 @@ export interface IUpdateBookRequest {
     name?: string
     description?: string
 }
+
+/**
+ * Интерфейс описывающий данные для добавления тегов для книги
+ */
+export interface IUpdateBookTagsRequest {
+    tags: number[]
+}

@@ -1,0 +1,33 @@
+.label {
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 20px;
+    min-width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Ubuntu, serif;
+    transition: all .3s;
+    cursor: pointer;
+    margin: 10px;
+}
+
+.checked {
+    border: 1px solid black;
+    padding: 10px;
+    border-radius: 20px;
+    min-width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Ubuntu, serif;
+    cursor: pointer;
+    margin: 10px;
+}
+
+.input {
+    width: 0;
+    padding: 0;
+    opacity: 0;
+}

@@ -4,7 +4,7 @@ import axios from "axios";
 import {TokenService} from "./TokenService";
 import {ErrorService} from "./ErrorService";
 import {IBooksResponse} from "./models/responses/IBookResponse";
-import {ICreateBookRequest, IUpdateBookRequest} from "./models/requests/IBookRequests";
+import {ICreateBookRequest, IUpdateBookRequest, IUpdateBookTagsRequest} from "./models/requests/IBookRequests";
 
 /**
  * Сервис для работы с книгами
@@ -95,6 +95,48 @@ export class BookService {
     static async updateBookAsync(id: number, data: IUpdateBookRequest): Promise<IError | null> {
         try {
             await axios.put(process.env.REACT_APP_URL_API + `/books/${id}/info`, data, {
+                headers: {
+                    Authorization: await TokenService.getAccessTokenAsync()
+                }
+            })
+
+            return null
+        }
+        catch (err: any) {
+            return ErrorService.toServiceError(err, "BookService")
+        }
+    }
+
+    /**
+     * Метод для добавления автора книги
+     * @param bookId id книги
+     * @param authorId id автора
+     * @returns IError или null
+     */
+    static  async updateBookAuthorAsync(authorId: number, bookId: number): Promise<IError | null> {
+        try {
+            await axios.put(process.env.REACT_APP_URL_API + `/books/${bookId}/author/${authorId}`,{}, {
+                headers: {
+                    Authorization: await TokenService.getAccessTokenAsync()
+                }
+            })
+
+            return null
+        }
+        catch (err: any) {
+            return ErrorService.toServiceError(err, "BookService")
+        }
+    }
+
+    /**
+     * Метод для добавления тэгов для книги
+     * @param bookId id книги
+     * @param tags массив из id тэгов
+     * @returns IError или null
+     */
+    static async updateTagsBook(bookId: number, tags: IUpdateBookTagsRequest): Promise<IError | null> {
+        try {
+            await axios.put(process.env.REACT_APP_URL_API + `/books/${bookId}/tags`, tags, {
                 headers: {
                     Authorization: await TokenService.getAccessTokenAsync()
                 }

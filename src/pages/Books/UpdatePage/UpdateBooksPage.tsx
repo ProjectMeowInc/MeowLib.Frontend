@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Link, useParams} from "react-router-dom";
 import Preloader from "../../../components/preloader/preloader";
 import styles from "./updateBooksPage.module.css";
@@ -11,11 +11,17 @@ import {ErrorTypesEnum} from "../../../services/models/IError";
 import {ChapterService} from "../../../services/ChapterService";
 import ChapterListItem from "../../../components/BooksPage/ChapterListItem/ChapterListItem";
 import {IChapterDTO} from "../../../services/models/DTO/IChapterDTO";
+import {TagsService} from "../../../services/TagsService";
+import TagList from "../../../components/BooksPage/TagList/TagList";
+import {IGetTagsResponse} from "../../../services/models/responses/IGetTagsResponse";
+import {TagsContext} from "../../../context/TagsContext";
 
 const UpdateBooksPage = () => {
     const [bookData, setBookData] = useState<IUpdateBookRequest | null>(null)
     const [chapters, setChapters] = useState<IChapterDTO[] | null>(null)
+    const [tagList, setTagList] = useState<IGetTagsResponse | null>(null)
     const params = useParams()
+    const {selectedTags, setSelectedTags} = useContext(TagsContext)
 
     useEffect(() => {
 
@@ -23,16 +29,20 @@ const UpdateBooksPage = () => {
             return RedirectService.redirectToNotFoundPage()
         }
 
-        BookService.getBookAsync(parseInt(params.id)).then(response => {
-            if (ErrorService.isError(response)) {
-                if (response.errorType === ErrorTypesEnum.Critical) {
-                    return AlertService.errorMessage(response.displayMessage)
+        BookService.getBookAsync(parseInt(params.id)).then(result => {
+            if (ErrorService.isError(result)) {
+                if (result.errorType === ErrorTypesEnum.Critical) {
+                    return AlertService.errorMessage(result.displayMessage)
                 }
 
-                return AlertService.warningMessage(response.displayMessage)
+                return AlertService.warningMessage(result.displayMessage)
             }
 
-            setBookData({...bookData, name: response.name, description: response.description})
+            const selectedTagsIds = result.tags.map(tag => tag.id)
+
+            setSelectedTags(selectedTagsIds)
+
+            setBookData({...bookData, name: result.name, description: result.description})
         })
 
         ChapterService.getChaptersAsync(parseInt(params.id)).then(getChaptersResult => {
@@ -46,6 +56,18 @@ const UpdateBooksPage = () => {
 
             setChapters(getChaptersResult)
         })
+
+        TagsService.getAllTagsAsync().then(getTagsResult => {
+            if (ErrorService.isError(getTagsResult)) {
+                if (getTagsResult.errorType === ErrorTypesEnum.Critical) {
+                    return AlertService.errorMessage(getTagsResult.displayMessage)
+                }
+
+                return AlertService.warningMessage(getTagsResult.displayMessage)
+            }
+
+            setTagList(getTagsResult)
+        })
     }, [])
 
     async function SubmitHandlerAsync () {
@@ -54,9 +76,23 @@ const UpdateBooksPage = () => {
             return RedirectService.redirectToNotFoundPage()
         }
 
+        const updateBookTagsResult = await BookService.updateTagsBook(parseInt(params.id), {
+            tags: selectedTags
+        })
+
+        if (ErrorService.isError(updateBookTagsResult)) {
+            if (updateBookTagsResult.errorType === ErrorTypesEnum.Critical) {
+                return AlertService.errorMessage(updateBookTagsResult.displayMessage)
+            }
+
+            return AlertService.warningMessage(updateBookTagsResult.displayMessage)
+        }
+
+        AlertService.successMessage("Данные о книге были обновлены")
+
         //Чтобы не ругался анализатор
 
-        if (bookData == null) {
+        if (bookData === null) {
             return
         }
 
@@ -78,7 +114,7 @@ const UpdateBooksPage = () => {
         setBookData({...bookData, name: updateBookData.name, description: updateBookData.description})
     }
 
-    if (bookData === null) {
+    if (bookData === null || tagList === null) {
         return (
             <Preloader/>
         )
@@ -100,6 +136,7 @@ const UpdateBooksPage = () => {
                         className={styles.textarea}
                         name="tag_description"
                         placeholder={bookData.description ?? "Введите описание тега"}/>
+                    <TagList data={tagList.data}/>
                     <button onClick={SubmitHandlerAsync} className={styles.button}>Сохранить</button>
                 </div>
                 <div className={styles.chapters}>
