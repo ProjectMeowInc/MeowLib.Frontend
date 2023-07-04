@@ -111,7 +111,7 @@ export class BookService {
      * Метод для добавления автора книги
      * @param bookId id книги
      * @param authorId id автора
-     * * @returns IError или null
+     * @returns IError или null
      */
     static  async updateBookAuthorAsync(authorId: number, bookId: number): Promise<IError | null> {
         try {
