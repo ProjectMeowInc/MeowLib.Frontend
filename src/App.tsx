@@ -20,6 +20,7 @@ import CreateChapterPage from "./pages/Chapters/CreatePage/CreateChapterPage";
 import UpdateChapterPage from "./pages/Chapters/UpdatePage/UpdateChapterPage";
 import ChapterInfoPage from "./pages/Chapters/InformationPage/ChapterInfoPage";
 import {TagContextProvider} from "./context/TagsContext";
+import {AuthorContextProvider} from "./context/AuthorContext";
 
 const App = () => {
   return (
@@ -42,9 +43,13 @@ const App = () => {
                         <Route index element={<MainBooksPage/>}/>
                         <Route path={"new"} element={<CreateBookPage/>}/>
                         <Route path={":id/edit"}>
-                            <Route index element={<TagContextProvider>
-                                <UpdateBooksPage/>
-                            </TagContextProvider>}/>
+                            <Route index element={
+                                <AuthorContextProvider>
+                                    <TagContextProvider>
+                                        <UpdateBooksPage/>
+                                    </TagContextProvider>
+                                </AuthorContextProvider>
+                            }/>
                             <Route path={"chapter/new"} element={<CreateChapterPage/>}/>
                             <Route path={"chapters/:chapterId/edit"} element={<UpdateChapterPage/>}/>
                             <Route path={"chapters/:chapterId/info"} element={<ChapterInfoPage/>} />
