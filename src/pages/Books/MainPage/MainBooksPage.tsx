@@ -8,7 +8,6 @@ import {BookService} from "../../../services/BookService";
 import {ErrorService} from "../../../services/ErrorService";
 import {ErrorTypesEnum} from "../../../services/models/IError";
 import {AlertService} from "../../../services/AlertService";
-import {TagContextProvider} from "../../../context/TagsContext";
 
 const MainBooksPage = () => {
 
