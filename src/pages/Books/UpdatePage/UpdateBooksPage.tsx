@@ -39,7 +39,7 @@ const UpdateBooksPage = () => {
             }
 
             response.tags.map(tag => {
-                setUpdateTags([...updateTags, tag.id])
+                setUpdateTags(prevState => [...prevState, tag.id])
             })
 
             setBookData({...bookData, name: response.name, description: response.description})
