@@ -14,8 +14,7 @@ const TagListItem = ({id, name, description}: ITagDTO) => {
 
     function addTagHandler() {
         if (isChecked) {
-            return setSelectedTags(prevState => prevState.filter(tagId => tagId !== id)
-            )
+            return setSelectedTags(prevState => prevState.filter(tagId => tagId !== id))
         }
 
         return setSelectedTags(prevState => [...prevState, id])

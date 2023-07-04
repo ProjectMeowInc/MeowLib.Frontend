@@ -6,8 +6,6 @@ import "react-toastify/dist/ReactToastify.css"
 import {ToastContainer} from "react-toastify";
 import {Tooltip} from "react-tooltip";
 import 'react-tooltip/dist/react-tooltip.css'
-import {RedirectContextProvider} from "./context/RedirectContext";
-import {LoadingContextProvider} from "./context/LoadingContext";
 import {TagContextProvider} from "./context/TagsContext";
 
 const root = ReactDOM.createRoot(
@@ -15,13 +13,9 @@ const root = ReactDOM.createRoot(
 );
 root.render(
     <BrowserRouter>
-            <RedirectContextProvider>
-                <LoadingContextProvider>
-                    <TagContextProvider>
-                        <App/>
-                    </TagContextProvider>
-                </LoadingContextProvider>
-            </RedirectContextProvider>
+            <TagContextProvider>
+                <App/>
+            </TagContextProvider>
         <ToastContainer/>
         <Tooltip id={"my-tooltip"}/>
     </BrowserRouter>

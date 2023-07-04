@@ -1,14 +1,13 @@
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 import styles from "./createBookPage.module.css"
-import {RedirectContext} from "../../../context/RedirectContext";
 import {ICreateBookRequest} from "../../../services/models/requests/IBookRequests";
 import {BookService} from "../../../services/BookService";
 import {AlertService} from "../../../services/AlertService";
 import {ErrorTypesEnum} from "../../../services/models/IError";
+import {RedirectService} from "../../../services/RedirectService";
 
 const CreateBookPage = () => {
     const [bookData, setBookData] = useState<ICreateBookRequest>()
-    const {delayRedirect} = useContext(RedirectContext)
 
     async function SubmitHandler(): Promise<void> {
 
@@ -27,7 +26,7 @@ const CreateBookPage = () => {
 
         AlertService.successMessage("Книга успешно создана")
 
-        return delayRedirect(-1)
+        return RedirectService.delayRedirectToPrevPage()
     }
 
     function ChangeHandler(data: ICreateBookRequest): void {

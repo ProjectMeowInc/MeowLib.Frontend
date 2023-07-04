@@ -8,6 +8,7 @@ import {BookService} from "../../../services/BookService";
 import {ErrorService} from "../../../services/ErrorService";
 import {ErrorTypesEnum} from "../../../services/models/IError";
 import {AlertService} from "../../../services/AlertService";
+import {TagContextProvider} from "../../../context/TagsContext";
 
 const MainBooksPage = () => {
 
@@ -28,6 +29,7 @@ const MainBooksPage = () => {
     }, [])
 
     return (
+        <TagContextProvider>
         <div className={styles.wrapper}>
             <h1 className={styles.header}>Управление авторами</h1>
 
@@ -44,6 +46,7 @@ const MainBooksPage = () => {
                     : <p className={styles.empty}>Здесь пока ничего нет</p>
             }
         </div>
+            </TagContextProvider>
     );
 };
 
