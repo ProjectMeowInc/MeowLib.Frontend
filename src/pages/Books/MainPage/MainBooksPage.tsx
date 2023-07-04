@@ -29,7 +29,6 @@ const MainBooksPage = () => {
     }, [])
 
     return (
-        <TagContextProvider>
         <div className={styles.wrapper}>
             <h1 className={styles.header}>Управление авторами</h1>
 
@@ -46,7 +45,6 @@ const MainBooksPage = () => {
                     : <p className={styles.empty}>Здесь пока ничего нет</p>
             }
         </div>
-            </TagContextProvider>
     );
 };
 
