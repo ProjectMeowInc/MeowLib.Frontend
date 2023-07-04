@@ -1,5 +1,4 @@
 import {createContext, Dispatch, ReactNode, SetStateAction, useState} from "react";
-import {AlertService} from "../services/AlertService";
 
 interface ITagContext {
     selectedTags: number[]
