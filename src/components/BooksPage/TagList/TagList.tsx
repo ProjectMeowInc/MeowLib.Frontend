@@ -15,7 +15,7 @@ const TagList = ({data}: IGetTagsResponse) => {
         <div className={styles.tags}>
             {
                 data.map(tag => (
-                    <TagListItem id={tag.id} name={tag.name} description={tag.description}/>
+                    <TagListItem key={tag.id} id={tag.id} name={tag.name} description={tag.description}/>
                 ))
             }
         </div>
