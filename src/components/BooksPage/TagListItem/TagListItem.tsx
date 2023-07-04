@@ -6,7 +6,7 @@ import {TagsContext} from "../../../context/TagsContext";
 const TagListItem = ({id, name, description}: ITagDTO) => {
 
     const [isChecked, setIsChecked] = useState<boolean>(false)
-    const {setUpdateTags, checkTagIsSelected} = useContext(TagsContext)
+    const {setSelectedTags, checkTagIsSelected} = useContext(TagsContext)
 
     useEffect(() => {
         setIsChecked(checkTagIsSelected(id))
@@ -14,12 +14,11 @@ const TagListItem = ({id, name, description}: ITagDTO) => {
 
     function addTagHandler() {
         if (isChecked) {
-            return setUpdateTags(prevState => {
-                return prevState.filter(tagId => tagId !== id)
-            })
+            return setSelectedTags(prevState => prevState.filter(tagId => tagId !== id)
+            )
         }
 
-        return setUpdateTags(prevState => [...prevState, id])
+        return setSelectedTags(prevState => [...prevState, id])
     }
 
     return (

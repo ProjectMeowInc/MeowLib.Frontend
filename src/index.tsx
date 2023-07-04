@@ -15,13 +15,13 @@ const root = ReactDOM.createRoot(
 );
 root.render(
     <BrowserRouter>
-        <TagContextProvider>
             <RedirectContextProvider>
                 <LoadingContextProvider>
-                    <App/>
+                    <TagContextProvider>
+                        <App/>
+                    </TagContextProvider>
                 </LoadingContextProvider>
             </RedirectContextProvider>
-        </TagContextProvider>
         <ToastContainer/>
         <Tooltip id={"my-tooltip"}/>
     </BrowserRouter>

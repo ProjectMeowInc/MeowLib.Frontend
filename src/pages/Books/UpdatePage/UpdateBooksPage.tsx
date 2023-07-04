@@ -19,9 +19,9 @@ import {TagsContext} from "../../../context/TagsContext";
 const UpdateBooksPage = () => {
     const [bookData, setBookData] = useState<IUpdateBookRequest | null>(null)
     const [chapters, setChapters] = useState<IChapterDTO[] | null>(null)
-    const [tags, setTags] = useState<IGetTagsResponse | null>(null)
+    const [tagList, setTagList] = useState<IGetTagsResponse | null>(null)
     const params = useParams()
-    const {updateTags, setUpdateTags} = useContext(TagsContext)
+    const {selectedTags, setSelectedTags} = useContext(TagsContext)
 
     useEffect(() => {
 
@@ -29,20 +29,20 @@ const UpdateBooksPage = () => {
             return RedirectService.redirectToNotFoundPage()
         }
 
-        BookService.getBookAsync(parseInt(params.id)).then(response => {
-            if (ErrorService.isError(response)) {
-                if (response.errorType === ErrorTypesEnum.Critical) {
-                    return AlertService.errorMessage(response.displayMessage)
+        BookService.getBookAsync(parseInt(params.id)).then(result => {
+            if (ErrorService.isError(result)) {
+                if (result.errorType === ErrorTypesEnum.Critical) {
+                    return AlertService.errorMessage(result.displayMessage)
                 }
 
-                return AlertService.warningMessage(response.displayMessage)
+                return AlertService.warningMessage(result.displayMessage)
             }
 
-            response.tags.map(tag => {
-                setUpdateTags(prevState => [...prevState, tag.id])
-            })
+            const selectedTagsIds = result.tags.map(tag => tag.id)
 
-            setBookData({...bookData, name: response.name, description: response.description})
+            setSelectedTags(selectedTagsIds)
+
+            setBookData({...bookData, name: result.name, description: result.description})
         })
 
         ChapterService.getChaptersAsync(parseInt(params.id)).then(getChaptersResult => {
@@ -66,7 +66,7 @@ const UpdateBooksPage = () => {
                 return AlertService.warningMessage(getTagsResult.displayMessage)
             }
 
-            setTags(getTagsResult)
+            setTagList(getTagsResult)
         })
     }, [])
 
@@ -77,7 +77,7 @@ const UpdateBooksPage = () => {
         }
 
         const updateBookTagsResult = await BookService.updateTagsBook(parseInt(params.id), {
-            tags: updateTags
+            tags: selectedTags
         })
 
         if (ErrorService.isError(updateBookTagsResult)) {
@@ -114,7 +114,7 @@ const UpdateBooksPage = () => {
         setBookData({...bookData, name: updateBookData.name, description: updateBookData.description})
     }
 
-    if (bookData === null || tags === null) {
+    if (bookData === null || tagList === null) {
         return (
             <Preloader/>
         )
@@ -136,7 +136,7 @@ const UpdateBooksPage = () => {
                         className={styles.textarea}
                         name="tag_description"
                         placeholder={bookData.description ?? "Введите описание тега"}/>
-                    <TagList data={tags?.data}/>
+                    <TagList data={tagList.data}/>
                     <button onClick={SubmitHandlerAsync} className={styles.button}>Сохранить</button>
                 </div>
                 <div className={styles.chapters}>
