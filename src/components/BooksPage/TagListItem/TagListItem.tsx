@@ -6,39 +6,28 @@ import {TagsContext} from "../../../context/TagsContext";
 const TagListItem = ({id, name, description}: ITagDTO) => {
 
     const [isChecked, setIsChecked] = useState<boolean>(false)
-    const {updateTags, setUpdateTags} = useContext(TagsContext)
+    const {setUpdateTags, checkTagIsSelected} = useContext(TagsContext)
 
     useEffect(() => {
-        const checkedTag = updateTags.find(element => {
-            return element === id
-        })
-
-        if (checkedTag !== undefined) {
-            setIsChecked(true)
-        }
+        setIsChecked(checkTagIsSelected(id))
     })
 
     function addTagHandler() {
-        if (updateTags !== null) {
-            const findTag = updateTags.find(element => {
-                return element === id
+        if (isChecked) {
+            return setUpdateTags(prevState => {
+                return prevState.filter(tagId => tagId !== id)
             })
-
-            if (findTag !== undefined) {
-                setUpdateTags(updateTags.filter(element => element !== id))
-                return
-            }
-
-            setUpdateTags([...updateTags, id])
         }
-        else {
-            setUpdateTags([id])
-        }
+
+        return setUpdateTags(prevState => [...prevState, id])
     }
 
     return (
-        <label className={!isChecked ? styles.label : styles.checked}>
-            <input onChange={addTagHandler} className={styles.input} onClick={() => setIsChecked(!isChecked)} type="checkbox" id={id.toString()}/>
+        <label className={isChecked ? styles.checked : styles.label}>
+            <input onClick={() => {
+                addTagHandler()
+                setIsChecked(!isChecked)
+            }} className={styles.input} type="checkbox"/>
             {name}
         </label>
     );
