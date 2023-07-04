@@ -1,0 +1,24 @@
+.author {
+    margin: 10px;
+    padding: 10px;
+    font-family: Ubuntu, serif;
+    border: 1px solid black;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.author_none_checked {
+    margin: 10px;
+    padding: 10px;
+    font-family: Ubuntu, serif;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+    color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
