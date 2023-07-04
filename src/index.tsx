@@ -13,9 +13,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
     <BrowserRouter>
-            <TagContextProvider>
                 <App/>
-            </TagContextProvider>
         <ToastContainer/>
         <Tooltip id={"my-tooltip"}/>
     </BrowserRouter>
