@@ -44,7 +44,9 @@ const UpdateBooksPage = () => {
                 return AlertService.warningMessage(result.displayMessage)
             }
 
-            setSelectedAuthor(result.author.id)
+            if (result.author) {
+                setSelectedAuthor(result.author.id)
+            }
 
             const selectedTagsIds = result.tags.map(tag => tag.id)
             setSelectedTags(selectedTagsIds)
