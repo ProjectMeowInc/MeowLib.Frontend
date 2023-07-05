@@ -1,5 +1,5 @@
-import {IAuthorDTO} from "./IAuthorModels";
 import {ITag} from "./ITagDTO";
+import {IAuthorDTO} from "./IAuthorModels";
 
 /**
  * Интерфейс опсиывающий книгу
@@ -8,7 +8,7 @@ export interface IBook {
     id: number
     name: string
     description: string
-    authors: IAuthorDTO[]
+    author: IAuthorDTO | null
     tags: ITag[]
 }
 

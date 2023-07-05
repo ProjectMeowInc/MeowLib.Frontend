@@ -17,6 +17,12 @@
     font-size: 16px;
 }
 
+.tags_caption {
+    font-weight: 500;
+    font-family: Ubuntu, serif;
+    font-size: 24px;
+}
+
 .input:focus {
     outline: none;
 }
@@ -39,8 +45,8 @@
 
 .placeholders {
     width: 33%;
-    height: 40vh;
     display: flex;
+    min-height: 50vh;
     justify-content: space-evenly;
     align-items: center;
     flex-direction: column;

@@ -15,13 +15,19 @@ import {TagsService} from "../../../services/TagsService";
 import TagList from "../../../components/BooksPage/TagList/TagList";
 import {IGetTagsResponse} from "../../../services/models/responses/IGetTagsResponse";
 import {TagsContext} from "../../../context/TagsContext";
+import AuthorList from "../../../components/BooksPage/AuthorList/AuthorList";
+import {AuthorServices} from "../../../services/AuthorServices";
+import {IAuthorDTO} from "../../../services/models/DTO/IAuthorModels";
+import {AuthorContext} from "../../../context/AuthorContext";
 
 const UpdateBooksPage = () => {
     const [bookData, setBookData] = useState<IUpdateBookRequest | null>(null)
     const [chapters, setChapters] = useState<IChapterDTO[] | null>(null)
     const [tagList, setTagList] = useState<IGetTagsResponse | null>(null)
+    const [authorList, setAuthorList] = useState<IAuthorDTO[] | null>(null)
     const params = useParams()
     const {selectedTags, setSelectedTags} = useContext(TagsContext)
+    const {selectedAuthor, setSelectedAuthor} = useContext(AuthorContext)
 
     useEffect(() => {
 
@@ -38,8 +44,11 @@ const UpdateBooksPage = () => {
                 return AlertService.warningMessage(result.displayMessage)
             }
 
-            const selectedTagsIds = result.tags.map(tag => tag.id)
+            if (result.author) {
+                setSelectedAuthor(result.author.id)
+            }
 
+            const selectedTagsIds = result.tags.map(tag => tag.id)
             setSelectedTags(selectedTagsIds)
 
             setBookData({...bookData, name: result.name, description: result.description})
@@ -68,6 +77,18 @@ const UpdateBooksPage = () => {
 
             setTagList(getTagsResult)
         })
+
+        AuthorServices.getAuthorsAsync().then(getAuthorsResult => {
+            if (ErrorService.isError(getAuthorsResult)) {
+                if (getAuthorsResult.errorType === ErrorTypesEnum.Critical) {
+                    return AlertService.errorMessage(getAuthorsResult.displayMessage)
+                }
+
+                return AlertService.warningMessage(getAuthorsResult.displayMessage)
+            }
+
+            setAuthorList(getAuthorsResult.data)
+        })
     }, [])
 
     async function SubmitHandlerAsync () {
@@ -88,7 +109,21 @@ const UpdateBooksPage = () => {
             return AlertService.warningMessage(updateBookTagsResult.displayMessage)
         }
 
-        AlertService.successMessage("Данные о книге были обновлены")
+        // Проверка чтобы не ругался статический анализавтор
+
+        if (selectedAuthor === null) {
+            return
+        }
+
+        const updateAuthorResult = await BookService.updateBookAuthorAsync(selectedAuthor, parseInt(params.id))
+
+        if (ErrorService.isError(updateAuthorResult)) {
+            if (updateAuthorResult.errorType === ErrorTypesEnum.Critical) {
+                return AlertService.errorMessage(updateAuthorResult.displayMessage)
+            }
+
+            return AlertService.warningMessage(updateAuthorResult.displayMessage)
+        }
 
         //Чтобы не ругался анализатор
 
@@ -114,7 +149,7 @@ const UpdateBooksPage = () => {
         setBookData({...bookData, name: updateBookData.name, description: updateBookData.description})
     }
 
-    if (bookData === null || tagList === null) {
+    if (bookData === null || tagList === null || authorList === null) {
         return (
             <Preloader/>
         )
@@ -136,7 +171,12 @@ const UpdateBooksPage = () => {
                         className={styles.textarea}
                         name="tag_description"
                         placeholder={bookData.description ?? "Введите описание тега"}/>
+                    <p className={styles.tags_caption}>Тэги</p>
                     <TagList data={tagList.data}/>
+
+                    <p className={styles.tags_caption}>Авторы</p>
+                    <AuthorList authorList={authorList}/>
+
                     <button onClick={SubmitHandlerAsync} className={styles.button}>Сохранить</button>
                 </div>
                 <div className={styles.chapters}>
