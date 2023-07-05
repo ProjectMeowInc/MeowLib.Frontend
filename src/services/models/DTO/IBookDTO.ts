@@ -8,7 +8,7 @@ export interface IBook {
     id: number
     name: string
     description: string
-    author: IAuthorDTO
+    author: IAuthorDTO | null
     tags: ITag[]
 }
 
