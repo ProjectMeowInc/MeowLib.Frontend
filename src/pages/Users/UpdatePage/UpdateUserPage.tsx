@@ -1,20 +1,18 @@
-import React, {useContext, useState} from 'react';
-
+import React, {useState} from 'react';
 import styles from "./updateUserPage.module.css";
 import {IUpdateUserInfoRequest} from "../../../services/models/requests/IUserRequests";
 import {UserRolesEnum} from "../../../services/models/DTO/IUserModels";
 import {useParams} from "react-router-dom";
-import {RedirectContext} from "../../../context/RedirectContext";
 import {ErrorTypesEnum} from "../../../services/models/IError";
 import {AlertService} from "../../../services/AlertService";
 import {UserService} from "../../../services/UserService";
 import {ErrorService} from "../../../services/ErrorService";
+import {RedirectService} from "../../../services/RedirectService";
 
 const UpdateUserPage = () => {
 
     const [userData, setUserData] = useState<IUpdateUserInfoRequest>()
     const params = useParams()
-    const {delayRedirect} = useContext(RedirectContext)
 
     function UpdateInfoHandler(data: IUpdateUserInfoRequest) {
 
@@ -28,7 +26,7 @@ const UpdateUserPage = () => {
     async function SubmitHandler() {
 
         if (params.id === undefined) {
-            return delayRedirect(404)
+            return RedirectService.redirectToNotFoundPage()
         }
 
         if (userData === undefined) {
@@ -46,7 +44,7 @@ const UpdateUserPage = () => {
         }
 
         AlertService.successMessage("Информация успешно обновлена")
-        return delayRedirect(-1)
+        return RedirectService.delayRedirectToPrevPage()
     }
 
     return (

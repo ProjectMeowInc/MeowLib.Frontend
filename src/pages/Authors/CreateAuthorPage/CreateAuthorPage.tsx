@@ -1,19 +1,15 @@
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 import styles from "./createAuthorPage.module.css"
 import {AlertService} from "../../../services/AlertService";
 import {TokenService} from "../../../services/TokenService";
 import {AuthorServices} from "../../../services/AuthorServices";
 import {ErrorTypesEnum} from "../../../services/models/IError";
-import {RedirectContext} from "../../../context/RedirectContext";
-import {LoadingContext} from "../../../context/LoadingContext";
 import {ICreateAuthorRequest} from "../../../services/models/requests/IAuthorRequests";
+import {RedirectService} from "../../../services/RedirectService";
 
 const CreateAuthorPage = () => {
 
     const [requestData, setRequestData] = useState<ICreateAuthorRequest>()
-
-    const {delayRedirect} = useContext(RedirectContext)
-    const {setLoadingPercent, startNewTask} = useContext(LoadingContext)
 
     function SubmitHandler() {
 
@@ -26,9 +22,6 @@ const CreateAuthorPage = () => {
         }
 
         const tokenData = TokenService.getAccessTokenAsync()
-
-        startNewTask()
-        setLoadingPercent(25)
 
         if (tokenData === null) {
             return AlertService.errorMessage("Ошибка токена. Пожалуйста авторизуйтесь заново.")
@@ -45,9 +38,7 @@ const CreateAuthorPage = () => {
             return  AlertService.successMessage("Автор успешно создан")
         })
 
-        setLoadingPercent(100)
-
-        delayRedirect(-1)
+        return RedirectService.delayRedirectToPrevPage()
     }
 
     function UpdateNameHandler(name: string) {

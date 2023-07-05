@@ -1,18 +1,17 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from "./updateTagPage.module.css"
 import {TagsService} from "../../../services/TagsService";
 import {useNavigate, useParams} from "react-router-dom";
 import {AlertService} from "../../../services/AlertService";
 import {ErrorTypesEnum} from "../../../services/models/IError";
-import {RedirectContext} from "../../../context/RedirectContext";
 import {ErrorService} from "../../../services/ErrorService";
 import Preloader from "../../../components/preloader/preloader";
 import {ITagDTO} from "../../../services/models/DTO/ITagDTO";
+import {RedirectService} from "../../../services/RedirectService";
 
 const UpdateTagPage = () => {
 
     const [tagData, setTagData] = useState<ITagDTO | null>(null)
-    const {delayRedirect} = useContext(RedirectContext)
     const params = useParams()
 
     const navigate = useNavigate()
@@ -62,7 +61,7 @@ const UpdateTagPage = () => {
         }
 
         AlertService.successMessage("Успешно обновлена информация о тэге")
-        return delayRedirect(-1)
+        return RedirectService.delayRedirectToPrevPage()
     }
 
     function UpdateInformationHandler(updateTagData: ITagDTO) {

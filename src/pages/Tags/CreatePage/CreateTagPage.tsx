@@ -1,16 +1,15 @@
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 import styles from "./createTagPage.module.css"
 import {ErrorService} from "../../../services/ErrorService";
 import {TagsService} from "../../../services/TagsService";
 import {ICreateTagRequest} from "../../../services/models/requests/ITagRequests";
 import {AlertService} from "../../../services/AlertService";
-import {RedirectContext} from "../../../context/RedirectContext";
 import {ErrorTypesEnum} from "../../../services/models/IError";
+import {RedirectService} from "../../../services/RedirectService";
 
 const CreateTagPage = () => {
     const [tagName, setTagName] = useState<string>()
     const [tagDescription, setTagDescription] = useState<string | undefined>()
-    const {delayRedirect} = useContext(RedirectContext)
 
     function SubmitHandler() {
         if (tagName === undefined) {
@@ -25,7 +24,7 @@ const CreateTagPage = () => {
         TagsService.createTagAsync(data).then(err => {
             if (err === null) {
                 AlertService.successMessage("Тэг успешно создан")
-                return delayRedirect(-1)
+                return RedirectService.delayRedirectToPrevPage()
             }
 
             if (err.errorType === ErrorTypesEnum.Critical) {
