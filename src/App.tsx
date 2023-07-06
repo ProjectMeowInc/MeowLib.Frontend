@@ -6,7 +6,6 @@ import AuthorPage from "./pages/Authors/MainPage/AuthorPage";
 import AdminLayout from "./layouts/AdminLayout/AdminLayout";
 import NotFoundPage from "./pages/Error/NotFoundPage/NotFoundPage";
 import TagsPage from "./pages/Tags/MainPage/TagsPage";
-import LoadingLayout from "./layouts/LoadingLayout/LoadingLayout";
 import CreateAuthorPage from "./pages/Authors/CreateAuthorPage/CreateAuthorPage";
 import UpdateAuthorPage from "./pages/Authors/UpdateAuthorPage/UpdateAuthorPage";
 import CreateTagPage from "./pages/Tags/CreatePage/CreateTagPage";
@@ -25,7 +24,7 @@ import {AuthorContextProvider} from "./context/AuthorContext";
 const App = () => {
   return (
         <Routes>
-            <Route path={"/"} element={<LoadingLayout/>}>
+            <Route path={"/"}>
                 <Route path={"login"} element={<AuthPage/>}/>
                 <Route path={"admin"} element={<AdminLayout/>}>
                     <Route path={""} element={<AdminPage/>}/>

@@ -1,28 +1,22 @@
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 import styles from "./authPage.module.css"
 import {ErrorTypesEnum} from "../../services/models/IError";
 import {ErrorService} from "../../services/ErrorService";
 import {TokenService} from "../../services/TokenService";
 import {UserRolesEnum} from "../../services/models/DTO/IUserModels";
 import {AlertService} from "../../services/AlertService";
-import {LoadingContext} from "../../context/LoadingContext";
 import {AuthService} from "../../services/AuthService";
 import {RedirectService} from "../../services/RedirectService";
 
 const AuthPage = () => {
 
     const [isLoginPage, setIsLoginPage] = useState<boolean>(true)
-
     const [login, setLogin] = useState<string>("")
     const [password, setPassword] = useState<string>("")
     const [isLongSession, setIsLongSession] = useState<boolean>(false)
-    const {setLoadingPercent, startNewTask} = useContext(LoadingContext)
 
     async function ClickHandler (login: string, password: string, isLogin: boolean): Promise<void> {
         if(isLogin) {
-
-            startNewTask()
-            setLoadingPercent(50)
 
             const result = await AuthService.authorizationAsync({login, password, isLongSession})
 
@@ -43,8 +37,6 @@ const AuthPage = () => {
             }
 
             AlertService.successMessage("Вы успешно авторизовались")
-
-            setLoadingPercent(100)
 
             if(accessTokenData.userRole === UserRolesEnum.Moderator || accessTokenData.userRole === UserRolesEnum.Admin) {
                 return RedirectService.redirect("/admin")

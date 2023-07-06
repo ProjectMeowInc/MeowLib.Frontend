@@ -47,8 +47,8 @@ const AuthorPage = () => {
                 <p>Нажмите чтобы добавить нового автора</p>
             </Link>
 
-            <input onChange={ctx => {
-                SearchHandler({name: ctx.target.value})
+            <input onChange={async ctx => {
+                await SearchHandler({name: ctx.target.value})
             }} className={styles.search} type="text" placeholder={"Введите имя автора"}/>
 
             {authorsList === null

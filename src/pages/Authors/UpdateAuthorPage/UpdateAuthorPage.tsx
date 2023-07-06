@@ -1,18 +1,17 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from "../CreateAuthorPage/createAuthorPage.module.css";
 import {AlertService} from "../../../services/AlertService";
 import {AuthorServices} from "../../../services/AuthorServices";
 import {ErrorTypesEnum} from "../../../services/models/IError";
 import {useNavigate, useParams} from "react-router-dom";
-import {RedirectContext} from "../../../context/RedirectContext";
 import {ErrorService} from "../../../services/ErrorService";
 import {IAuthorDTO} from "../../../services/models/DTO/IAuthorModels";
 import Preloader from "../../../components/preloader/preloader";
+import {RedirectService} from "../../../services/RedirectService";
 
 const UpdateAuthorPage = () => {
 
     const [author, setAuthor] = useState<IAuthorDTO | null>(null)
-    const {delayRedirect} = useContext(RedirectContext)
     const params = useParams()
     const navigate = useNavigate()
 
@@ -68,7 +67,7 @@ const UpdateAuthorPage = () => {
 
         })
 
-        delayRedirect(-1)
+        return RedirectService.delayRedirectToPrevPage()
     }
 
     return (
