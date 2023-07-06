@@ -8,6 +8,7 @@ export interface IBook {
     id: number
     name: string
     description: string
+    imageUrl: string | null
     author: IAuthorDTO | null
     tags: ITag[]
 }
