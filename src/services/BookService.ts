@@ -134,7 +134,7 @@ export class BookService {
      * @param tags массив из id тэгов
      * @returns IError или null
      */
-    static async updateTagsBook(bookId: number, tags: IUpdateBookTagsRequest): Promise<IError | null> {
+    static async updateTagsBookAsync(bookId: number, tags: IUpdateBookTagsRequest): Promise<IError | null> {
         try {
             await axios.put(process.env.REACT_APP_URL_API + `/books/${bookId}/tags`, tags, {
                 headers: {
@@ -155,7 +155,7 @@ export class BookService {
      * @param image изображение в виде formData
      * @returns IError или null
      */
-    static async uploadImageBook(bookId: number, image: FormData): Promise<IError | null> {
+    static async uploadImageBookAsync(bookId: number, image: FormData): Promise<IError | null> {
         try {
             await axios.put(process.env.REACT_APP_URL_API + `/books/${bookId}/image`, image, {
                 headers: {
