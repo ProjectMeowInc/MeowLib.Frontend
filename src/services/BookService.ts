@@ -148,4 +148,25 @@ export class BookService {
             return ErrorService.toServiceError(err, "BookService")
         }
     }
+
+    /**
+     * Метод для обновленя обложки книги
+     * @param bookId id книги
+     * @param image изображение в виде formData
+     * @returns IError или null
+     */
+    static async uploadImageBook(bookId: number, image: FormData): Promise<IError | null> {
+        try {
+            await axios.put(process.env.REACT_APP_URL_API + `/books/${bookId}/image`, image, {
+                headers: {
+                    Authorization: await TokenService.getAccessTokenAsync()
+                }
+            })
+
+            return null
+        }
+        catch (err: any) {
+            return ErrorService.toServiceError(err, "BookService")
+        }
+    }
 }
