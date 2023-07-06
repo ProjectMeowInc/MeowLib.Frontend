@@ -98,7 +98,7 @@ const UpdateBooksPage = () => {
             return RedirectService.redirectToNotFoundPage()
         }
 
-        const updateBookTagsResult = await BookService.updateTagsBook(parseInt(params.id), {
+        const updateBookTagsResult = await BookService.updateTagsBookAsync(parseInt(params.id), {
             tags: selectedTags
         })
 
@@ -116,7 +116,7 @@ const UpdateBooksPage = () => {
             return
         }
 
-        const uploadImageResult = await BookService.uploadImageBook(parseInt(params.id), image)
+        const uploadImageResult = await BookService.uploadImageBookAsync(parseInt(params.id), image)
 
         if (ErrorService.isError(uploadImageResult)) {
             if (uploadImageResult.errorType === ErrorTypesEnum.Critical) {
