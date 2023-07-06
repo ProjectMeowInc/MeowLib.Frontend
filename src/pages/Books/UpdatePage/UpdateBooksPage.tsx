@@ -25,6 +25,7 @@ const UpdateBooksPage = () => {
     const [chapters, setChapters] = useState<IChapterDTO[] | null>(null)
     const [tagList, setTagList] = useState<IGetTagsResponse | null>(null)
     const [authorList, setAuthorList] = useState<IAuthorDTO[] | null>(null)
+    const [image, setImage] = useState<FormData | null>(null)
     const params = useParams()
     const {selectedTags, setSelectedTags} = useContext(TagsContext)
     const {selectedAuthor, setSelectedAuthor} = useContext(AuthorContext)
@@ -111,6 +112,20 @@ const UpdateBooksPage = () => {
 
         // Проверка чтобы не ругался статический анализавтор
 
+        if (image === null) {
+            return
+        }
+
+        const uploadImageResult = await BookService.uploadImageBook(parseInt(params.id), image)
+
+        if (ErrorService.isError(uploadImageResult)) {
+            if (uploadImageResult.errorType === ErrorTypesEnum.Critical) {
+                return AlertService.errorMessage(uploadImageResult.displayMessage)
+            }
+
+            return AlertService.warningMessage(uploadImageResult.displayMessage)
+        }
+
         if (selectedAuthor === null) {
             return
         }
@@ -149,6 +164,15 @@ const UpdateBooksPage = () => {
         setBookData({...bookData, name: updateBookData.name, description: updateBookData.description})
     }
 
+    function UpdateImageHandler(event: React.ChangeEvent<HTMLInputElement>): void {
+        if (event.target.files) {
+            const file = event.target.files[0]
+            const formData = new FormData()
+            formData.append("image", file)
+            setImage(formData)
+        }
+    }
+
     if (bookData === null || tagList === null || authorList === null) {
         return (
             <Preloader/>
@@ -171,6 +195,8 @@ const UpdateBooksPage = () => {
                         className={styles.textarea}
                         name="tag_description"
                         placeholder={bookData.description ?? "Введите описание тега"}/>
+                    <p className={styles.tags_caption}>Загрузка изображения</p>
+                    <input onChange={UpdateImageHandler} type="file"/>
                     <p className={styles.tags_caption}>Тэги</p>
                     <TagList data={tagList.data}/>
 
