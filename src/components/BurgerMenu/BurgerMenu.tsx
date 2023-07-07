@@ -7,8 +7,8 @@ const BurgerMenu = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false)
 
     return (
-        <div className={styles.burger_menu}>
-            <div className={styles.btn} onClick={() => setIsOpen(!isOpen)}>
+        <div className={styles.burger_menu} onClick={() => setIsOpen(!isOpen)}>
+            <div className={styles.btn}>
                 <span></span>
                 <span></span>
                 <span></span>
