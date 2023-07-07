@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import styles from "./burgerMenu.module.css"
-import {TokenService} from "../../services/TokenService";
 
 const BurgerMenu = () => {
 
