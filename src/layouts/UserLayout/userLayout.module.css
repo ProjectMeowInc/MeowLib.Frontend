@@ -1,0 +1,11 @@
+.block {
+    width: 22%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.block img {
+    width: 310px;
+    height: 62px;
+}
