@@ -60,7 +60,7 @@ const App = () => {
                         <Route path={":id/edit"} element={<UpdateUserPage/>}/>
                     </Route>
                 </Route>
-                <Route path={"main"} element={<UserLayout/>}>
+                <Route path={"/"} element={<UserLayout/>}>
                     <Route index />
                 </Route>
                 <Route path={"*"} element={<NotFoundPage/>}/>
