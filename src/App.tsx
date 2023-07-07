@@ -1,25 +1,26 @@
 import React from 'react';
 import {Route, Routes} from "react-router-dom";
-import AuthPage from "./pages/AuthPage/AuthPage";
-import AdminPage from "./pages/AdminPage/AdminPage";
-import AuthorPage from "./pages/Authors/MainPage/AuthorPage";
+import AuthPage from "./pages/AdminPanelPages/AuthPage/AuthPage";
+import AdminPage from "./pages/AdminPanelPages/AdminPage/AdminPage";
+import AuthorPage from "./pages/AdminPanelPages/Authors/MainPage/AuthorPage";
 import AdminLayout from "./layouts/AdminLayout/AdminLayout";
-import NotFoundPage from "./pages/Error/NotFoundPage/NotFoundPage";
-import TagsPage from "./pages/Tags/MainPage/TagsPage";
-import CreateAuthorPage from "./pages/Authors/CreateAuthorPage/CreateAuthorPage";
-import UpdateAuthorPage from "./pages/Authors/UpdateAuthorPage/UpdateAuthorPage";
-import CreateTagPage from "./pages/Tags/CreatePage/CreateTagPage";
-import UpdateTagPage from "./pages/Tags/UpdatePage/UpdateTagPage";
-import MainBooksPage from "./pages/Books/MainPage/MainBooksPage";
-import CreateBookPage from "./pages/Books/CreatePage/CreateBookPage";
-import UsersPage from "./pages/Users/MainPage/UsersPage";
-import UpdateUserPage from "./pages/Users/UpdatePage/UpdateUserPage";
-import UpdateBooksPage from "./pages/Books/UpdatePage/UpdateBooksPage";
-import CreateChapterPage from "./pages/Chapters/CreatePage/CreateChapterPage";
-import UpdateChapterPage from "./pages/Chapters/UpdatePage/UpdateChapterPage";
-import ChapterInfoPage from "./pages/Chapters/InformationPage/ChapterInfoPage";
+import NotFoundPage from "./pages/AdminPanelPages/Error/NotFoundPage/NotFoundPage";
+import TagsPage from "./pages/AdminPanelPages/Tags/MainPage/TagsPage";
+import CreateAuthorPage from "./pages/AdminPanelPages/Authors/CreateAuthorPage/CreateAuthorPage";
+import UpdateAuthorPage from "./pages/AdminPanelPages/Authors/UpdateAuthorPage/UpdateAuthorPage";
+import CreateTagPage from "./pages/AdminPanelPages/Tags/CreatePage/CreateTagPage";
+import UpdateTagPage from "./pages/AdminPanelPages/Tags/UpdatePage/UpdateTagPage";
+import MainBooksPage from "./pages/AdminPanelPages/Books/MainPage/MainBooksPage";
+import CreateBookPage from "./pages/AdminPanelPages/Books/CreatePage/CreateBookPage";
+import UsersPage from "./pages/AdminPanelPages/Users/MainPage/UsersPage";
+import UpdateUserPage from "./pages/AdminPanelPages/Users/UpdatePage/UpdateUserPage";
+import UpdateBooksPage from "./pages/AdminPanelPages/Books/UpdatePage/UpdateBooksPage";
+import CreateChapterPage from "./pages/AdminPanelPages/Chapters/CreatePage/CreateChapterPage";
+import UpdateChapterPage from "./pages/AdminPanelPages/Chapters/UpdatePage/UpdateChapterPage";
+import ChapterInfoPage from "./pages/AdminPanelPages/Chapters/InformationPage/ChapterInfoPage";
 import {TagContextProvider} from "./context/TagsContext";
 import {AuthorContextProvider} from "./context/AuthorContext";
+import UserLayout from "./layouts/UserLayout/UserLayout";
 
 const App = () => {
   return (
@@ -58,6 +59,9 @@ const App = () => {
                         <Route index element={<UsersPage/>}/>
                         <Route path={":id/edit"} element={<UpdateUserPage/>}/>
                     </Route>
+                </Route>
+                <Route path={"main"} element={<UserLayout/>}>
+                    <Route index />
                 </Route>
                 <Route path={"*"} element={<NotFoundPage/>}/>
             </Route>
