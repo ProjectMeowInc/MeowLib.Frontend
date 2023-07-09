@@ -1,6 +1,6 @@
 import React from 'react';
 import {Route, Routes} from "react-router-dom";
-import AuthPage from "./pages/AdminPanelPages/AuthPage/AuthPage";
+import AuthPage from "./pages/AuthPage/AuthPage";
 import AdminPage from "./pages/AdminPanelPages/AdminPage/AdminPage";
 import AuthorPage from "./pages/AdminPanelPages/Authors/MainPage/AuthorPage";
 import AdminLayout from "./layouts/AdminLayout/AdminLayout";
@@ -43,7 +43,7 @@ const App = () => {
                     <Route path={"books"}>
                         <Route index element={<MainBooksPage/>}/>
                         <Route path={"new"} element={<CreateBookPage/>}/>
-                        <Route path={":id/edit"}>
+                        <Route path={":bookId/edit"}>
                             <Route index element={
                                 <AuthorContextProvider>
                                     <TagContextProvider>
