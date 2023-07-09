@@ -9,20 +9,11 @@ const BurgerMenu = () => {
     const [userData, setUserData] = useState<IAccessTokenData | null>(null)
 
     useEffect(() => {
-
-        let accessToken: string
-
-        async function getAndSetAccessToken() {
-            const result = await TokenService.getAccessTokenAsync()
-
-            if (result !== null) {
-                accessToken = result
+        TokenService.getAccessTokenAsync().then(accessToken => {
+            if (accessToken) {
+                const accessTokenData = TokenService.parseAccessToken(accessToken)
+                setUserData(accessTokenData)
             }
-        }
-
-        getAndSetAccessToken().then(() => {
-            const accessTokenData = TokenService.parseAccessToken(accessToken)
-            setUserData(accessTokenData)
         })
     }, [])
 
