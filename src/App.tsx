@@ -21,6 +21,7 @@ import ChapterInfoPage from "./pages/AdminPanelPages/Chapters/InformationPage/Ch
 import {TagContextProvider} from "./context/TagsContext";
 import {AuthorContextProvider} from "./context/AuthorContext";
 import UserLayout from "./layouts/UserLayout/UserLayout";
+import MainPage from "./pages/UserPages/MainPage/MainPage";
 
 const App = () => {
   return (
@@ -61,7 +62,7 @@ const App = () => {
                     </Route>
                 </Route>
                 <Route path={"/"} element={<UserLayout/>}>
-                    <Route index />
+                    <Route index element={<MainPage/>}/>
                 </Route>
                 <Route path={"*"} element={<NotFoundPage/>}/>
             </Route>
