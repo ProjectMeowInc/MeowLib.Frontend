@@ -1,5 +1,6 @@
 .block {
     width: 22%;
+    position: absolute;
     display: flex;
     align-items: center;
     justify-content: space-between;
