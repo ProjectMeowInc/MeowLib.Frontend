@@ -9,20 +9,14 @@ import {AlertService} from "../../../../services/AlertService";
 import {Link} from "react-router-dom";
 import {ISearchAuthorRequest} from "../../../../services/models/requests/IAuthorRequests";
 import {ErrorTypesEnum} from "../../../../services/models/IError";
+import {GetAuthorsAsync} from "../../../../helpers/Authors/GetAuthorsAsync";
 
 const AuthorPage = () => {
 
     const [authorsList, setAuthorsList] = useState<IAuthorDTO[] | null>(null)
 
     useEffect( () => {
-        AuthorServices.getAuthorsAsync().then(response => {
-
-            if (ErrorService.isError(response)) {
-                return AlertService.errorMessage(response.displayMessage)
-            }
-
-            setAuthorsList(response.data)
-        })
+        GetAuthorsAsync().then(result => setAuthorsList(result))
     }, [])
 
     async function SearchHandler(data: ISearchAuthorRequest) {

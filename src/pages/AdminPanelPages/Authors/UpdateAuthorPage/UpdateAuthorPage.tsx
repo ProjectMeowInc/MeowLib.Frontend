@@ -4,10 +4,10 @@ import {AlertService} from "../../../../services/AlertService";
 import {AuthorServices} from "../../../../services/AuthorServices";
 import {ErrorTypesEnum} from "../../../../services/models/IError";
 import {useNavigate, useParams} from "react-router-dom";
-import {ErrorService} from "../../../../services/ErrorService";
 import {IAuthorDTO} from "../../../../services/models/DTO/IAuthorModels";
 import Preloader from "../../../../components/preloader/preloader";
 import {RedirectService} from "../../../../services/RedirectService";
+import {GetAuthorAsync} from "../../../../helpers/Authors/GetAuthorAsync";
 
 const UpdateAuthorPage = () => {
 
@@ -21,18 +21,7 @@ const UpdateAuthorPage = () => {
             return navigate("/NotFound")
         }
 
-        AuthorServices.getAuthorAsync(parseInt(params.id)).then(response => {
-            if (ErrorService.isError(response)) {
-
-                if (response.errorType === ErrorTypesEnum.Critical) {
-                    return AlertService.errorMessage(response.displayMessage)
-                }
-
-                return AlertService.warningMessage(response.displayMessage)
-            }
-
-            setAuthor(response)
-        })
+        GetAuthorAsync(parseInt(params.id)).then(result => setAuthor(result))
     }, [])
 
     function UpdateName(name: string) {

@@ -4,28 +4,15 @@ import {Link} from "react-router-dom";
 import Preloader from "../../../../components/preloader/preloader";
 import BooksListItem from "../../../../components/BooksPage/BookListItem/BooksListItem";
 import {IBooksResponse} from "../../../../services/models/responses/IBookResponse";
-import {BookService} from "../../../../services/BookService";
-import {ErrorService} from "../../../../services/ErrorService";
-import {ErrorTypesEnum} from "../../../../services/models/IError";
-import {AlertService} from "../../../../services/AlertService";
+import {GetBooksAsync} from "../../../../helpers/Books/GetBooks";
 
 const MainBooksPage = () => {
 
     const [bookList, setBookList] = useState<IBooksResponse | null>(null)
 
     useEffect(() => {
-        BookService.getBooksAsync().then(response => {
-            if (ErrorService.isError(response)) {
-                if (response.errorType === ErrorTypesEnum.Critical) {
-                    return AlertService.errorMessage(response.displayMessage)
-                }
-
-                return AlertService.warningMessage(response.displayMessage)
-            }
-
-            setBookList(response)
-        })
-    }, [])
+        GetBooksAsync().then(response => setBookList(response))
+    })
 
     return (
         <div className={styles.wrapper}>
