@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 import styles from "./authPage.module.css"
-import {ErrorTypesEnum} from "../../../services/models/IError";
-import {ErrorService} from "../../../services/ErrorService";
-import {TokenService} from "../../../services/TokenService";
-import {UserRolesEnum} from "../../../services/models/DTO/IUserModels";
-import {AlertService} from "../../../services/AlertService";
-import {AuthService} from "../../../services/AuthService";
-import {RedirectService} from "../../../services/RedirectService";
+import {ErrorTypesEnum} from "../../services/models/IError";
+import {ErrorService} from "../../services/ErrorService";
+import {TokenService} from "../../services/TokenService";
+import {UserRolesEnum} from "../../services/models/DTO/IUserModels";
+import {AlertService} from "../../services/AlertService";
+import {AuthService} from "../../services/AuthService";
+import {RedirectService} from "../../services/RedirectService";
 
 const AuthPage = () => {
 
