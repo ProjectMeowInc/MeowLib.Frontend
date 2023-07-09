@@ -12,7 +12,7 @@ const BurgerMenu = () => {
 
         let accessToken: string
 
-        async function getAccessToken() {
+        async function getAndSetAccessToken() {
             const result = await TokenService.getAccessTokenAsync()
 
             if (result !== null) {
@@ -20,7 +20,7 @@ const BurgerMenu = () => {
             }
         }
 
-        getAccessToken().then(() => {
+        getAndSetAccessToken().then(() => {
             const accessTokenData = TokenService.parseAccessToken(accessToken)
             setUserData(accessTokenData)
         })
