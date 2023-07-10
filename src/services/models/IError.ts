@@ -10,9 +10,9 @@ import {AlertService} from "../AlertService";
  * - Critical - критическая ошибка. Что-то, что нельзя контролируемого обработать. Например: неожиданный ответ от сервера.
  */
 export enum ErrorTypesEnum {
-    Warning,
-    Error,
-    Critical
+    Warning = 0,
+    Error = 1,
+    Critical = 2
 }
 
 /**
@@ -23,6 +23,7 @@ export enum ErrorTypesEnum {
 export interface IError {
     displayMessage: string
     errorType: ErrorTypesEnum
+    catchError: () => void
 }
 
 /**
@@ -32,6 +33,33 @@ export interface IErrorWithAction extends IError {
     action: "redirect" | "reload"
     param?: string
     execute: () => void
+}
+
+export class Error implements IError {
+    displayMessage: string;
+    errorType: ErrorTypesEnum;
+
+    constructor(displayMessage: string, errorType: ErrorTypesEnum) {
+        this.displayMessage = displayMessage
+        this.errorType = errorType
+    }
+
+    catchError(): void {
+        if (this.errorType === ErrorTypesEnum.Warning) {
+            AlertService.warningMessage(this.displayMessage)
+            return
+        }
+
+        if (this.errorType === ErrorTypesEnum.Error) {
+            AlertService.warningMessage(this.displayMessage)
+            return
+        }
+
+        if (this.errorType === ErrorTypesEnum.Critical) {
+            AlertService.errorMessage(this.displayMessage)
+        }
+    }
+
 }
 
 /**
@@ -48,6 +76,10 @@ export class ErrorWithAction implements IErrorWithAction {
         this.displayMessage = displayMessage
         this.errorType = errorType
         this.param = param
+    }
+
+    catchError(): void {
+        this.execute()
     }
 
      execute(): void {
