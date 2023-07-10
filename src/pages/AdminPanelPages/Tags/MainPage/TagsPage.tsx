@@ -1,7 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import styles from "./tagsPage.module.css"
-import {AlertService} from "../../../../services/AlertService";
-import {ErrorService} from "../../../../services/ErrorService";
 import Preloader from "../../../../components/preloader/preloader";
 import TagsPageListItem from "../../../../components/TagsPage/TagsPageListItem";
 import {ITagDTO} from "../../../../services/models/DTO/ITagDTO";
@@ -13,14 +11,16 @@ const TagsPage = () => {
     const [displayTagList, setDisplayTagList] = useState<ITagDTO[] | null>(null)
 
     useEffect(() => {
-        TagsService.getAllTagsAsync().then(response => {
+        TagsService.getAllTagsAsync().then(getTagsResult => {
 
-            if (ErrorService.isError(response)) {
-                return AlertService.errorMessage(response.displayMessage)
+            if (getTagsResult.tryCatchError()) {
+                return
             }
 
-            setTagList(response.data)
-            setDisplayTagList(response.data)
+            const tagList = getTagsResult.unwrap()
+
+            setTagList(tagList)
+            setDisplayTagList(tagList)
         })
     }, [])
 

@@ -4,7 +4,6 @@ import {ErrorService} from "../../../../services/ErrorService";
 import {TagsService} from "../../../../services/TagsService";
 import {ICreateTagRequest} from "../../../../services/models/requests/ITagRequests";
 import {AlertService} from "../../../../services/AlertService";
-import {ErrorTypesEnum} from "../../../../services/models/IError";
 import {RedirectService} from "../../../../services/RedirectService";
 
 const CreateTagPage = () => {
@@ -21,17 +20,13 @@ const CreateTagPage = () => {
             description: tagDescription
         }
 
-        TagsService.createTagAsync(data).then(err => {
-            if (err === null) {
-                AlertService.successMessage("Тэг успешно создан")
-                return RedirectService.delayRedirectToPrevPage()
+        TagsService.createTagAsync(data).then(createTagResult => {
+            if (createTagResult.tryCatchError()) {
+                return
             }
 
-            if (err.errorType === ErrorTypesEnum.Critical) {
-                return AlertService.errorMessage(err.displayMessage)
-            }
-
-            return AlertService.warningMessage(err.displayMessage)
+            AlertService.successMessage("Тег успешно создан")
+            return RedirectService.delayRedirectToPrevPage()
         })
     }
 

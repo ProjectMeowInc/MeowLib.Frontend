@@ -3,8 +3,6 @@ import styles from "./updateTagPage.module.css"
 import {TagsService} from "../../../../services/TagsService";
 import {useNavigate, useParams} from "react-router-dom";
 import {AlertService} from "../../../../services/AlertService";
-import {ErrorTypesEnum} from "../../../../services/models/IError";
-import {ErrorService} from "../../../../services/ErrorService";
 import Preloader from "../../../../components/preloader/preloader";
 import {ITagDTO} from "../../../../services/models/DTO/ITagDTO";
 import {RedirectService} from "../../../../services/RedirectService";
@@ -21,20 +19,12 @@ const UpdateTagPage = () => {
             return navigate("/404NotFound")
         }
 
-        TagsService.getTagByIdAsync(parseInt(params.id)).then(response => {
-            if (ErrorService.isError(response)) {
-                if (response.errorType === ErrorTypesEnum.Critical) {
-                    return AlertService.errorMessage(response.displayMessage)
-                }
-
-                return AlertService.warningMessage(response.displayMessage)
+        TagsService.getTagByIdAsync(parseInt(params.id)).then(getTagResult => {
+            if (getTagResult.tryCatchError()) {
+                return
             }
 
-            setTagData({
-                id: response.id,
-                name: response.name,
-                description: response.description ?? "На описание не хватило бюджета"
-            })
+            setTagData(getTagResult.unwrap())
         })
 
     }, [])
@@ -50,14 +40,10 @@ const UpdateTagPage = () => {
             return AlertService.warningMessage("Произошла ошибка")
         }
 
-        const err= await TagsService.updateTagAsync(parseInt(params.id), tagData)
+        const updateTagResult = await TagsService.updateTagAsync(parseInt(params.id), tagData)
 
-        if (err !== null) {
-            if (err.errorType === ErrorTypesEnum.Critical) {
-                return AlertService.errorMessage(err.displayMessage)
-            }
-
-            AlertService.warningMessage(err.displayMessage)
+        if (updateTagResult.tryCatchError()) {
+            return
         }
 
         AlertService.successMessage("Успешно обновлена информация о тэге")
