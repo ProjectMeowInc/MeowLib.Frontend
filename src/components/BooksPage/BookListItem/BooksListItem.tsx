@@ -4,16 +4,13 @@ import styles from "./booksListItem.module.css";
 import {Link} from "react-router-dom";
 import {IBookDTO} from "../../../services/models/DTO/IBookDTO";
 import {BookService} from "../../../services/BookService";
-import {RedirectService} from "../../../services/RedirectService";
 
 const BooksListItem = ({id, name, description}: IBookDTO) => {
     function DeleteHandler () {
-        BookService.deleteBookAsync(id).then(err => {
-            if (err !== null) {
-                return AlertService.errorMessage(err.displayMessage)
+        BookService.deleteBookAsync(id).then(deleteBookResult => {
+            if (deleteBookResult.tryCatchError()) {
+                return
             }
-
-            RedirectService.delayReloadPage()
 
             return AlertService.successMessage("Книга была успешно удалена")
         })
