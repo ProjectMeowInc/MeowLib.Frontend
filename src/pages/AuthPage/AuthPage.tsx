@@ -79,10 +79,14 @@ const AuthPage = () => {
 
                    <hr className={styles.separator}/>
 
-                   <label className={styles.label}>
-                       <input onClick={() => setIsLongSession(prevState => !prevState)} type="checkbox"/>
-                       <p>Запомнить меня</p>
-                   </label>
+                   {
+                       !isLoginPage
+                           ? <></>
+                           : <label className={styles.label}>
+                               <input onClick={() => setIsLongSession(prevState => !prevState)} type="checkbox"/>
+                               <p>Запомнить меня</p>
+                           </label>
+                   }
 
                    <button onClick={async () => ClickHandler(login, password, isLoginPage)} className={styles.button}>Отправить</button>
                </div>
