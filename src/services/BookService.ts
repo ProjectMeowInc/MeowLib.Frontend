@@ -5,6 +5,7 @@ import {TokenService} from "./TokenService";
 import {ErrorService} from "./ErrorService";
 import {IBooksResponse} from "./models/responses/IBookResponse";
 import {ICreateBookRequest, IUpdateBookRequest, IUpdateBookTagsRequest} from "./models/requests/IBookRequests";
+import {EmptyResult, Result} from "./result/Result";
 
 /**
  * Сервис для работы с книгами
@@ -15,7 +16,7 @@ export class BookService {
      * Метод для получения всех книг
      * @return массив из книг или IError
      */
-    static async getBooksAsync(): Promise<IBooksResponse | IError> {
+    static async getBooksAsync(): Promise<Result<IBooksResponse>> {
         try {
             const response = await axios.get<IBooksResponse>(process.env.REACT_APP_URL_API + "/books", {
                 headers: {
@@ -23,10 +24,10 @@ export class BookService {
                 }
             })
 
-            return response.data
+            return Result.ok(response.data)
         }
         catch (err: any) {
-            return ErrorService.toServiceError(err, "BookService")
+            return Result.withError(ErrorService.toServiceError(err, "BookService"))
         }
     }
 
@@ -35,19 +36,19 @@ export class BookService {
      * @param id id книги
      * @returns книгу в виде IBook или ошибку в виде IError
      */
-    static async getBookAsync(id: number): Promise<IBook | IError> {
+    static async getBookAsync(id: number): Promise<Result<IBook>> {
         try {
             const response = await axios.get<IBook>(process.env.REACT_APP_URL_API + `/books/${id}`)
 
-            return response.data
+            return Result.ok(response.data)
         }
         catch (err: any) {
-            return ErrorService.toServiceError(err, "BookService")
+            return Result.withError(ErrorService.toServiceError(err, "BookService"))
         }
     }
 
     /**
-     * Метод для созадния книги
+     * Метод для создания книги
      * @param data данные книги
      * @returns IError или null
      */
@@ -87,12 +88,12 @@ export class BookService {
     }
 
     /**
-     * Метод для обновлении информации о книге
+     * Метод для обновления информации о книге
      * @param id книги
      * @param data новые данные книги
      * @returns IError или null
      */
-    static async updateBookAsync(id: number, data: IUpdateBookRequest): Promise<IError | null> {
+    static async updateBookAsync(id: number, data: IUpdateBookRequest): Promise<EmptyResult> {
         try {
             await axios.put(process.env.REACT_APP_URL_API + `/books/${id}/info`, data, {
                 headers: {
@@ -100,10 +101,10 @@ export class BookService {
                 }
             })
 
-            return null
+            return EmptyResult.ok()
         }
         catch (err: any) {
-            return ErrorService.toServiceError(err, "BookService")
+            return EmptyResult.withError(ErrorService.toServiceError(err, "BookService"))
         }
     }
 
@@ -129,9 +130,9 @@ export class BookService {
     }
 
     /**
-     * Метод для добавления тэгов для книги
+     * Метод для добавления тегов для книги
      * @param bookId id книги
-     * @param tags массив из id тэгов
+     * @param tags массив из id тегов
      * @returns IError или null
      */
     static async updateTagsBookAsync(bookId: number, tags: IUpdateBookTagsRequest): Promise<IError | null> {
@@ -150,7 +151,7 @@ export class BookService {
     }
 
     /**
-     * Метод для обновленя обложки книги
+     * Метод для обновления обложки книги
      * @param bookId id книги
      * @param image изображение в виде formData
      * @returns IError или null
