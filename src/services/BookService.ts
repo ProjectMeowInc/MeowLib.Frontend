@@ -1,4 +1,3 @@
-import {IError} from "./models/IError";
 import {IBook} from "./models/DTO/IBookDTO";
 import axios from "axios";
 import {TokenService} from "./TokenService";
@@ -52,7 +51,7 @@ export class BookService {
      * @param data данные книги
      * @returns IError или null
      */
-    static async createBookAsync(data: ICreateBookRequest): Promise<IError | null> {
+    static async createBookAsync(data: ICreateBookRequest): Promise<EmptyResult> {
         try {
             await axios.post(process.env.REACT_APP_URL_API + "/books", data, {
                 headers: {
@@ -60,10 +59,10 @@ export class BookService {
                 }
             })
 
-            return null
+            return EmptyResult.ok()
         }
         catch (err: any) {
-            return ErrorService.toServiceError(err, "BookService")
+            return EmptyResult.withError(ErrorService.toServiceError(err, "BookService"))
         }
     }
 
@@ -72,7 +71,7 @@ export class BookService {
      * @param id книги
      * @returns IError или null
      */
-    static async deleteBookAsync(id: number): Promise<IError | null> {
+    static async deleteBookAsync(id: number): Promise<EmptyResult> {
         try {
             await axios.delete(process.env.REACT_APP_URL_API + `/books/${id}`, {
                 headers: {
@@ -80,10 +79,10 @@ export class BookService {
                 }
             })
 
-            return null
+            return EmptyResult.ok()
         }
         catch (err: any) {
-            return ErrorService.toServiceError(err, "BookService")
+            return EmptyResult.withError(ErrorService.toServiceError(err, "BookService"))
         }
     }
 
@@ -114,7 +113,7 @@ export class BookService {
      * @param authorId id автора
      * @returns IError или null
      */
-    static  async updateBookAuthorAsync(authorId: number, bookId: number): Promise<IError | null> {
+    static  async updateBookAuthorAsync(authorId: number, bookId: number): Promise<EmptyResult> {
         try {
             await axios.put(process.env.REACT_APP_URL_API + `/books/${bookId}/author/${authorId}`,{}, {
                 headers: {
@@ -122,10 +121,10 @@ export class BookService {
                 }
             })
 
-            return null
+            return EmptyResult.ok()
         }
         catch (err: any) {
-            return ErrorService.toServiceError(err, "BookService")
+            return EmptyResult.withError(ErrorService.toServiceError(err, "BookService"))
         }
     }
 
@@ -135,7 +134,7 @@ export class BookService {
      * @param tags массив из id тегов
      * @returns IError или null
      */
-    static async updateTagsBookAsync(bookId: number, tags: IUpdateBookTagsRequest): Promise<IError | null> {
+    static async updateTagsBookAsync(bookId: number, tags: IUpdateBookTagsRequest): Promise<EmptyResult> {
         try {
             await axios.put(process.env.REACT_APP_URL_API + `/books/${bookId}/tags`, tags, {
                 headers: {
@@ -143,10 +142,10 @@ export class BookService {
                 }
             })
 
-            return null
+            return EmptyResult.ok()
         }
         catch (err: any) {
-            return ErrorService.toServiceError(err, "BookService")
+            return EmptyResult.withError(ErrorService.toServiceError(err, "BookService"))
         }
     }
 
@@ -156,7 +155,7 @@ export class BookService {
      * @param image изображение в виде formData
      * @returns IError или null
      */
-    static async uploadImageBookAsync(bookId: number, image: FormData): Promise<IError | null> {
+    static async uploadImageBookAsync(bookId: number, image: FormData): Promise<EmptyResult> {
         try {
             await axios.put(process.env.REACT_APP_URL_API + `/books/${bookId}/image`, image, {
                 headers: {
@@ -164,10 +163,10 @@ export class BookService {
                 }
             })
 
-            return null
+            return EmptyResult.ok()
         }
         catch (err: any) {
-            return ErrorService.toServiceError(err, "BookService")
+            return EmptyResult.withError(ErrorService.toServiceError(err, "BookService"))
         }
     }
 }

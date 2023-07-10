@@ -4,6 +4,7 @@ import {IError} from "./models/IError";
 import {ErrorService} from "./ErrorService";
 import {IUserDTO} from "./models/DTO/IUserModels";
 import {TokenService} from "./TokenService";
+import {Result} from "./result/Result";
 
 /**
  * Сервис для работы с пользователем.
@@ -14,14 +15,14 @@ export class UserService {
      * Метод для получения всех пользователей
      * @returns Возвращает ошибку или массив с пользователями
      */
-    static async getUsersAsync(): Promise<IUserDTO[] | IError> {
+    static async getUsersAsync(): Promise<Result<IUserDTO[]>> {
         try {
             const response = await axios.get<IUserDTO[]>(process.env.REACT_APP_URL_API + "/users")
 
-            return response.data
+            return Result.ok(response.data)
         }
         catch (err: any) {
-            return ErrorService.toServiceError(err, "UserService")
+            return Result.withError(ErrorService.toServiceError(err, "UserService"))
         }
     }
 
@@ -31,7 +32,7 @@ export class UserService {
      * @param data нформация мольхлователя
      * @returns Возвращает IUserDTO или IError
      */
-    static async updateUserAsync(id: number, data: IUpdateUserInfoRequest): Promise<IUserDTO | IError> {
+    static async updateUserAsync(id: number, data: IUpdateUserInfoRequest): Promise<Result<IUserDTO>> {
         try {
             const response = await axios.put<IUserDTO>(process.env.REACT_APP_URL_API + `/users/${id}`, data, {
                 headers: {
@@ -39,10 +40,10 @@ export class UserService {
                 }
             })
 
-            return response.data
+            return Result.ok(response.data)
         }
         catch (err: any) {
-            return ErrorService.toServiceError(err, "UserService")
+            return Result.withError(ErrorService.toServiceError(err, "UserService"))
         }
     }
 }

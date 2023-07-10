@@ -3,6 +3,7 @@ import {IError} from "./models/IError";
 import axios from "axios";
 import {TokenService} from "./TokenService";
 import {ErrorService} from "./ErrorService";
+import {EmptyResult} from "./result/Result";
 
 /**
  * Сервис для логирования в тг
@@ -14,7 +15,7 @@ export class LogService {
      * @param data тело ошибки
      * @returns null при успехе или ошибка
      */
-    static async sendLogAsync(data: ISendLogRequest): Promise<IError | null> {
+    static async sendLogAsync(data: ISendLogRequest): Promise<EmptyResult> {
         try {
             await axios.post(process.env.REACT_APP_URL_API + "/logs", data, {
                 headers: {
@@ -22,10 +23,10 @@ export class LogService {
                 }
             })
 
-            return null
+            return EmptyResult.ok()
         }
         catch (err: any) {
-            return ErrorService.toServiceError(err, "LogService")
+            return EmptyResult.withError(ErrorService.toServiceError(err, "LogService"))
         }
     }
 }
