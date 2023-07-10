@@ -7,6 +7,7 @@ import {IAccessTokenData} from "./models/DTO/ITokenModels";
 import axios from "axios";
 import {ILoginResponse} from "./models/responses/IAuthResponses";
 import {AlertService} from "./AlertService";
+import {RedirectService} from "./RedirectService";
 
 /**
  * Сервис для работы с токеном
@@ -53,7 +54,7 @@ export class TokenService {
 
             const refreshToken = this.getRefreshToken()
 
-            if (refreshToken === null) {
+            if (refreshToken === null && RedirectService.getPath() !== "/") {
                 return new ErrorWithAction("redirect", "Авторизуйтесь", ErrorTypesEnum.Critical, "/login")
             }
 
@@ -173,7 +174,6 @@ export class TokenService {
      * @returns null при успешном выполнении и IError при ошибке
      */
     static setAccessToken (token: string): void {
-
         Cookies.set("AccessToken", token)
     }
 }
