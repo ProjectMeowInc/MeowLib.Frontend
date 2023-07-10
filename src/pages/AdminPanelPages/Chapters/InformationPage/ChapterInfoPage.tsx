@@ -4,9 +4,6 @@ import Preloader from "../../../../components/preloader/preloader";
 import {ChapterService} from "../../../../services/ChapterService";
 import {useParams} from "react-router-dom";
 import {RedirectService} from "../../../../services/RedirectService";
-import {ErrorService} from "../../../../services/ErrorService";
-import {ErrorTypesEnum} from "../../../../services/models/IError";
-import {AlertService} from "../../../../services/AlertService";
 import styles from "./chapterInfoPage.module.css";
 
 const ChapterInfoPage = () => {
@@ -27,17 +24,12 @@ const ChapterInfoPage = () => {
             return RedirectService.redirectToNotFoundPage
         }
 
-        ChapterService.getChapterAsync(parseInt(bookId), parseInt(chapterId)).then(chapterResult => {
-            if (ErrorService.isError(chapterResult)) {
-                if (chapterResult.errorType === ErrorTypesEnum.Critical) {
-                    AlertService.errorMessage(chapterResult.displayMessage)
-                    return RedirectService.redirectToNotFoundPage()
-                }
-
-                return AlertService.warningMessage(chapterResult.displayMessage)
+        ChapterService.getChapterAsync(parseInt(bookId), parseInt(chapterId)).then(getChapterResult => {
+            if (getChapterResult.tryCatchError()) {
+                return
             }
 
-            setChapterData(chapterResult)
+            setChapterData(getChapterResult.unwrap())
         })
     }, [])
 

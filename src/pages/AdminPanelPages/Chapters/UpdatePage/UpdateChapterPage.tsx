@@ -5,8 +5,6 @@ import {ChapterService} from "../../../../services/ChapterService";
 import {useParams} from "react-router-dom";
 import {RedirectService} from "../../../../services/RedirectService";
 import {AlertService} from "../../../../services/AlertService";
-import {ErrorService} from "../../../../services/ErrorService";
-import {ErrorTypesEnum} from "../../../../services/models/IError";
 
 const UpdateChapterPage = () => {
 
@@ -19,7 +17,7 @@ const UpdateChapterPage = () => {
 
     async function SubmitHandlerAsync(): Promise<void> {
 
-        if (!params.id) {
+        if (!params.bookId) {
             return RedirectService.redirectToNotFoundPage()
         }
 
@@ -31,13 +29,10 @@ const UpdateChapterPage = () => {
             return AlertService.warningMessage("Не все поля заполнены")
         }
 
-        const updateChapterResult = await ChapterService.updateChapterTextAsync(parseInt(params.id), parseInt(params.chapterId), chapterData)
+        const updateChapterResult = await ChapterService.updateChapterTextAsync(parseInt(params.bookId), parseInt(params.chapterId), chapterData)
 
-        if (ErrorService.isError(updateChapterResult)) {
-            if (updateChapterResult.errorType === ErrorTypesEnum.Critical) {
-                return AlertService.errorMessage(updateChapterResult.displayMessage)
-            }
-            return AlertService.warningMessage(updateChapterResult.displayMessage)
+        if (updateChapterResult.tryCatchError()) {
+            return
         }
 
         AlertService.successMessage("Текст успешно обновлён")
