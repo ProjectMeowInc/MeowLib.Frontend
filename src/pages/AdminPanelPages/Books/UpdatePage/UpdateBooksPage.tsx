@@ -78,49 +78,40 @@ const UpdateBooksPage = () => {
             return AlertService.warningMessage(updateBookTagsResult.displayMessage)
         }
 
-        // Проверка чтобы не ругался статический анализавтор
+        if (image !== null) {
+            const uploadImageResult = await BookService.uploadImageBookAsync(parseInt(params.bookId), image)
 
-        if (image === null) {
-            return
-        }
+            if (ErrorService.isError(uploadImageResult)) {
+                if (uploadImageResult.errorType === ErrorTypesEnum.Critical) {
+                    return AlertService.errorMessage(uploadImageResult.displayMessage)
+                }
 
-        const uploadImageResult = await BookService.uploadImageBookAsync(parseInt(params.bookId), image)
-
-        if (ErrorService.isError(uploadImageResult)) {
-            if (uploadImageResult.errorType === ErrorTypesEnum.Critical) {
-                return AlertService.errorMessage(uploadImageResult.displayMessage)
+                return AlertService.warningMessage(uploadImageResult.displayMessage)
             }
-
-            return AlertService.warningMessage(uploadImageResult.displayMessage)
         }
 
-        if (selectedAuthor === null) {
-            return
-        }
+        if (selectedAuthor !== null) {
+            const updateAuthorResult = await BookService.updateBookAuthorAsync(selectedAuthor, parseInt(params.bookId))
 
-        const updateAuthorResult = await BookService.updateBookAuthorAsync(selectedAuthor, parseInt(params.bookId))
+            if (ErrorService.isError(updateAuthorResult)) {
+                if (updateAuthorResult.errorType === ErrorTypesEnum.Critical) {
+                    return AlertService.errorMessage(updateAuthorResult.displayMessage)
+                }
 
-        if (ErrorService.isError(updateAuthorResult)) {
-            if (updateAuthorResult.errorType === ErrorTypesEnum.Critical) {
-                return AlertService.errorMessage(updateAuthorResult.displayMessage)
+                return AlertService.warningMessage(updateAuthorResult.displayMessage)
             }
-
-            return AlertService.warningMessage(updateAuthorResult.displayMessage)
         }
 
-        //Чтобы не ругался анализатор
+        if (bookData !== null) {
+            const updateBookResult = await BookService.updateBookAsync(parseInt(params.bookId), bookData)
 
-        if (bookData === null) {
-            return
-        }
+            if (ErrorService.isError(updateBookResult)) {
+                if (updateBookResult.errorType === ErrorTypesEnum.Critical) {
+                    return AlertService.errorMessage(updateBookResult.displayMessage)
+                }
 
-        const updateBookResult = await BookService.updateBookAsync(parseInt(params.bookId), bookData)
-
-        if (ErrorService.isError(updateBookResult)) {            if (updateBookResult.errorType === ErrorTypesEnum.Critical) {
-                return AlertService.errorMessage(updateBookResult.displayMessage)
+                return AlertService.warningMessage(updateBookResult.displayMessage)
             }
-
-            return AlertService.warningMessage(updateBookResult.displayMessage)
         }
 
         AlertService.successMessage("Книга успешно обновлена")
