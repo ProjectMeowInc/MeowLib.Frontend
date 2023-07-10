@@ -3,7 +3,6 @@ import styles from "./createBookPage.module.css"
 import {ICreateBookRequest} from "../../../../services/models/requests/IBookRequests";
 import {BookService} from "../../../../services/BookService";
 import {AlertService} from "../../../../services/AlertService";
-import {ErrorTypesEnum} from "../../../../services/models/IError";
 import {RedirectService} from "../../../../services/RedirectService";
 
 const CreateBookPage = () => {
@@ -15,13 +14,10 @@ const CreateBookPage = () => {
             return AlertService.warningMessage("Заполните поля")
         }
 
-        const err = await BookService.createBookAsync(bookData)
+        const createBookResult = await BookService.createBookAsync(bookData)
 
-        if (err !== null) {
-            if (err.errorType === ErrorTypesEnum.Critical) {
-                return AlertService.errorMessage(err.displayMessage)
-            }
-            return AlertService.warningMessage(err.displayMessage)
+        if (createBookResult.tryCatchError()) {
+            return
         }
 
         AlertService.successMessage("Книга успешно создана")

@@ -4,14 +4,21 @@ import {Link} from "react-router-dom";
 import Preloader from "../../../../components/preloader/preloader";
 import BooksListItem from "../../../../components/BooksPage/BookListItem/BooksListItem";
 import {IBooksResponse} from "../../../../services/models/responses/IBookResponse";
-import {GetBooksAsync} from "../../../../helpers/Books/GetBooks";
+import {BookService} from "../../../../services/BookService";
+
 
 const MainBooksPage = () => {
 
     const [bookList, setBookList] = useState<IBooksResponse | null>(null)
 
     useEffect(() => {
-        GetBooksAsync().then(response => setBookList(response))
+        BookService.getBooksAsync().then(getBooksResult => {
+            if (getBooksResult.tryCatchError()) {
+                return
+            }
+
+            setBookList(getBooksResult.unwrap())
+        })
     },[])
 
     return (
