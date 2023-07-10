@@ -32,10 +32,8 @@ const BurgerMenu = () => {
                         <p className={styles.login}>{userData.login}</p>
                         <p className={styles.list_item}>Избранное</p>
                     </div>
-                    : <div className={styles.list}>
-                        <p className={styles.list_item}>Вход</p>
-                        <p className={styles.list_item}>Регистрация</p>
-                    </div>
+                    : <Link to={"/login"} className={styles.list_item}>Вход или регистрация</Link>
+
                 }
                 <p className={styles.list_item}>Библиотека</p>
 
