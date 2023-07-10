@@ -12,7 +12,7 @@ const MainBooksPage = () => {
 
     useEffect(() => {
         GetBooksAsync().then(response => setBookList(response))
-    })
+    },[])
 
     return (
         <div className={styles.wrapper}>
