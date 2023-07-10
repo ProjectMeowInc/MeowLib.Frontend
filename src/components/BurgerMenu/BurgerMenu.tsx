@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react';
 import styles from "./burgerMenu.module.css"
 import {IAccessTokenData} from "../../services/models/DTO/ITokenModels";
 import {TokenService} from "../../services/TokenService";
+import {UserRolesEnum} from "../../services/models/DTO/IUserModels";
+import {Link} from "react-router-dom";
 
 const BurgerMenu = () => {
 
@@ -24,7 +26,7 @@ const BurgerMenu = () => {
                 <span></span>
                 <span></span>
             </div>
-            <div className={isOpen ? styles.menu : styles.menu_active}>
+            <div className={isOpen ? styles.menu_active : styles.menu}>
                 {userData !== null
                     ? <div>
                         <p className={styles.login}>{userData.login}</p>
@@ -36,6 +38,12 @@ const BurgerMenu = () => {
                     </div>
                 }
                 <p className={styles.list_item}>Библиотека</p>
+
+                {
+                    userData && userData.userRole === UserRolesEnum.Admin || userData && userData.userRole === UserRolesEnum.Moderator
+                        ? <Link className={styles.list_item} to={"/admin"}>Админ панель</Link>
+                        : <></>
+                }
 
             </div>
         </div>
