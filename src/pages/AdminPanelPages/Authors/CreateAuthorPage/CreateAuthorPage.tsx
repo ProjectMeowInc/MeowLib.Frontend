@@ -3,7 +3,6 @@ import styles from "./createAuthorPage.module.css"
 import {AlertService} from "../../../../services/AlertService";
 import {TokenService} from "../../../../services/TokenService";
 import {AuthorServices} from "../../../../services/AuthorServices";
-import {ErrorTypesEnum} from "../../../../services/models/IError";
 import {ICreateAuthorRequest} from "../../../../services/models/requests/IAuthorRequests";
 import {RedirectService} from "../../../../services/RedirectService";
 
@@ -27,13 +26,9 @@ const CreateAuthorPage = () => {
             return AlertService.errorMessage("Ошибка токена. Пожалуйста авторизуйтесь заново.")
         }
 
-        AuthorServices.createAuthorAsync(requestData).then(error => {
-            if(error !== null) {
-                if(error.errorType === ErrorTypesEnum.Critical) {
-                    return AlertService.errorMessage(error.displayMessage)
-                }
-
-                return AlertService.warningMessage(error.displayMessage)
+        AuthorServices.createAuthorAsync(requestData).then(createAuthorResult => {
+            if(createAuthorResult.tryCatchError()) {
+                return
             }
             return  AlertService.successMessage("Автор успешно создан")
         })

@@ -2,12 +2,10 @@ import React, {useEffect, useState} from 'react';
 import styles from "../CreateAuthorPage/createAuthorPage.module.css";
 import {AlertService} from "../../../../services/AlertService";
 import {AuthorServices} from "../../../../services/AuthorServices";
-import {ErrorTypesEnum} from "../../../../services/models/IError";
 import {useNavigate, useParams} from "react-router-dom";
 import {IAuthorDTO} from "../../../../services/models/DTO/IAuthorModels";
 import Preloader from "../../../../components/preloader/preloader";
 import {RedirectService} from "../../../../services/RedirectService";
-import {GetAuthorAsync} from "../../../../helpers/Authors/GetAuthorAsync";
 
 const UpdateAuthorPage = () => {
 
@@ -21,7 +19,13 @@ const UpdateAuthorPage = () => {
             return navigate("/NotFound")
         }
 
-        GetAuthorAsync(parseInt(params.id)).then(result => setAuthor(result))
+        AuthorServices.getAuthorAsync(parseInt(params.id)).then(getAuthorResult => {
+            if (getAuthorResult.tryCatchError()) {
+                return
+            }
+
+            setAuthor(getAuthorResult.unwrap())
+        })
     }, [])
 
     function UpdateName(name: string) {
@@ -44,16 +48,12 @@ const UpdateAuthorPage = () => {
             return AlertService.errorMessage("Неожиданное поведение")
         }
 
-        AuthorServices.updateAuthorAsync(author.id, author.name).then(err => {
-            if (err !== null) {
-                if (err.errorType === ErrorTypesEnum.Critical) {
-                    return AlertService.errorMessage(err.displayMessage)
-                }
-                return AlertService.warningMessage(err.displayMessage)
+        AuthorServices.updateAuthorAsync(author.id, author.name).then(getAuthorResult => {
+            if (getAuthorResult.tryCatchError()) {
+                return
             }
 
             AlertService.successMessage("Автор был успешно обновлён")
-
         })
 
         return RedirectService.delayRedirectToPrevPage()

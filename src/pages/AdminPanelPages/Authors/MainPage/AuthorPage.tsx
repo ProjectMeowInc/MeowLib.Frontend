@@ -2,35 +2,34 @@ import React, {useEffect, useState} from 'react';
 import AuthorListItem from "../../../../components/AuthorPage/AuthorListItem";
 import styles from "./authorsPage.module.css"
 import {AuthorServices} from "../../../../services/AuthorServices";
-import {ErrorService} from "../../../../services/ErrorService";
 import {IAuthorDTO} from "../../../../services/models/DTO/IAuthorModels";
 import Preloader from "../../../../components/preloader/preloader";
-import {AlertService} from "../../../../services/AlertService";
 import {Link} from "react-router-dom";
 import {ISearchAuthorRequest} from "../../../../services/models/requests/IAuthorRequests";
-import {ErrorTypesEnum} from "../../../../services/models/IError";
-import {GetAuthorsAsync} from "../../../../helpers/Authors/GetAuthorsAsync";
 
 const AuthorPage = () => {
 
     const [authorsList, setAuthorsList] = useState<IAuthorDTO[] | null>(null)
 
     useEffect( () => {
-        GetAuthorsAsync().then(result => setAuthorsList(result))
+        AuthorServices.getAuthorsAsync().then(getAuthorsResult => {
+            if (getAuthorsResult.tryCatchError()) {
+                return
+            }
+
+            setAuthorsList(getAuthorsResult.unwrap())
+        })
     }, [])
 
     async function SearchHandler(data: ISearchAuthorRequest) {
 
         const searchResult = await AuthorServices.searchAuthorWithParamsAsync(data)
 
-        if (ErrorService.isError(searchResult)) {
-            if (searchResult.errorType === ErrorTypesEnum.Critical) {
-                return AlertService.errorMessage(searchResult.displayMessage)
-            }
+        if (searchResult.tryCatchError()) {
             return
         }
 
-        return setAuthorsList(searchResult)
+        return setAuthorsList(searchResult.unwrap())
     }
 
     return (
