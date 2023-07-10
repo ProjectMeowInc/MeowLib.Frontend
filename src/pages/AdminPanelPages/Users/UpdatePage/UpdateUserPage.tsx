@@ -3,10 +3,8 @@ import styles from "./updateUserPage.module.css";
 import {IUpdateUserInfoRequest} from "../../../../services/models/requests/IUserRequests";
 import {UserRolesEnum} from "../../../../services/models/DTO/IUserModels";
 import {useParams} from "react-router-dom";
-import {ErrorTypesEnum} from "../../../../services/models/IError";
 import {AlertService} from "../../../../services/AlertService";
 import {UserService} from "../../../../services/UserService";
-import {ErrorService} from "../../../../services/ErrorService";
 import {RedirectService} from "../../../../services/RedirectService";
 
 const UpdateUserPage = () => {
@@ -33,14 +31,10 @@ const UpdateUserPage = () => {
             return AlertService.warningMessage("Вы не указали изменения")
         }
 
-        const result = UserService.updateUserAsync(parseInt(params.id), userData)
+        const updateUserResult = await UserService.updateUserAsync(parseInt(params.id), userData)
 
-        if (ErrorService.isError(result)) {
-            if (result.errorType === ErrorTypesEnum.Critical) {
-                return AlertService.errorMessage(result.displayMessage)
-            }
-
-            return AlertService.warningMessage(result.displayMessage)
+        if (updateUserResult.tryCatchError()) {
+            return
         }
 
         AlertService.successMessage("Информация успешно обновлена")

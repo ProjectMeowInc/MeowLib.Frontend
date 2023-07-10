@@ -1,4 +1,4 @@
-import {ErrorTypesEnum, IError, IErrorWithAction} from "./models/IError";
+import {Error, ErrorTypesEnum, IError, IErrorWithAction} from "./models/IError";
 import {AxiosError} from "axios";
 import {IBaseErrorResponse} from "./models/responses/errors/IBaseErrorResponse";
 import {LogService} from "./LogService";
@@ -11,28 +11,22 @@ export class ErrorService {
     /**
      * Метод создаёт модель критической ошибки. 
      * 
-     * TODO: Может стоит добавить логирование таких ошибок на backend.
+     * TODO: Может, стоит добавить логирование таких ошибок на backend.
      * @param displayMessage Сообщение для отображения в интерфейсе. 
      * Для критических ошибок стандартное значение - "Неизвестная критическая ошибка".
      * @returns Модель ошибки.
      */
     static criticalError(displayMessage: string | null = null): IError {
-        return {
-            displayMessage: displayMessage ?? "Неизвестная ошибка. Попробуйте ещё раз.",
-            errorType: ErrorTypesEnum.Critical
-        };
+        return new Error(displayMessage ?? "Неизвестная ошибка", ErrorTypesEnum.Critical);
     }
 
     /**
-     * Метод создаёт модель варнинг-ошибки. 
+     * Метод создаёт модель warning-ошибки.
      * @param displayMessage Сообщение для отображения в интерфейсе. Может быть пустым.
      * @returns Модель ошибки.
      */
     static warningError(displayMessage: string | null): IError {
-        return {
-            displayMessage: displayMessage ?? "Неизвестная ошибка",
-            errorType: ErrorTypesEnum.Warning
-        };
+        return new Error(displayMessage ?? "Неизвестная ошибка", ErrorTypesEnum.Warning);
     }
 
     /**
@@ -41,10 +35,7 @@ export class ErrorService {
      * @returns Модель ошибки.
      */
     static commonError(displayMessage: string | null): IError {
-        return {
-            displayMessage: displayMessage ?? "Неизвестная ошибка",
-            errorType: ErrorTypesEnum.Error
-        };
+        return new Error(displayMessage ?? "Неизвестная ошибка", ErrorTypesEnum.Error);
     }
 
     /**
@@ -61,6 +52,7 @@ export class ErrorService {
         if(typeof(data) === "string") {
             return false
         }
+
         // noinspection RedundantIfStatementJS
         if (!("errorType" in data) || !("displayMessage" in data)) {
             return false

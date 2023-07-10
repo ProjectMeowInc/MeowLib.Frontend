@@ -5,7 +5,6 @@ import {Link, useParams} from "react-router-dom";
 import {ChapterService} from "../../../services/ChapterService";
 import {AlertService} from "../../../services/AlertService";
 import {RedirectService} from "../../../services/RedirectService";
-import {ErrorTypesEnum} from "../../../services/models/IError";
 
 const ChapterListItem = ({id, name, releaseDate}: IChapterDTO) => {
 
@@ -13,23 +12,19 @@ const ChapterListItem = ({id, name, releaseDate}: IChapterDTO) => {
 
     async function DeleteHandler(): Promise<void> {
 
-        const bookId = params.id
+        const bookId = params.bookId
 
         if (bookId === undefined) {
             return RedirectService.redirectToNotFoundPage()
         }
 
-        const deleteChapterError = await ChapterService.deleteChapterAsync(parseInt(bookId), id)
+        const deleteChapterResult = await ChapterService.deleteChapterAsync(parseInt(bookId), id)
 
-        if (deleteChapterError !== null) {
-            if (deleteChapterError.errorType === ErrorTypesEnum.Critical) {
-                return AlertService.errorMessage(deleteChapterError.displayMessage)
-            }
-
-            return AlertService.warningMessage(deleteChapterError.displayMessage)
+        if (deleteChapterResult.tryCatchError()) {
+            return
         }
 
-        AlertService.successMessage("Глава успено удалена")
+        AlertService.successMessage("Глава успешно удалена")
         return RedirectService.delayReloadPage()
     }
 

@@ -3,21 +3,20 @@ import styles from "./authorListItem.module.css"
 import {IAuthorDTO} from "../../services/models/DTO/IAuthorModels";
 import {AuthorServices} from "../../services/AuthorServices";
 import {AlertService} from "../../services/AlertService";
-import {Link, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
+import {RedirectService} from "../../services/RedirectService";
 
 const AuthorListItem = ({id, name}: IAuthorDTO) => {
 
-    const navigate = useNavigate()
-
     function DeleteHandler () {
-        AuthorServices.deleteAuthorAsync(id).then(err => {
-            if (err !== null) {
-                return AlertService.errorMessage(err.displayMessage)
+        AuthorServices.deleteAuthorAsync(id).then(deleteAuthorResult => {
+            if (deleteAuthorResult.tryCatchError()) {
+                return
             }
 
             AlertService.successMessage("Автор был успешно удалён")
 
-            navigate(0)
+            RedirectService.delayReloadPage()
         })
     }
 

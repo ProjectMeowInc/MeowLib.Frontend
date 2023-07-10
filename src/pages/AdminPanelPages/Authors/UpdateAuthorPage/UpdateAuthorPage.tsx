@@ -2,9 +2,7 @@ import React, {useEffect, useState} from 'react';
 import styles from "../CreateAuthorPage/createAuthorPage.module.css";
 import {AlertService} from "../../../../services/AlertService";
 import {AuthorServices} from "../../../../services/AuthorServices";
-import {ErrorTypesEnum} from "../../../../services/models/IError";
 import {useNavigate, useParams} from "react-router-dom";
-import {ErrorService} from "../../../../services/ErrorService";
 import {IAuthorDTO} from "../../../../services/models/DTO/IAuthorModels";
 import Preloader from "../../../../components/preloader/preloader";
 import {RedirectService} from "../../../../services/RedirectService";
@@ -21,17 +19,12 @@ const UpdateAuthorPage = () => {
             return navigate("/NotFound")
         }
 
-        AuthorServices.getAuthorAsync(parseInt(params.id)).then(response => {
-            if (ErrorService.isError(response)) {
-
-                if (response.errorType === ErrorTypesEnum.Critical) {
-                    return AlertService.errorMessage(response.displayMessage)
-                }
-
-                return AlertService.warningMessage(response.displayMessage)
+        AuthorServices.getAuthorAsync(parseInt(params.id)).then(getAuthorResult => {
+            if (getAuthorResult.tryCatchError()) {
+                return
             }
 
-            setAuthor(response)
+            setAuthor(getAuthorResult.unwrap())
         })
     }, [])
 
@@ -55,16 +48,12 @@ const UpdateAuthorPage = () => {
             return AlertService.errorMessage("Неожиданное поведение")
         }
 
-        AuthorServices.updateAuthorAsync(author.id, author.name).then(err => {
-            if (err !== null) {
-                if (err.errorType === ErrorTypesEnum.Critical) {
-                    return AlertService.errorMessage(err.displayMessage)
-                }
-                return AlertService.warningMessage(err.displayMessage)
+        AuthorServices.updateAuthorAsync(author.id, author.name).then(getAuthorResult => {
+            if (getAuthorResult.tryCatchError()) {
+                return
             }
 
             AlertService.successMessage("Автор был успешно обновлён")
-
         })
 
         return RedirectService.delayRedirectToPrevPage()

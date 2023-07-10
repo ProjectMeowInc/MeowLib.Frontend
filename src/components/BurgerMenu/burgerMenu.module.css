@@ -22,8 +22,7 @@
 .menu {
     position: fixed;
     margin: -100px 0 0 -50px;
-    padding: 50px;
-    padding-top: 125px;
+    padding: 125px 50px 50px 50px;
     list-style-type: none;
     -webkit-font-smoothing: antialiased;
     transform-origin: 0 0;
@@ -38,9 +37,7 @@
 .menu_active {
     position: fixed;
     margin: -100px 0 0 -50px;
-    padding: 50px;
-    padding-top: 125px;
-    list-style-type: none;
+    padding: 125px 50px 50px 50px;
     -webkit-font-smoothing: antialiased;
     transform-origin: 0 0;
     transform: none;
@@ -48,7 +45,6 @@
     background-color: #475256;
     width: 20%;
     height: 85vh;
-    color: white;
 }
 
 .login {
@@ -56,6 +52,7 @@
     font-size: 36px;
     margin-left: 45px;
     margin-top: 90px;
+    color: white;
 }
 
 .list {
@@ -67,5 +64,6 @@
     font-size: 24px;
     font-weight: 200;
     margin-left: 45px;
-    margin-top: 20px;
+    color: white;
+    padding: 20px 0;
 }

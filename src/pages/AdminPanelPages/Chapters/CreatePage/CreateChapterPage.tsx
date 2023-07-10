@@ -5,8 +5,6 @@ import {useParams} from "react-router-dom";
 import {ICreateChapterRequest} from "../../../../services/models/requests/IChapterRequests";
 import {RedirectService} from "../../../../services/RedirectService";
 import {AlertService} from "../../../../services/AlertService";
-import {ErrorService} from "../../../../services/ErrorService";
-import {ErrorTypesEnum} from "../../../../services/models/IError";
 
 const CreateChapterPage = () => {
 
@@ -23,7 +21,7 @@ const CreateChapterPage = () => {
 
     async function SubmitHandler(): Promise<void> {
 
-        if (params.id === undefined) {
+        if (params.bookId === undefined) {
             return RedirectService.redirectToNotFoundPage()
         }
 
@@ -31,14 +29,10 @@ const CreateChapterPage = () => {
             return AlertService.warningMessage("Не все поля заполнены")
         }
 
-        const createChapterResult = await ChapterService.createChapterAsync(parseInt(params.id), chapterData)
+        const createChapterResult = await ChapterService.createChapterAsync(parseInt(params.bookId), chapterData)
 
-        if (ErrorService.isError(createChapterResult)) {
-            if (createChapterResult.errorType === ErrorTypesEnum.Critical) {
-                return AlertService.errorMessage(createChapterResult.displayMessage)
-            }
-
-            return AlertService.warningMessage(createChapterResult.displayMessage)
+        if (createChapterResult.tryCatchError()) {
+            return
         }
 
         AlertService.successMessage("Глава успешно создана")

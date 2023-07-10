@@ -1,45 +1,34 @@
 import React, {useState} from 'react';
-import {Link, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import styles from "./tagsPageListItem.module.css";
 import {ITagDTO} from "../../services/models/DTO/ITagDTO";
 import {TagsService} from "../../services/TagsService";
-import {ErrorService} from "../../services/ErrorService";
 import {AlertService} from "../../services/AlertService";
-import {ErrorTypesEnum} from "../../services/models/IError";
+import {RedirectService} from "../../services/RedirectService";
 
 const TagsPageListItem = ({id, name}: ITagDTO) => {
 
     const [tooltip, setTooltip] = useState<string>()
 
-    const navigate = useNavigate()
-
     function MouseHandler() {
-        TagsService.getTagByIdAsync(id).then(response => {
-            if(ErrorService.isError(response)) {
-                if(response.errorType === ErrorTypesEnum.Error) {
-                    return AlertService.errorMessage(response.displayMessage)
-                }
-                return AlertService.warningMessage(response.displayMessage)
+        TagsService.getTagByIdAsync(id).then(getTagResult => {
+            if(getTagResult.tryCatchError()) {
+                return
             }
 
-            setTooltip(response.description ?? "Описания пока нет")
+            setTooltip(getTagResult.unwrap().description ?? "Описания пока нет")
         })
     }
 
 
     function DeleteHandler () {
-        TagsService.deleteTagAsync(id).then(error => {
-            if(error !== null) {
-                if(error.errorType === ErrorTypesEnum.Critical) {
-                    return AlertService.errorMessage(error.displayMessage)
-                }
-
-                return AlertService.warningMessage(error.displayMessage)
+        TagsService.deleteTagAsync(id).then(deleteTagResult => {
+            if(deleteTagResult.hasError()) {
+                return
             }
 
             AlertService.successMessage("Тэг удалён")
-
-            navigate(0)
+            RedirectService.delayReloadPage()
         })
     }
 

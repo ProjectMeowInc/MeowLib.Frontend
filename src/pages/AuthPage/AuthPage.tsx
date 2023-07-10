@@ -1,12 +1,10 @@
 import React, {useState} from 'react';
 import styles from "./authPage.module.css"
-import {ErrorTypesEnum} from "../../../services/models/IError";
-import {ErrorService} from "../../../services/ErrorService";
-import {TokenService} from "../../../services/TokenService";
-import {UserRolesEnum} from "../../../services/models/DTO/IUserModels";
-import {AlertService} from "../../../services/AlertService";
-import {AuthService} from "../../../services/AuthService";
-import {RedirectService} from "../../../services/RedirectService";
+import {TokenService} from "../../services/TokenService";
+import {UserRolesEnum} from "../../services/models/DTO/IUserModels";
+import {AlertService} from "../../services/AlertService";
+import {AuthService} from "../../services/AuthService";
+import {RedirectService} from "../../services/RedirectService";
 
 const AuthPage = () => {
 
@@ -18,19 +16,18 @@ const AuthPage = () => {
     async function ClickHandler (login: string, password: string, isLogin: boolean): Promise<void> {
         if(isLogin) {
 
-            const result = await AuthService.authorizationAsync({login, password, isLongSession})
+            const authorizationResult = await AuthService.authorizationAsync({login, password, isLongSession})
 
-            if(ErrorService.isError(result)) {
-                if(result.errorType === ErrorTypesEnum.Critical) {
-                    return AlertService.errorMessage(result.displayMessage)
-                }
-                return AlertService.warningMessage(result.displayMessage)
+            if (authorizationResult.tryCatchError()) {
+                return
             }
 
-            TokenService.setAccessToken(result.accessToken)
-            TokenService.setRefreshToken(result.refreshToken)
+            const tokens = authorizationResult.unwrap()
 
-            const accessTokenData = TokenService.parseAccessToken(result.accessToken)
+            TokenService.setAccessToken(tokens.accessToken)
+            TokenService.setRefreshToken(tokens.refreshToken)
+
+            const accessTokenData = TokenService.parseAccessToken(tokens.accessToken)
 
             if(accessTokenData === null) {
                return AlertService.errorMessage("Ошибка авторизации")
@@ -39,20 +36,17 @@ const AuthPage = () => {
             AlertService.successMessage("Вы успешно авторизовались")
 
             if(accessTokenData.userRole === UserRolesEnum.Moderator || accessTokenData.userRole === UserRolesEnum.Admin) {
-                return RedirectService.redirect("/admin")
+                return RedirectService.delayRedirect("/")
             }
         }
         else {
-            const error = await AuthService.registrationAsync({login, password});
-            if(error === null) {
-                return AlertService.successMessage("Вы успешно зарегистрировались. Теперь вы можете авторизоваться")
+            const registrationResult = await AuthService.registrationAsync({login, password})
+
+            if (registrationResult.tryCatchError()) {
+                return
             }
 
-            if (error.errorType === ErrorTypesEnum.Critical) {
-                return AlertService.errorMessage(error.displayMessage)
-            }
-
-            AlertService.warningMessage(error.displayMessage)
+            AlertService.successMessage("Вы успешно зарегистрировались")
         }
     }
 
@@ -79,10 +73,14 @@ const AuthPage = () => {
 
                    <hr className={styles.separator}/>
 
-                   <label className={styles.label}>
-                       <input onClick={() => setIsLongSession(prevState => !prevState)} type="checkbox"/>
-                       <p>Запомнить меня</p>
-                   </label>
+                   {
+                       !isLoginPage
+                           ? <></>
+                           : <label className={styles.label}>
+                               <input onClick={() => setIsLongSession(prevState => !prevState)} type="checkbox"/>
+                               <p>Запомнить меня</p>
+                           </label>
+                   }
 
                    <button onClick={async () => ClickHandler(login, password, isLoginPage)} className={styles.button}>Отправить</button>
                </div>

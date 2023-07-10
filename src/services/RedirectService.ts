@@ -59,4 +59,11 @@ export class RedirectService {
             window.history.back()
         }, 3000)
     }
+
+    /**
+     * Метод для получения текущего пути
+     */
+    static getPath(): string {
+        return window.location.pathname
+    }
 }

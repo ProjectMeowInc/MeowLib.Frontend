@@ -6,24 +6,22 @@ import {IUpdateBookRequest} from "../../../../services/models/requests/IBookRequ
 import {BookService} from "../../../../services/BookService";
 import {RedirectService} from "../../../../services/RedirectService";
 import {AlertService} from "../../../../services/AlertService";
-import {ErrorService} from "../../../../services/ErrorService";
-import {ErrorTypesEnum} from "../../../../services/models/IError";
-import {ChapterService} from "../../../../services/ChapterService";
 import ChapterListItem from "../../../../components/BooksPage/ChapterListItem/ChapterListItem";
 import {IChapterDTO} from "../../../../services/models/DTO/IChapterDTO";
-import {TagsService} from "../../../../services/TagsService";
 import TagList from "../../../../components/BooksPage/TagList/TagList";
-import {IGetTagsResponse} from "../../../../services/models/responses/IGetTagsResponse";
 import {TagsContext} from "../../../../context/TagsContext";
 import AuthorList from "../../../../components/BooksPage/AuthorList/AuthorList";
-import {AuthorServices} from "../../../../services/AuthorServices";
 import {IAuthorDTO} from "../../../../services/models/DTO/IAuthorModels";
 import {AuthorContext} from "../../../../context/AuthorContext";
+import {TagsService} from "../../../../services/TagsService";
+import {ITagDTO} from "../../../../services/models/DTO/ITagDTO";
+import {AuthorServices} from "../../../../services/AuthorServices";
+import {ChapterService} from "../../../../services/ChapterService";
 
 const UpdateBooksPage = () => {
     const [bookData, setBookData] = useState<IUpdateBookRequest | null>(null)
     const [chapters, setChapters] = useState<IChapterDTO[] | null>(null)
-    const [tagList, setTagList] = useState<IGetTagsResponse | null>(null)
+    const [tagList, setTagList] = useState<ITagDTO[] | null>(null)
     const [authorList, setAuthorList] = useState<IAuthorDTO[] | null>(null)
     const [image, setImage] = useState<FormData | null>(null)
     const params = useParams()
@@ -32,128 +30,88 @@ const UpdateBooksPage = () => {
 
     useEffect(() => {
 
-        if (params.id === undefined) {
-            return RedirectService.redirectToNotFoundPage()
+        if (params.bookId === undefined) {
+            return
         }
 
-        BookService.getBookAsync(parseInt(params.id)).then(result => {
-            if (ErrorService.isError(result)) {
-                if (result.errorType === ErrorTypesEnum.Critical) {
-                    return AlertService.errorMessage(result.displayMessage)
-                }
-
-                return AlertService.warningMessage(result.displayMessage)
+        BookService.getBookAsync(parseInt(params.bookId)).then(getBooksResult => {
+            if (getBooksResult.tryCatchError()) {
+                return
             }
 
-            if (result.author) {
-                setSelectedAuthor(result.author.id)
+            const book = getBooksResult.unwrap()
+
+            if (book.author) {
+                setSelectedAuthor(book.author.id)
             }
 
-            const selectedTagsIds = result.tags.map(tag => tag.id)
+            const selectedTagsIds = book.tags.map(tag => tag.id)
             setSelectedTags(selectedTagsIds)
 
-            setBookData({...bookData, name: result.name, description: result.description})
-        })
-
-        ChapterService.getChaptersAsync(parseInt(params.id)).then(getChaptersResult => {
-            if (ErrorService.isError(getChaptersResult)) {
-                if (getChaptersResult.errorType === ErrorTypesEnum.Critical) {
-                    return AlertService.errorMessage(getChaptersResult.displayMessage)
-                }
-
-                return AlertService.warningMessage(getChaptersResult.displayMessage)
-            }
-
-            setChapters(getChaptersResult)
+            setBookData({...bookData, name: book.name, description: book.description})
         })
 
         TagsService.getAllTagsAsync().then(getTagsResult => {
-            if (ErrorService.isError(getTagsResult)) {
-                if (getTagsResult.errorType === ErrorTypesEnum.Critical) {
-                    return AlertService.errorMessage(getTagsResult.displayMessage)
-                }
-
-                return AlertService.warningMessage(getTagsResult.displayMessage)
+            if (getTagsResult.tryCatchError()) {
+                return
             }
 
-            setTagList(getTagsResult)
+            setTagList(getTagsResult.unwrap())
         })
 
-        AuthorServices.getAuthorsAsync().then(getAuthorsResult => {
-            if (ErrorService.isError(getAuthorsResult)) {
-                if (getAuthorsResult.errorType === ErrorTypesEnum.Critical) {
-                    return AlertService.errorMessage(getAuthorsResult.displayMessage)
-                }
-
-                return AlertService.warningMessage(getAuthorsResult.displayMessage)
+        AuthorServices.getAuthorsAsync().then(getAuthorResult => {
+            if (getAuthorResult.tryCatchError()) {
+                return
             }
 
-            setAuthorList(getAuthorsResult.data)
+            setAuthorList(getAuthorResult.unwrap())
+        })
+
+        ChapterService.getChaptersAsync(parseInt(params.bookId)).then(getChaptersResult => {
+            if (getChaptersResult.tryCatchError()) {
+                return
+            }
+
+            setChapters(getChaptersResult.unwrap())
         })
     }, [])
 
     async function SubmitHandlerAsync () {
 
-        if (params.id === undefined) {
+        if (params.bookId === undefined) {
             return RedirectService.redirectToNotFoundPage()
         }
 
-        const updateBookTagsResult = await BookService.updateTagsBookAsync(parseInt(params.id), {
+        const updateBookTagsResult = await BookService.updateTagsBookAsync(parseInt(params.bookId), {
             tags: selectedTags
         })
 
-        if (ErrorService.isError(updateBookTagsResult)) {
-            if (updateBookTagsResult.errorType === ErrorTypesEnum.Critical) {
-                return AlertService.errorMessage(updateBookTagsResult.displayMessage)
-            }
-
-            return AlertService.warningMessage(updateBookTagsResult.displayMessage)
-        }
-
-        // Проверка чтобы не ругался статический анализавтор
-
-        if (image === null) {
+        if (updateBookTagsResult.tryCatchError()) {
             return
         }
 
-        const uploadImageResult = await BookService.uploadImageBookAsync(parseInt(params.id), image)
+        if (image !== null) {
+            const uploadImageResult = await BookService.uploadImageBookAsync(parseInt(params.bookId), image)
 
-        if (ErrorService.isError(uploadImageResult)) {
-            if (uploadImageResult.errorType === ErrorTypesEnum.Critical) {
-                return AlertService.errorMessage(uploadImageResult.displayMessage)
+            if (uploadImageResult.tryCatchError()) {
+                return
             }
-
-            return AlertService.warningMessage(uploadImageResult.displayMessage)
         }
 
-        if (selectedAuthor === null) {
-            return
-        }
+        if (selectedAuthor !== null) {
+            const updateAuthorResult = await BookService.updateBookAuthorAsync(selectedAuthor, parseInt(params.bookId))
 
-        const updateAuthorResult = await BookService.updateBookAuthorAsync(selectedAuthor, parseInt(params.id))
-
-        if (ErrorService.isError(updateAuthorResult)) {
-            if (updateAuthorResult.errorType === ErrorTypesEnum.Critical) {
-                return AlertService.errorMessage(updateAuthorResult.displayMessage)
+            if (updateAuthorResult.tryCatchError()) {
+                return
             }
-
-            return AlertService.warningMessage(updateAuthorResult.displayMessage)
         }
 
-        //Чтобы не ругался анализатор
+        if (bookData !== null) {
+            const updateBookResult = await BookService.updateBookAsync(parseInt(params.bookId), bookData)
 
-        if (bookData === null) {
-            return
-        }
-
-        const updateBookResult = await BookService.updateBookAsync(parseInt(params.id), bookData)
-
-        if (ErrorService.isError(updateBookResult)) {
-            if (updateBookResult.errorType === ErrorTypesEnum.Critical) {
-                return AlertService.errorMessage(updateBookResult.displayMessage)
+            if (updateBookResult.tryCatchError()) {
+                return
             }
-
-            return AlertService.warningMessage(updateBookResult.displayMessage)
         }
 
         AlertService.successMessage("Книга успешно обновлена")
@@ -197,8 +155,8 @@ const UpdateBooksPage = () => {
                         placeholder={bookData.description ?? "Введите описание тега"}/>
                     <p className={styles.tags_caption}>Загрузка изображения</p>
                     <input onChange={UpdateImageHandler} type="file"/>
-                    <p className={styles.tags_caption}>Тэги</p>
-                    <TagList data={tagList.data}/>
+                    <p className={styles.tags_caption}>Теги</p>
+                    <TagList data={tagList}/>
 
                     <p className={styles.tags_caption}>Авторы</p>
                     <AuthorList authorList={authorList}/>

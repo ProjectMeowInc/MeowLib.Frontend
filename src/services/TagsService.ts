@@ -1,55 +1,53 @@
 import {ITagDTO} from "./models/DTO/ITagDTO";
-import {IError} from "./models/IError";
 import axios from "axios";
 import {ICreateTagRequest, IUpdateTagRequest} from "./models/requests/ITagRequests";
 import {TokenService} from "./TokenService";
-import {IGetTagResponse, IGetTagsResponse} from "./models/responses/IGetTagsResponse";
+import {IGetTagResponse} from "./models/responses/IGetTagsResponse";
 import {ErrorService} from "./ErrorService";
+import {EmptyResult, Result} from "./result/Result";
 
 /**
- * Сервис для работы с тэгами
+ * Сервис для работы с тегами
  */
 export class TagsService {
 
     /**
-     * Метод для получения списка тэгов
+     * Метод для получения списка тегов
      * @returns данные в виде IGetTagsResponse или ошибку
      */
-    static async getAllTagsAsync(): Promise<IGetTagsResponse | IError> {
+    static async getAllTagsAsync(): Promise<Result<ITagDTO[]>> {
         try {
             const response = await axios.get<ITagDTO[]>(process.env.REACT_APP_URL_API + "/tags")
 
-            return {
-                data: response.data
-            }
+            return Result.ok(response.data)
         }
         catch (err: any) {
-            return ErrorService.toServiceError(err, "TagService")
+            return Result.withError(ErrorService.toServiceError(err, "TagService"))
         }
     }
 
     /**
-     * Метод для получения информации о одном тэге
-     * @param id тэга
+     * Метод для получения информации об одном теге
+     * @param id тэгу
      * @returns данные в виде IGetTagResponse или ошибку
      */
-    static async getTagByIdAsync(id: number): Promise<IGetTagResponse | IError> {
+    static async getTagByIdAsync(id: number): Promise<Result<ITagDTO>> {
         try {
             const response = await axios.get<IGetTagResponse>(process.env.REACT_APP_URL_API + `/tags/${id}`)
 
-            return response.data
+            return Result.ok(response.data)
         }
         catch (err: any) {
-            return ErrorService.toServiceError(err, "TagService")
+            return Result.withError(ErrorService.toServiceError(err, "TagService"))
         }
     }
 
     /**
      * Метод для создания тега
-     * @param data данные о тэге
+     * @param data данные о теге
      * @returns ошибку или null
      */
-    static async createTagAsync(data: ICreateTagRequest): Promise<null | IError> {
+    static async createTagAsync(data: ICreateTagRequest): Promise<EmptyResult> {
         try {
             await axios.post(process.env.REACT_APP_URL_API + "/tags/", data, {
                 headers: {
@@ -57,19 +55,19 @@ export class TagsService {
                 }
             })
 
-            return  null
+            return EmptyResult.ok()
         }
         catch (err: any) {
-            return ErrorService.toServiceError(err, "TagService")
+            return EmptyResult.withError(ErrorService.toServiceError(err, "TagService"))
         }
     }
 
     /**
      * Метод для удаления тега
-     * @param id тэга
+     * @param id тэгу
      * @returns ошибку или null
      */
-    static async deleteTagAsync(id: number): Promise<IError | null> {
+    static async deleteTagAsync(id: number): Promise<EmptyResult> {
         try {
             await axios.delete(process.env.REACT_APP_URL_API + `/tags/${id}`,{
                 headers: {
@@ -77,20 +75,20 @@ export class TagsService {
                 }
             })
 
-            return null
+            return EmptyResult.ok()
         }
         catch (err: any) {
-            return ErrorService.toServiceError(err, "TagService")
+            return EmptyResult.withError(ErrorService.toServiceError(err, "TagService"))
         }
     }
 
     /**
      * Метод для удаления тега
-     * @param id тэга
+     * @param id тэгу
      * @param data данные на обновление
      * @returns ошибку или null
      */
-    static async updateTagAsync(id: number, data: IUpdateTagRequest): Promise<IError | null> {
+    static async updateTagAsync(id: number, data: IUpdateTagRequest): Promise<EmptyResult> {
         try {
             await axios.put(process.env.REACT_APP_URL_API + `/tags/${id}`, data, {
                 headers: {
@@ -98,10 +96,10 @@ export class TagsService {
                 }
             })
 
-            return null
+            return EmptyResult.ok()
         }
         catch (err: any) {
-            return ErrorService.toServiceError(err, "TagService")
+            return EmptyResult.withError(ErrorService.toServiceError(err, "TagService"))
         }
     }
 }
