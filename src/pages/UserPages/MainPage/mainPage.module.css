@@ -25,8 +25,36 @@
     width: 78vw;
     height: 100%;
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
     color: white;
     font-family: Comfortaa, serif;
     font-size: 36px;
+}
+
+.wrapper {
+    width: 75%;
+    margin: 0 auto;
+}
+
+.books {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 70%;
+    height: 50%;
+}
+
+.update_caption {
+    margin-top: 100px;
+    font-family: Raleway, serif;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.last_updates {
+    width: 100%;
 }
