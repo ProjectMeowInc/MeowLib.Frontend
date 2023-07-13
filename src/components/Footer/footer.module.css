@@ -1,0 +1,12 @@
+.footer {
+    margin-top: 90px;
+    width: 100%;
+    height: 20vh;
+    background-color: #2B3848;
+}
+
+.footer img {
+    margin-top: 35px;
+    margin-left: 95px;
+    width: 310px;
+}

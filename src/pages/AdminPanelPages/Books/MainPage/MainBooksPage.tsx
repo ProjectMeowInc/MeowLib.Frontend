@@ -33,7 +33,7 @@ const MainBooksPage = () => {
                 ? <Preloader/>
                 : bookList.items.length !== 0
                     ? bookList.items.map(book => (
-                        <BooksListItem key={book.id} id={book.id} name={book.name} description={book.description}/>
+                        <BooksListItem key={book.id} id={book.id} name={book.name} description={book.description} imageName={book.imageName}/>
                     ))
                     : <p className={styles.empty}>Здесь пока ничего нет</p>
             }

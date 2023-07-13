@@ -91,8 +91,6 @@ export class ErrorWithAction implements IErrorWithAction {
                 if (this.param !== undefined) {
                     return RedirectService.redirect(this.param)
                 }
-
-                RedirectService.redirectToLogin()
                 break;
 
             case "reload":
@@ -103,7 +101,7 @@ export class ErrorWithAction implements IErrorWithAction {
                 LogService.sendLogAsync({
                     errorLog: {
                         errorModule: "IError",
-                        message: "Произошла хуйня: Неизвестное действие",
+                        message: "Произошло: Неизвестное действие",
                         isApiError: false,
                         additionalInfo: {
                             action: this.action
