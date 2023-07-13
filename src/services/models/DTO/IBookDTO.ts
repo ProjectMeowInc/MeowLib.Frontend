@@ -2,7 +2,7 @@ import {ITag} from "./ITagDTO";
 import {IAuthorDTO} from "./IAuthorModels";
 
 /**
- * Интерфейс опсиывающий книгу
+ * Интерфейс описывающий книгу
  */
 export interface IBook {
     id: number
@@ -14,10 +14,11 @@ export interface IBook {
 }
 
 /**
- * Интерфейс опсиывающий DTO книги
+ * Интерфейс описывающий DTO книги
  */
 export interface IBookDTO {
     id: number
     name: string
     description: string
+    imageName: string | null
 }
