@@ -2,6 +2,7 @@ import React from 'react';
 import BurgerMenu from "../../components/BurgerMenu/BurgerMenu";
 import styles from "./userLayout.module.css"
 import {Outlet} from "react-router-dom";
+import Footer from "../../components/Footer/Footer";
 
 const UserLayout = () => {
     return (
@@ -12,6 +13,8 @@ const UserLayout = () => {
             </div>
 
             <Outlet/>
+
+            <Footer/>
         </div>
     );
 };
