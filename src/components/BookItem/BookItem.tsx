@@ -1,8 +1,8 @@
 import React from 'react';
 import {IBookDTO} from "../../services/models/DTO/IBookDTO";
-import styles from "./bookItemV2.module.css"
+import styles from "./bookItem.module.css"
 
-const BookItemV2 = ({id, name, description, imageName}:IBookDTO) => {
+const BookItem = ({id, name, description, imageName}:IBookDTO) => {
 
     return (
         <div className={styles.book}>
@@ -19,4 +19,4 @@ const BookItemV2 = ({id, name, description, imageName}:IBookDTO) => {
     );
 };
 
-export default BookItemV2;
+export default BookItem;

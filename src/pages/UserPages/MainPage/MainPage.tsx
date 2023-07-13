@@ -2,12 +2,12 @@ import React, {useEffect, useState} from 'react';
 import styles from "./mainPage.module.css";
 import {IBookDTO} from "../../../services/models/DTO/IBookDTO";
 import {BookService} from "../../../services/BookService";
-import BookItemV1 from "../../../components/BookItemV1/BookItemV1";
-import BookItemV2 from "../../../components/BookItemV2/BookItemV2";
+import BookItemRecentlyAdded from "../../../components/BookItemRecentlyAdded/BookItemRecentlyAdded";
+import BookItem from "../../../components/BookItem/BookItem";
 
 const MainPage = () => {
 
-    const [books, setBooks] = useState<IBookDTO[] | null>()
+    const [books, setBooks] = useState<IBookDTO[] | null>(null)
 
     useEffect(() => {
         BookService.getBooksAsync().then(getBooksResult => {
@@ -35,7 +35,7 @@ const MainPage = () => {
                     <div className={styles.books}>
                         {
                             books && books.map(book => (
-                                <BookItemV1 key={book.id} id={book.id} name={book.name} description={book.description} imageName={book.imageName}/>
+                                <BookItemRecentlyAdded key={book.id} id={book.id} name={book.name} description={book.description} imageName={book.imageName}/>
                             ))
                         }
                     </div>
@@ -47,7 +47,7 @@ const MainPage = () => {
                 <div className={styles.last_updates}>
                     {
                         books && books.map(book => (
-                            <BookItemV2 key={book.id} id={book.id} name={book.name} description={book.description} imageName={book.imageName}/>
+                            <BookItem key={book.id} id={book.id} name={book.name} description={book.description} imageName={book.imageName}/>
                         ))
                     }
                 </div>
