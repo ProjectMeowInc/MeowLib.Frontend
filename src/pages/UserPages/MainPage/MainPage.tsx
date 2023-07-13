@@ -7,7 +7,7 @@ import BookItemV2 from "../../../components/BookItemV2/BookItemV2";
 
 const MainPage = () => {
 
-    const [bookList, setBookList] = useState<IBookDTO[] | null>()
+    const [books, setBooks] = useState<IBookDTO[] | null>()
 
     useEffect(() => {
         BookService.getBooksAsync().then(getBooksResult => {
@@ -17,9 +17,7 @@ const MainPage = () => {
 
             const books = getBooksResult.unwrap()
 
-            console.log(getBooksResult);
-
-            return setBookList(books.items)
+            return setBooks(books.items)
         })
 
     }, [])
@@ -36,7 +34,7 @@ const MainPage = () => {
 
                     <div className={styles.books}>
                         {
-                            bookList && bookList.map(book => (
+                            books && books.map(book => (
                                 <BookItemV1 key={book.id} id={book.id} name={book.name} description={book.description} imageName={book.imageName}/>
                             ))
                         }
@@ -48,7 +46,7 @@ const MainPage = () => {
 
                 <div className={styles.last_updates}>
                     {
-                        bookList && bookList.map(book => (
+                        books && books.map(book => (
                             <BookItemV2 key={book.id} id={book.id} name={book.name} description={book.description} imageName={book.imageName}/>
                         ))
                     }
