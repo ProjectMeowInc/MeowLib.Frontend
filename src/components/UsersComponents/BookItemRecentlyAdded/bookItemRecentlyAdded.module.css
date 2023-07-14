@@ -2,7 +2,7 @@
     width: 23%;
     height: 80%;
     background-size: cover;
-    background-image: url("../../../public/img/someBook.png");
+    background-image: url("../../../../public/img/someBook.png");
     transition: .5s all;
     color: transparent;
     font-family: Raleway, serif;

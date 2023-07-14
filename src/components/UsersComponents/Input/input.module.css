@@ -1,0 +1,19 @@
+.input {
+    width: 85%;
+    height: 50px;
+    font-family: Raleway, serif;
+    border-radius: 7px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.15);
+    border: none;
+    transition: .4s all;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+    padding-left: 20px;
+}
+
+.input:focus {
+    outline: none;
+    box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.15);
+}

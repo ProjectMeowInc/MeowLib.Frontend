@@ -32,6 +32,8 @@
     width: 20%;
     height: 85vh;
     color: white;
+    display: flex;
+    flex-direction: column;
 }
 
 .menu_active {
@@ -45,6 +47,8 @@
     background-color: #475256;
     width: 20%;
     height: 85vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .login {

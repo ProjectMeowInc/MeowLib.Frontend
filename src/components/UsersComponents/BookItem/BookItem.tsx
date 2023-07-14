@@ -1,5 +1,5 @@
 import React from 'react';
-import {IBookDTO} from "../../services/models/DTO/IBookDTO";
+import {IBookDTO} from "../../../services/models/DTO/IBookDTO";
 import styles from "./bookItem.module.css"
 
 const BookItem = ({id, name, description, imageName}:IBookDTO) => {
