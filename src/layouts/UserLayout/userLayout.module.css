@@ -1,12 +1,13 @@
 .block {
     width: 22%;
-    position: absolute;
+    position: fixed;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
 .block img {
+    margin-top: 20px;
     width: 310px;
     height: 62px;
 }

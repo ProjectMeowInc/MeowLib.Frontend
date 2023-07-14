@@ -35,11 +35,11 @@ const BurgerMenu = () => {
                     : <Link to={"/login"} className={styles.list_item}>Вход или регистрация</Link>
 
                 }
-                <p className={styles.list_item}>Библиотека</p>
+                <Link to={"/books"} className={styles.list_item}>Библиотека</Link>
 
                 {
-                    userData && userData.userRole === UserRolesEnum.Admin || userData && userData.userRole === UserRolesEnum.Moderator
-                        ? <Link className={styles.list_item} to={"/admin"}>Админ панель</Link>
+                    (userData && userData.userRole === UserRolesEnum.Admin) || (userData && userData.userRole === UserRolesEnum.Moderator)
+                        ? <Link to={"/admin"} className={styles.list_item} >Админ панель</Link>
                         : <></>
                 }
 

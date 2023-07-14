@@ -1,0 +1,29 @@
+.wrapper {
+    margin: 0 auto;
+    width: 75%;
+    font-family: Raleway, serif;
+}
+
+.search {
+    margin-top: 30px;
+    display: flex;
+    width: 40%;
+    justify-content: space-between;
+}
+
+.caption {
+    padding-top: 230px;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.send {
+    cursor: pointer;
+}
+
+.books {
+    display: flex;
+    flex-wrap: wrap;
+}
