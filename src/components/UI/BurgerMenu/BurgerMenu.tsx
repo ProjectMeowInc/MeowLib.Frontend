@@ -1,30 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import styles from "./burgerMenu.module.css"
-import {IAccessTokenData} from "../../../services/models/DTO/ITokenModels";
-import {TokenService} from "../../../services/TokenService";
-import {UserRolesEnum} from "../../../services/models/DTO/IUserModels";
 import {Link} from "react-router-dom";
-import {RedirectService} from "../../../services/RedirectService";
+import {AuthorizationContext} from "../../../context/AuthorizationContext";
 
 const BurgerMenu = () => {
 
     const [isOpen, setIsOpen] = useState<boolean>(false)
-    const [userData, setUserData] = useState<IAccessTokenData | null>(null)
-
-    useEffect(() => {
-        TokenService.getAccessTokenAsync().then(getAccessTokenResult => {
-            if (getAccessTokenResult.tryCatchError()) {
-                return
-            }
-
-            const accessTokenData = TokenService.parseAccessToken(getAccessTokenResult.unwrap())
-            if (!accessTokenData) {
-                return RedirectService.redirectToLogin()
-            }
-
-            setUserData(accessTokenData)
-        })
-    }, [])
+    const {user} = useContext(AuthorizationContext)
 
     return (
         <div className={styles.burger_menu} onClick={() => setIsOpen(!isOpen)}>
@@ -34,9 +16,10 @@ const BurgerMenu = () => {
                 <span></span>
             </div>
             <div className={isOpen ? styles.menu_active : styles.menu}>
-                {userData !== null
+                {
+                    user
                     ? <div>
-                        <p className={styles.login}>{userData.login}</p>
+                        <p className={styles.login}>{user.login}</p>
                         <p className={styles.list_item}>Избранное</p>
                     </div>
                     : <Link to={"/login"} className={styles.list_item}>Вход или регистрация</Link>
@@ -45,9 +28,8 @@ const BurgerMenu = () => {
                 <Link to={"/books"} className={styles.list_item}>Библиотека</Link>
 
                 {
-                    (userData && userData.userRole === UserRolesEnum.Admin) || (userData && userData.userRole === UserRolesEnum.Moderator)
-                        ? <Link to={"/admin"} className={styles.list_item} >Админ панель</Link>
-                        : <></>
+                    user && user.hasAdminAccess() &&
+                        <Link to={"/admin"} className={styles.list_item}>Админ панель</Link>
                 }
 
             </div>
