@@ -1,0 +1,44 @@
+.book {
+    margin-top: 50px;
+    width: 17%;
+    height: 37vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    border-radius: 10px;
+    transition: .4s all;
+    text-align: center;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.book:hover {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.img {
+    width: 80%;
+    height: 70%;
+    background-size: cover;
+    border-radius: 10px;
+}
+
+.img_not_found {
+    width: 80%;
+    height: 70%;
+    color: white;
+    background-color: grey;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: 300;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.book_caption {
+    text-overflow: ellipsis;
+    word-break: break-word;
+    white-space: normal;
+}
