@@ -1,12 +1,12 @@
 import React from 'react';
 import styles from "./input.module.css";
 
-interface IInput {
+interface IInputProps {
     placeholder: string
     type: "text" | "password"
 }
 
-const Input = ({placeholder, type}: IInput) => {
+const Input = ({placeholder, type}: IInputProps) => {
     return (
         <input className={styles.input} type={type} placeholder={placeholder} />
     );
