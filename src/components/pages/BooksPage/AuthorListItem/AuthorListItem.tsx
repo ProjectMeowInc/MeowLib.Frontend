@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext} from 'react';
 import {IAuthorDTO} from "../../../../services/models/DTO/IAuthorModels";
 import styles from "./authorListItem.module.css";
 import {AuthorContext} from "../../../../context/AuthorContext";
