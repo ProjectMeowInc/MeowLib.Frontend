@@ -37,6 +37,7 @@ export class UserService {
 
         const result = await new HttpRequest<IUserDTO>()
             .withUrl(`/users/${id}`)
+            .withBody(data)
             .withPutMethod()
             .withAuthorization()
             .sendAsync()
