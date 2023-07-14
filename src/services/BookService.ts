@@ -1,6 +1,5 @@
 import {IBook} from "./models/DTO/IBookDTO";
 import axios from "axios";
-import {TokenService} from "./TokenService";
 import {ErrorService} from "./ErrorService";
 import {IBooksResponse} from "./models/responses/IBookResponse";
 import {ICreateBookRequest, IUpdateBookRequest, IUpdateBookTagsRequest} from "./models/requests/IBookRequests";
@@ -51,18 +50,20 @@ export class BookService {
      * @returns IError или null
      */
     static async createBookAsync(data: ICreateBookRequest): Promise<EmptyResult> {
-        try {
-            await axios.post(process.env.REACT_APP_URL_API + "/books", data, {
-                headers: {
-                    Authorization: await TokenService.getAccessTokenAsync()
-                }
-            })
 
-            return EmptyResult.ok()
+        const result = await HttpRequest.create<void>()
+            .withUrl("/books")
+            .withAuthorization()
+            .withPostMethod()
+            .withBody(data)
+            .sendAsync()
+
+        if (result.hasError()) {
+            const error = result.getError();
+            return EmptyResult.withError(error)
         }
-        catch (err: any) {
-            return EmptyResult.withError(ErrorService.toServiceError(err, "BookService"))
-        }
+
+        return EmptyResult.ok()
     }
 
     /**
@@ -71,18 +72,19 @@ export class BookService {
      * @returns IError или null
      */
     static async deleteBookAsync(id: number): Promise<EmptyResult> {
-        try {
-            await axios.delete(process.env.REACT_APP_URL_API + `/books/${id}`, {
-                headers: {
-                    Authorization: await TokenService.getAccessTokenAsync()
-                }
-            })
 
-            return EmptyResult.ok()
+        const result = await HttpRequest.create<void>()
+            .withUrl(`/books/${id}`)
+            .withAuthorization()
+            .withDeleteMethod()
+            .sendAsync()
+
+        if (result.hasError()) {
+            const error = result.getError()
+            return EmptyResult.withError(error)
         }
-        catch (err: any) {
-            return EmptyResult.withError(ErrorService.toServiceError(err, "BookService"))
-        }
+
+        return EmptyResult.ok()
     }
 
     /**
@@ -92,18 +94,20 @@ export class BookService {
      * @returns IError или null
      */
     static async updateBookAsync(id: number, data: IUpdateBookRequest): Promise<EmptyResult> {
-        try {
-            await axios.put(process.env.REACT_APP_URL_API + `/books/${id}/info`, data, {
-                headers: {
-                    Authorization: await TokenService.getAccessTokenAsync()
-                }
-            })
 
-            return EmptyResult.ok()
+        const result = await HttpRequest.create<void>()
+            .withUrl( `/books/${id}/info`)
+            .withBody(data)
+            .withAuthorization()
+            .withPutMethod()
+            .sendAsync()
+
+        if (result.hasError()) {
+            const error = result.getError()
+            return EmptyResult.withError(error)
         }
-        catch (err: any) {
-            return EmptyResult.withError(ErrorService.toServiceError(err, "BookService"))
-        }
+
+        return EmptyResult.ok()
     }
 
     /**
@@ -113,18 +117,19 @@ export class BookService {
      * @returns IError или null
      */
     static  async updateBookAuthorAsync(authorId: number, bookId: number): Promise<EmptyResult> {
-        try {
-            await axios.put(process.env.REACT_APP_URL_API + `/books/${bookId}/author/${authorId}`,{}, {
-                headers: {
-                    Authorization: await TokenService.getAccessTokenAsync()
-                }
-            })
 
-            return EmptyResult.ok()
+        const result = await HttpRequest.create<void>()
+            .withUrl( `/books/${bookId}/author/${authorId}`)
+            .withAuthorization()
+            .withPutMethod()
+            .sendAsync()
+
+        if (result.hasError()) {
+            const error = result.getError()
+            return EmptyResult.withError(error)
         }
-        catch (err: any) {
-            return EmptyResult.withError(ErrorService.toServiceError(err, "BookService"))
-        }
+
+        return EmptyResult.ok()
     }
 
     /**
@@ -134,18 +139,20 @@ export class BookService {
      * @returns IError или null
      */
     static async updateTagsBookAsync(bookId: number, tags: IUpdateBookTagsRequest): Promise<EmptyResult> {
-        try {
-            await axios.put(process.env.REACT_APP_URL_API + `/books/${bookId}/tags`, tags, {
-                headers: {
-                    Authorization: await TokenService.getAccessTokenAsync()
-                }
-            })
 
-            return EmptyResult.ok()
+        const result = await HttpRequest.create<void>()
+            .withUrl( `/books/${bookId}/tags`)
+            .withBody(tags)
+            .withAuthorization()
+            .withPutMethod()
+            .sendAsync()
+
+        if (result.hasError()) {
+            const error = result.getError()
+            return EmptyResult.withError(error)
         }
-        catch (err: any) {
-            return EmptyResult.withError(ErrorService.toServiceError(err, "BookService"))
-        }
+
+        return EmptyResult.ok()
     }
 
     /**
@@ -155,17 +162,19 @@ export class BookService {
      * @returns IError или null
      */
     static async uploadImageBookAsync(bookId: number, image: FormData): Promise<EmptyResult> {
-        try {
-            await axios.put(process.env.REACT_APP_URL_API + `/books/${bookId}/image`, image, {
-                headers: {
-                    Authorization: await TokenService.getAccessTokenAsync()
-                }
-            })
 
-            return EmptyResult.ok()
+        const result = await HttpRequest.create<void>()
+            .withUrl(`/books/${bookId}/image`)
+            .withBody(image)
+            .withAuthorization()
+            .withPutMethod()
+            .sendAsync()
+
+        if (result.hasError()) {
+            const error = result.getError()
+            return EmptyResult.withError(error)
         }
-        catch (err: any) {
-            return EmptyResult.withError(ErrorService.toServiceError(err, "BookService"))
-        }
+
+        return EmptyResult.ok()
     }
 }

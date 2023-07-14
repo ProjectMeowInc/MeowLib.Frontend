@@ -1,10 +1,10 @@
 import {ITagDTO} from "./models/DTO/ITagDTO";
 import axios from "axios";
 import {ICreateTagRequest, IUpdateTagRequest} from "./models/requests/ITagRequests";
-import {TokenService} from "./TokenService";
 import {IGetTagResponse} from "./models/responses/IGetTagsResponse";
 import {ErrorService} from "./ErrorService";
 import {EmptyResult, Result} from "./result/Result";
+import HttpRequest from "./http/HttpRequest";
 
 /**
  * Сервис для работы с тегами
@@ -48,18 +48,20 @@ export class TagsService {
      * @returns ошибку или null
      */
     static async createTagAsync(data: ICreateTagRequest): Promise<EmptyResult> {
-        try {
-            await axios.post(process.env.REACT_APP_URL_API + "/tags/", data, {
-                headers: {
-                    Authorization: await TokenService.getAccessTokenAsync()
-                }
-            })
 
-            return EmptyResult.ok()
+        const result = await HttpRequest.create<void>()
+            .withUrl("/tags/")
+            .withBody(data)
+            .withAuthorization()
+            .withPostMethod()
+            .sendAsync()
+
+        if (result.hasError()) {
+            const error = result.getError()
+            return EmptyResult.withError(error)
         }
-        catch (err: any) {
-            return EmptyResult.withError(ErrorService.toServiceError(err, "TagService"))
-        }
+
+        return EmptyResult.ok()
     }
 
     /**
@@ -68,18 +70,19 @@ export class TagsService {
      * @returns ошибку или null
      */
     static async deleteTagAsync(id: number): Promise<EmptyResult> {
-        try {
-            await axios.delete(process.env.REACT_APP_URL_API + `/tags/${id}`,{
-                headers: {
-                    Authorization: await TokenService.getAccessTokenAsync()
-                }
-            })
 
-            return EmptyResult.ok()
+        const result = await HttpRequest.create<void>()
+            .withUrl(`/tags/${id}`)
+            .withAuthorization()
+            .withDeleteMethod()
+            .sendAsync()
+
+        if (result.hasError()) {
+            const error = result.getError()
+            return EmptyResult.withError(error)
         }
-        catch (err: any) {
-            return EmptyResult.withError(ErrorService.toServiceError(err, "TagService"))
-        }
+
+        return EmptyResult.ok()
     }
 
     /**
@@ -89,17 +92,19 @@ export class TagsService {
      * @returns ошибку или null
      */
     static async updateTagAsync(id: number, data: IUpdateTagRequest): Promise<EmptyResult> {
-        try {
-            await axios.put(process.env.REACT_APP_URL_API + `/tags/${id}`, data, {
-                headers: {
-                    Authorization: await TokenService.getAccessTokenAsync()
-                }
-            })
 
-            return EmptyResult.ok()
+        const result = await HttpRequest.create<void>()
+            .withUrl(`/tags/${id}`)
+            .withBody(data)
+            .withAuthorization()
+            .withPutMethod()
+            .sendAsync()
+
+        if (result.hasError()) {
+            const error = result.getError()
+            return EmptyResult.withError(error)
         }
-        catch (err: any) {
-            return EmptyResult.withError(ErrorService.toServiceError(err, "TagService"))
-        }
+
+        return EmptyResult.ok()
     }
 }
