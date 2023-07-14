@@ -2,8 +2,8 @@ import React, {useEffect, useState} from 'react';
 import styles from "./mainPage.module.css";
 import {IBookDTO} from "../../../services/models/DTO/IBookDTO";
 import {BookService} from "../../../services/BookService";
-import BookItemRecentlyAdded from "../../../components/BookItemRecentlyAdded/BookItemRecentlyAdded";
-import BookItem from "../../../components/BookItem/BookItem";
+import BookItemRecentlyAdded from "../../../components/UsersComponents/BookItemRecentlyAdded/BookItemRecentlyAdded";
+import BookItem from "../../../components/UsersComponents/BookItem/BookItem";
 
 const MainPage = () => {
 
