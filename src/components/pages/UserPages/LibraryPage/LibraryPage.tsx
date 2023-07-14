@@ -17,7 +17,7 @@ const LibraryPage = () => {
 
             const books = getBooksResult.unwrap()
 
-            setBooks(books.items)
+            setBooks(books)
         })
     }, [])
 

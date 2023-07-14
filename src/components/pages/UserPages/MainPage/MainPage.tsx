@@ -17,7 +17,7 @@ const MainPage = () => {
 
             const books = getBooksResult.unwrap()
 
-            return setBooks(books.items)
+            return setBooks(books)
         })
 
     }, [])
