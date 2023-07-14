@@ -34,9 +34,7 @@ const AuthPage = () => {
 
             AlertService.successMessage("Вы успешно авторизовались")
 
-            if(accessTokenData.userRole === "Moderator" || accessTokenData.userRole === "Admin") {
-                return RedirectService.delayRedirect("/")
-            }
+            return RedirectService.delayRedirect("/")
         }
         else {
             const registrationResult = await AuthService.registrationAsync({login, password})
