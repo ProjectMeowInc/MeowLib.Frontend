@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import styles from "./adminLayout.module.css";
 import {Outlet, useNavigate} from "react-router-dom";
 import {TokenService} from "../../services/TokenService";
-import {UserRolesEnum} from "../../services/models/DTO/IUserModels";
 import {AlertService} from "../../services/AlertService";
 import {IAccessTokenData} from "../../services/models/DTO/ITokenModels";
 import {RedirectService} from "../../services/RedirectService";
@@ -34,7 +33,7 @@ const AdminLayout = () => {
                 return RedirectService.redirectToLogin()
             }
 
-            if(accessTokenData.userRole !== UserRolesEnum.Admin && accessTokenData.userRole !== UserRolesEnum.Moderator) {
+            if(accessTokenData.userRole !== "Admin" && accessTokenData.userRole !== "Moderator") {
                 return RedirectService.redirectToLogin()
             }
 

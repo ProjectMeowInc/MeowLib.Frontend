@@ -1,12 +1,4 @@
-/**
- * Перечесление возможных ролей пользователя.
- */
-export enum UserRolesEnum {
-    User = "User",
-    Editor = "Editor",
-    Moderator = "Moderator",
-    Admin = "Admin"
-}
+import {UserRoles} from "../UserRoles";
 
 /**
  * Интерфейс описывающий DTO пользователя
@@ -14,5 +6,5 @@ export enum UserRolesEnum {
 export interface IUserDTO {
     id: number
     login: string
-    role: UserRolesEnum
+    role: UserRoles
 }

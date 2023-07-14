@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import styles from "./authPage.module.css"
 import {TokenService} from "../../../services/TokenService";
-import {UserRolesEnum} from "../../../services/models/DTO/IUserModels";
 import {AlertService} from "../../../services/AlertService";
 import {AuthService} from "../../../services/AuthService";
 import {RedirectService} from "../../../services/RedirectService";
@@ -35,7 +34,7 @@ const AuthPage = () => {
 
             AlertService.successMessage("Вы успешно авторизовались")
 
-            if(accessTokenData.userRole === UserRolesEnum.Moderator || accessTokenData.userRole === UserRolesEnum.Admin) {
+            if(accessTokenData.userRole === "Moderator" || accessTokenData.userRole === "Admin") {
                 return RedirectService.delayRedirect("/")
             }
         }

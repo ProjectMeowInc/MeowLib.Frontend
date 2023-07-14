@@ -1,4 +1,3 @@
-import {UserRolesEnum} from "./models/DTO/IUserModels";
 import jwtDecode from "jwt-decode";
 import Cookies from "js-cookie";
 import {ErrorService} from "./ErrorService";
@@ -8,6 +7,7 @@ import axios from "axios";
 import {ILoginResponse} from "./models/responses/IAuthResponses";
 import {Result} from "./result/Result";
 import {ILoginDTO} from "./models/DTO/ILoginDTO";
+import {UserRoles} from "./models/UserRoles";
 
 /**
  * Сервис для работы с токеном
@@ -35,12 +35,12 @@ export class TokenService {
             return null
         }
 
-        const parsedRole = userRole as keyof typeof UserRolesEnum;
+        const parsedRole = userRole as UserRoles;
 
         return {
             id: Number(id),
             login: String(login),
-            userRole: UserRolesEnum[parsedRole],
+            userRole: parsedRole,
             exp: Number(exp)
         }
     }

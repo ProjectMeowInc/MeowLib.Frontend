@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import styles from "./updateUserPage.module.css";
 import {IUpdateUserInfoRequest} from "../../../../../services/models/requests/IUserRequests";
-import {UserRolesEnum} from "../../../../../services/models/DTO/IUserModels";
 import {useParams} from "react-router-dom";
 import {AlertService} from "../../../../../services/AlertService";
 import {UserService} from "../../../../../services/UserService";
@@ -76,10 +75,10 @@ const UpdateUserPage = () => {
                         role: ctx.target.value
                     })
                 } className={styles.select}>
-                    <option value={UserRolesEnum.User}>{UserRolesEnum.User}</option>
-                    <option value={UserRolesEnum.Editor}>{UserRolesEnum.Editor}</option>
-                    <option value={UserRolesEnum.Moderator}>{UserRolesEnum.Moderator}</option>
-                    <option value={UserRolesEnum.Admin}>{UserRolesEnum.Admin}</option>
+                    <option value={"User"}>User</option>
+                    <option value={"Editor"}>Editor</option>
+                    <option value={"Moderator"}>Moderator</option>
+                    <option value={"Admin"}>Admin</option>
                 </select>
 
                 <button onClick={SubmitHandler} className={styles.button}>Сохранить</button>
