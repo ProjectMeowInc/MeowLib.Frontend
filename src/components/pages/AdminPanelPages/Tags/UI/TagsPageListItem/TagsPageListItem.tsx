@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import {Link} from "react-router-dom";
 import styles from "./tagsPageListItem.module.css";
-import {ITagDTO} from "../../../services/models/DTO/ITagDTO";
-import {TagsService} from "../../../services/TagsService";
-import {AlertService} from "../../../services/AlertService";
-import {RedirectService} from "../../../services/RedirectService";
+import {ITagDTO} from "../../../../../../services/models/DTO/ITagDTO";
+import {TagsService} from "../../../../../../services/TagsService";
+import {AlertService} from "../../../../../../services/AlertService";
+import {RedirectService} from "../../../../../../services/RedirectService";
 
 const TagsPageListItem = ({id, name}: ITagDTO) => {
 

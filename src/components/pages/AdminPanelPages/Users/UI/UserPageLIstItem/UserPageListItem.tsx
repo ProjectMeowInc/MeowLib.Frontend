@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 import styles from "./userPage.module.css";
-import {IUserDTO} from "../../../services/models/DTO/IUserModels";
+import {IUserDTO} from "../../../../../../services/models/DTO/IUserModels";
 
 const UserPageListItem = ({id, login, role}: IUserDTO) => {
 

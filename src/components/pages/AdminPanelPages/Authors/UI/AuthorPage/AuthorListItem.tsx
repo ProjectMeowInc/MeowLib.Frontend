@@ -1,10 +1,10 @@
 import React from 'react';
 import styles from "./authorListItem.module.css"
-import {IAuthorDTO} from "../../../services/models/DTO/IAuthorModels";
-import {AuthorServices} from "../../../services/AuthorServices";
-import {AlertService} from "../../../services/AlertService";
+import {IAuthorDTO} from "../../../../../../services/models/DTO/IAuthorModels";
+import {AuthorServices} from "../../../../../../services/AuthorServices";
+import {AlertService} from "../../../../../../services/AlertService";
 import {Link} from "react-router-dom";
-import {RedirectService} from "../../../services/RedirectService";
+import {RedirectService} from "../../../../../../services/RedirectService";
 
 const AuthorListItem = ({id, name}: IAuthorDTO) => {
 

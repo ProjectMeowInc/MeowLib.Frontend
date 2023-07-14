@@ -1,5 +1,5 @@
 import React from 'react';
-import {IAuthorDTO} from "../../../../services/models/DTO/IAuthorModels";
+import {IAuthorDTO} from "../../../../../../services/models/DTO/IAuthorModels";
 import AuthorListItem from "../AuthorListItem/AuthorListItem";
 import styles from "./aurhorList.module.css"
 

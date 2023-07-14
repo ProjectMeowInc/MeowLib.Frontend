@@ -6,11 +6,11 @@ import {IUpdateBookRequest} from "../../../../../services/models/requests/IBookR
 import {BookService} from "../../../../../services/BookService";
 import {RedirectService} from "../../../../../services/RedirectService";
 import {AlertService} from "../../../../../services/AlertService";
-import ChapterListItem from "../../../BooksPage/ChapterListItem/ChapterListItem";
+import ChapterListItem from "../UI/ChapterListItem/ChapterListItem";
 import {IChapterDTO} from "../../../../../services/models/DTO/IChapterDTO";
-import TagList from "../../../BooksPage/TagList/TagList";
+import TagList from "../UI/TagList/TagList";
 import {TagsContext} from "../../../../../context/TagsContext";
-import AuthorList from "../../../BooksPage/AuthorList/AuthorList";
+import AuthorList from "../UI/AuthorList/AuthorList";
 import {IAuthorDTO} from "../../../../../services/models/DTO/IAuthorModels";
 import {AuthorContext} from "../../../../../context/AuthorContext";
 import {TagsService} from "../../../../../services/TagsService";

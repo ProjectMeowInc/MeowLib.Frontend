@@ -3,7 +3,7 @@ import styles from "./userPage.module.css"
 import Preloader from "../../../../UI/Preloader/Preloader";
 import {UserService} from "../../../../../services/UserService";
 import {IUserDTO} from "../../../../../services/models/DTO/IUserModels";
-import UserPageListItem from "../../../UserPage/UserPageListItem";
+import UserPageListItem from "../UI/UserPageLIstItem/UserPageListItem";
 
 const UsersPage = () => {
 

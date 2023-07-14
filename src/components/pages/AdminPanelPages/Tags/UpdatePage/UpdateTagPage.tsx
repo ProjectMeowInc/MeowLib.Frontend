@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import styles from "./updateTagPage.module.css"
 import {TagsService} from "../../../../../services/TagsService";
-import {useNavigate, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import {AlertService} from "../../../../../services/AlertService";
 import Preloader from "../../../../UI/Preloader/Preloader";
 import {ITagDTO} from "../../../../../services/models/DTO/ITagDTO";
@@ -12,11 +12,9 @@ const UpdateTagPage = () => {
     const [tagData, setTagData] = useState<ITagDTO | null>(null)
     const params = useParams()
 
-    const navigate = useNavigate()
-
     useEffect(() => {
         if (params.id === undefined) {
-            return navigate("/404NotFound")
+            return RedirectService.redirectToNotFoundPage
         }
 
         TagsService.getTagByIdAsync(parseInt(params.id)).then(getTagResult => {
@@ -33,7 +31,7 @@ const UpdateTagPage = () => {
 
 
         if (params.id === undefined) {
-            return navigate("/404NotFound")
+            return RedirectService.redirectToNotFoundPage()
         }
 
         if (tagData === null) {

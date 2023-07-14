@@ -1,10 +1,10 @@
 import React from 'react';
 import styles from "./chapterListItem.module.css";
-import {IChapterDTO} from "../../../../services/models/DTO/IChapterDTO";
+import {IChapterDTO} from "../../../../../../services/models/DTO/IChapterDTO";
 import {Link, useParams} from "react-router-dom";
-import {ChapterService} from "../../../../services/ChapterService";
-import {AlertService} from "../../../../services/AlertService";
-import {RedirectService} from "../../../../services/RedirectService";
+import {ChapterService} from "../../../../../../services/ChapterService";
+import {AlertService} from "../../../../../../services/AlertService";
+import {RedirectService} from "../../../../../../services/RedirectService";
 
 const ChapterListItem = ({id, name, releaseDate}: IChapterDTO) => {
 

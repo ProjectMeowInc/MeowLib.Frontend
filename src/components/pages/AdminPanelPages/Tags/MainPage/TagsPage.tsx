@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import styles from "./tagsPage.module.css"
 import Preloader from "../../../../UI/Preloader/Preloader";
-import TagsPageListItem from "../../../TagsPage/TagsPageListItem";
+import TagsPageListItem from "../UI/TagsPageListItem/TagsPageListItem";
 import {ITagDTO} from "../../../../../services/models/DTO/ITagDTO";
 import {TagsService} from "../../../../../services/TagsService";
 import {Link} from "react-router-dom";

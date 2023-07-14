@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
-import {IAuthorDTO} from "../../../../services/models/DTO/IAuthorModels";
+import {IAuthorDTO} from "../../../../../../services/models/DTO/IAuthorModels";
 import styles from "./authorListItem.module.css";
-import {AuthorContext} from "../../../../context/AuthorContext";
+import {AuthorContext} from "../../../../../../context/AuthorContext";
 
 const AuthorListItem = ({id, name}: IAuthorDTO) => {
 
