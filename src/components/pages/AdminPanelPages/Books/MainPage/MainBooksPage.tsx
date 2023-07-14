@@ -3,13 +3,13 @@ import styles from "./mainPage.module.css";
 import {Link} from "react-router-dom";
 import Preloader from "../../../../UI/Preloader/Preloader";
 import BooksListItem from "../../../BooksPage/BookListItem/BooksListItem";
-import {IBooksResponse} from "../../../../../services/models/responses/IBookResponse";
 import {BookService} from "../../../../../services/BookService";
+import {IBookDTO} from "../../../../../services/models/DTO/IBookDTO";
 
 
 const MainBooksPage = () => {
 
-    const [bookList, setBookList] = useState<IBooksResponse | null>(null)
+    const [bookList, setBookList] = useState<IBookDTO[] | null>(null)
 
     useEffect(() => {
         BookService.getBooksAsync().then(getBooksResult => {
@@ -31,8 +31,8 @@ const MainBooksPage = () => {
 
             {bookList === null
                 ? <Preloader/>
-                : bookList.items.length !== 0
-                    ? bookList.items.map(book => (
+                : bookList.length !== 0
+                    ? bookList.map(book => (
                         <BooksListItem key={book.id} id={book.id} name={book.name} description={book.description} imageName={book.imageName}/>
                     ))
                     : <p className={styles.empty}>Здесь пока ничего нет</p>
