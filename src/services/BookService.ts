@@ -1,4 +1,4 @@
-import {IBook} from "./models/DTO/IBookDTO";
+import {IBook, IBookDTO} from "./models/DTO/IBookDTO";
 import axios from "axios";
 import {ErrorService} from "./ErrorService";
 import {IBooksResponse} from "./models/responses/IBookResponse";
@@ -15,7 +15,7 @@ export class BookService {
      * Метод для получения всех книг
      * @return массив из книг или IError
      */
-    static async getBooksAsync(): Promise<Result<IBooksResponse>> {
+    static async getBooksAsync(): Promise<Result<IBookDTO[]>> {
         const result = await HttpRequest.create<IBooksResponse>()
             .withUrl("/books")
             .sendAsync()
@@ -25,7 +25,7 @@ export class BookService {
             return Result.withError(error)
         }
 
-        return Result.ok(result.unwrap())
+        return Result.ok(result.unwrap().items)
     }
 
     /**
