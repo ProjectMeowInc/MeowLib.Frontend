@@ -1,7 +1,6 @@
 import {ICreateChapterRequest, IUpdateChapterTextRequest} from "./models/requests/IChapterRequests";
 import {ErrorService} from "./ErrorService";
 import axios from "axios";
-import {IGetChaptersResponse} from "./models/responses/IChapterResponses";
 import {IChapter, IChapterDTO} from "./models/DTO/IChapterDTO";
 import {EmptyResult, Result} from "./result/Result";
 import HttpRequest from "./http/HttpRequest";
@@ -41,7 +40,7 @@ export class ChapterService {
     static async getChaptersAsync(bookId: number): Promise<Result<IChapterDTO[]>> {
         try {
 
-            const request = HttpRequest.create<IGetChaptersResponse>()
+            const request = HttpRequest.create<IChapterDTO[]>()
                 .withUrl(`/books/${bookId}/chapters`)
                 .withAuthorization()
 
@@ -52,7 +51,7 @@ export class ChapterService {
                 return Result.withError(error)
             }
 
-            const chapters = result.unwrap().items
+            const chapters = result.unwrap()
 
             return Result.ok(chapters)
         }
