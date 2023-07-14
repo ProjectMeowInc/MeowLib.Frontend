@@ -7,6 +7,7 @@ import {IAccessTokenData} from "./models/DTO/ITokenModels";
 import axios from "axios";
 import {ILoginResponse} from "./models/responses/IAuthResponses";
 import {Result} from "./result/Result";
+import {ILoginDTO} from "./models/DTO/ILoginDTO";
 
 /**
  * Сервис для работы с токеном
@@ -48,7 +49,7 @@ export class TokenService {
      * Метод для обновления access и refresh токена
      * @returns ILoginResponse или IError
      */
-    static async updateAuthAsync(): Promise<Result<ILoginResponse>> {
+    static async updateAuthAsync(): Promise<Result<ILoginDTO>> {
         try {
 
             const refreshToken = this.getRefreshToken()
