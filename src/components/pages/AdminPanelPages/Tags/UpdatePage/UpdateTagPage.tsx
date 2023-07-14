@@ -14,7 +14,7 @@ const UpdateTagPage = () => {
 
     useEffect(() => {
         if (params.id === undefined) {
-            return RedirectService.redirectToNotFoundPage
+            return RedirectService.redirectToNotFoundPage()
         }
 
         TagsService.getTagByIdAsync(parseInt(params.id)).then(getTagResult => {
