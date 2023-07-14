@@ -1,6 +1,4 @@
 import axios from "axios";
-import {IError} from "./models/IError";
-import {IGetAuthorsResponse} from "./models/responses/IAuthorResponse";
 import {IAuthorDTO} from "./models/DTO/IAuthorModels";
 import {TokenService} from "./TokenService";
 import {ICreateAuthorRequest, ISearchAuthorRequest} from "./models/requests/IAuthorRequests";

@@ -6,8 +6,8 @@ import {ErrorTypesEnum, ErrorWithAction, IError, IErrorWithAction} from "./model
 import {IAccessTokenData} from "./models/DTO/ITokenModels";
 import axios from "axios";
 import {ILoginResponse} from "./models/responses/IAuthResponses";
-import {AlertService} from "./AlertService";
 import {RedirectService} from "./RedirectService";
+import {Result} from "./result/Result";
 
 /**
  * Сервис для работы с токеном
@@ -49,32 +49,33 @@ export class TokenService {
      * Метод для обновления access и refresh токена
      * @returns ILoginResponse или IError
      */
-    static async updateAuthAsync(): Promise<ILoginResponse | IError> {
+    static async updateAuthAsync(): Promise<Result<ILoginResponse>> {
         try {
 
             const refreshToken = this.getRefreshToken()
 
             if (refreshToken === null && RedirectService.getPath() !== "/") {
-                return new ErrorWithAction("redirect", "Авторизуйтесь", ErrorTypesEnum.Critical, "/login")
+                const error = new ErrorWithAction("redirect", "Авторизуйтесь", ErrorTypesEnum.Critical, "/login")
+                return Result.withError(error)
             }
 
             const response = await axios.post<ILoginResponse>(process.env.REACT_APP_URL_API + "/authorization/update-auth", {
                 refreshToken: refreshToken
             })
 
-            return response.data
+            return Result.ok(response.data)
         }
         catch (err: any) {
 
             if (err.isAxiosError) {
                 if (err.response.status === 401) {
-                    const error: IErrorWithAction = new ErrorWithAction("redirect", "Пожалуйста авторизуйтесь снова", ErrorTypesEnum.Critical, )
-
-                    return error
+                    const error = new ErrorWithAction("redirect", "Пожалуйста авторизуйтесь снова", ErrorTypesEnum.Critical, "/login")
+                    return Result.withError(error)
                 }
             }
 
-            return ErrorService.toServiceError(err, "TokenService")
+            const error = ErrorService.toServiceError(err, "TokenService")
+            return Result.withError(error)
         }
     }
 
@@ -82,67 +83,51 @@ export class TokenService {
      * Метод для получения access токена
      * @returns строку при наличии токена
      */
-    static async getAccessTokenAsync(): Promise<string | null> {
+    static async getAccessTokenAsync(): Promise<Result<string>> {
         const token = Cookies.get("AccessToken")
 
         if(token === undefined) {
 
-            const updateResult = await this.updateAuthAsync()
+            const updateAuthResult = await this.updateAuthAsync()
 
-            if (ErrorService.isError(updateResult)) {
-                if (ErrorService.isActionError(updateResult)) {
-                    updateResult.execute()
-                    return null
-                }
-
-                if (updateResult.errorType === ErrorTypesEnum.Critical) {
-                    AlertService.errorMessage("Это пизда " + updateResult.displayMessage)
-                    return null
-                }
-
-                AlertService.warningMessage(updateResult.displayMessage)
-                return null
+            if (updateAuthResult.hasError()) {
+                const error = updateAuthResult.getError()
+                return Result.withError(error)
             }
 
-            this.setRefreshToken(updateResult.refreshToken)
-            this.setAccessToken(updateResult.accessToken)
+            const updatedTokens = updateAuthResult.unwrap()
 
-            return updateResult.accessToken
+            this.setRefreshToken(updatedTokens.refreshToken)
+            this.setAccessToken(updatedTokens.accessToken)
+
+            return Result.ok(updatedTokens.accessToken)
         }
 
         const decodedAccessToken = this.parseAccessToken(token)
 
         if (decodedAccessToken === null) {
-            return null
+            return Result.withErrorMessage("Ошибка парсинга токена")
         }
 
         const currentTime = Date.now() / 1000;
 
         if (currentTime - decodedAccessToken.exp > 0) {
-            const updateResult = await this.updateAuthAsync()
+            const updateAuthResult = await this.updateAuthAsync()
 
-            if (ErrorService.isError(updateResult)) {
-                if (ErrorService.isActionError(updateResult)) {
-                    updateResult.execute()
-                    return null
-                }
-
-                if (updateResult.errorType === ErrorTypesEnum.Critical) {
-                    AlertService.errorMessage("Это пизда " + updateResult.displayMessage)
-                    return null
-                }
-
-                AlertService.warningMessage(updateResult.displayMessage)
-                return null
+            if (updateAuthResult.hasError()) {
+                const error = updateAuthResult.getError()
+                return Result.withError(error)
             }
 
-            this.setRefreshToken(updateResult.refreshToken)
-            this.setAccessToken(updateResult.accessToken)
+            const updatedTokens = updateAuthResult.unwrap()
 
-            return updateResult.accessToken
+            this.setRefreshToken(updatedTokens.refreshToken)
+            this.setAccessToken(updatedTokens.accessToken)
+
+            return Result.ok(updatedTokens.accessToken)
         }
 
-        return token
+        return Result.ok(token)
     }
 
     /**

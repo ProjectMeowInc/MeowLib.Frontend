@@ -1,6 +1,5 @@
 import axios from "axios"
 import {IUpdateUserInfoRequest} from './models/requests/IUserRequests';
-import {IError} from "./models/IError";
 import {ErrorService} from "./ErrorService";
 import {IUserDTO} from "./models/DTO/IUserModels";
 import {TokenService} from "./TokenService";
@@ -29,7 +28,7 @@ export class UserService {
     /**
      * Метод для обновления информации о пользователе
      * @param id пользователя
-     * @param data нформация мольхлователя
+     * @param data информация пользователя
      * @returns Возвращает IUserDTO или IError
      */
     static async updateUserAsync(id: number, data: IUpdateUserInfoRequest): Promise<Result<IUserDTO>> {
@@ -37,6 +36,7 @@ export class UserService {
             const response = await axios.put<IUserDTO>(process.env.REACT_APP_URL_API + `/users/${id}`, data, {
                 headers: {
                     Authorization: await TokenService.getAccessTokenAsync()
+                        .then(result => result.unwrap())
                 }
             })
 

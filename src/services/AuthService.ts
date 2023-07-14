@@ -1,5 +1,4 @@
 import {ILogInRequest, ISignInRequest} from "./models/requests/IUserRequests";
-import {IError} from "./models/IError";
 import axios from "axios";
 import {ErrorService} from "./ErrorService";
 import {ILoginResponse} from "./models/responses/IAuthResponses";
