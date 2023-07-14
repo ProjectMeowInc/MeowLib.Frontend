@@ -14,12 +14,11 @@ export class LogService {
      */
     static async sendLogAsync(data: ISendLogRequest): Promise<EmptyResult> {
 
-        const request = HttpRequest.create<void>()
+        const result = await HttpRequest.create<void>()
             .withUrl("/logs")
             .withAuthorization()
             .withBody(data)
-
-        const result = await request.sendAsync()
+            .sendAsync()
 
         if (result.hasError()) {
             const error = result.getError()

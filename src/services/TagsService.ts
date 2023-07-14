@@ -1,8 +1,5 @@
 import {ITagDTO} from "./models/DTO/ITagDTO";
-import axios from "axios";
 import {ICreateTagRequest, IUpdateTagRequest} from "./models/requests/ITagRequests";
-import {IGetTagResponse} from "./models/responses/IGetTagsResponse";
-import {ErrorService} from "./ErrorService";
 import {EmptyResult, Result} from "./result/Result";
 import HttpRequest from "./http/HttpRequest";
 
@@ -16,14 +13,17 @@ export class TagsService {
      * @returns данные в виде IGetTagsResponse или ошибку
      */
     static async getAllTagsAsync(): Promise<Result<ITagDTO[]>> {
-        try {
-            const response = await axios.get<ITagDTO[]>(process.env.REACT_APP_URL_API + "/tags")
 
-            return Result.ok(response.data)
+        const result = await new HttpRequest<ITagDTO[]>()
+            .withUrl("/tags")
+            .withGetMethod()
+            .sendAsync()
+
+        if (result.hasError()) {
+            return Result.withError(result.getError())
         }
-        catch (err: any) {
-            return Result.withError(ErrorService.toServiceError(err, "TagService"))
-        }
+
+        return Result.ok(result.unwrap())
     }
 
     /**
@@ -32,14 +32,17 @@ export class TagsService {
      * @returns данные в виде IGetTagResponse или ошибку
      */
     static async getTagByIdAsync(id: number): Promise<Result<ITagDTO>> {
-        try {
-            const response = await axios.get<IGetTagResponse>(process.env.REACT_APP_URL_API + `/tags/${id}`)
 
-            return Result.ok(response.data)
+        const result = await new HttpRequest<ITagDTO>()
+            .withUrl(`/tags/${id}`)
+            .withGetMethod()
+            .sendAsync()
+
+        if (result.hasError()) {
+            return Result.withError(result.getError())
         }
-        catch (err: any) {
-            return Result.withError(ErrorService.toServiceError(err, "TagService"))
-        }
+
+        return Result.ok(result.unwrap())
     }
 
     /**

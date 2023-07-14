@@ -1,6 +1,4 @@
 import {ICreateChapterRequest, IUpdateChapterTextRequest} from "./models/requests/IChapterRequests";
-import {ErrorService} from "./ErrorService";
-import axios from "axios";
 import {IChapter, IChapterDTO} from "./models/DTO/IChapterDTO";
 import {EmptyResult, Result} from "./result/Result";
 import HttpRequest from "./http/HttpRequest";
@@ -16,13 +14,12 @@ export class ChapterService {
      * @param data данные необходимые для создания главы
      */
     static async createChapterAsync(id: number, data: ICreateChapterRequest): Promise<EmptyResult> {
-        const request = HttpRequest.create<void>()
+        const result = await HttpRequest.create<void>()
             .withUrl(`/books/${id}/chapters`)
             .withPostMethod()
             .withAuthorization()
             .withBody(data)
-
-        const result = await request.sendAsync()
+            .sendAsync()
 
         if (result.hasError()) {
             const error = result.getError()
@@ -38,26 +35,20 @@ export class ChapterService {
      * @returns IGetChapters или IError
      */
     static async getChaptersAsync(bookId: number): Promise<Result<IChapterDTO[]>> {
-        try {
 
-            const request = HttpRequest.create<IChapterDTO[]>()
-                .withUrl(`/books/${bookId}/chapters`)
-                .withAuthorization()
+        const result = await HttpRequest.create<IChapterDTO[]>()
+            .withUrl(`/books/${bookId}/chapters`)
+            .withAuthorization()
+            .sendAsync()
 
-            const result = await request.sendAsync()
-
-            if (result.hasError()) {
-                const error = result.getError()
-                return Result.withError(error)
-            }
-
-            const chapters = result.unwrap()
-
-            return Result.ok(chapters)
+        if (result.hasError()) {
+            const error = result.getError()
+            return Result.withError(error)
         }
-        catch (err: any) {
-            return Result.withError(ErrorService.toServiceError(err, "ChapterService"))
-        }
+
+        const chapters = result.unwrap()
+
+        return Result.ok(chapters)
     }
 
     /**
@@ -113,13 +104,16 @@ export class ChapterService {
      * @returns IChapter или null
      */
     static async getChapterAsync(bookId: number, chapterId: number): Promise<Result<IChapter>> {
-        try {
-            const response = await axios.get<IChapter>(process.env.REACT_APP_URL_API + `/books/${bookId}/chapters/${chapterId}`)
 
-            return Result.ok(response.data)
+        const result = await new HttpRequest<IChapter>()
+            .withUrl(`/books/${bookId}/chapters/${chapterId}`)
+            .withGetMethod()
+            .sendAsync()
+
+        if (result.hasError()) {
+            return Result.withError(result.getError())
         }
-        catch (err: any) {
-            return Result.withError(ErrorService.toServiceError(err, "ChapterService"))
-        }
+
+        return Result.ok(result.unwrap())
     }
 }

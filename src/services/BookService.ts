@@ -1,6 +1,4 @@
 import {IBook, IBookDTO} from "./models/DTO/IBookDTO";
-import axios from "axios";
-import {ErrorService} from "./ErrorService";
 import {IBooksResponse} from "./models/responses/IBookResponse";
 import {ICreateBookRequest, IUpdateBookRequest, IUpdateBookTagsRequest} from "./models/requests/IBookRequests";
 import {EmptyResult, Result} from "./result/Result";
@@ -34,14 +32,17 @@ export class BookService {
      * @returns книгу в виде IBook или ошибку в виде IError
      */
     static async getBookAsync(id: number): Promise<Result<IBook>> {
-        try {
-            const response = await axios.get<IBook>(process.env.REACT_APP_URL_API + `/books/${id}`)
 
-            return Result.ok(response.data)
+        const result = await new HttpRequest<IBook>()
+            .withUrl(`/books/${id}`)
+            .withGetMethod()
+            .sendAsync()
+
+        if (result.hasError()) {
+            return Result.withError(result.getError())
         }
-        catch (err: any) {
-            return Result.withError(ErrorService.toServiceError(err, "BookService"))
-        }
+
+        return Result.ok(result.unwrap())
     }
 
     /**
