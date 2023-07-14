@@ -2,11 +2,10 @@ import {UserRolesEnum} from "./models/DTO/IUserModels";
 import jwtDecode from "jwt-decode";
 import Cookies from "js-cookie";
 import {ErrorService} from "./ErrorService";
-import {ErrorTypesEnum, ErrorWithAction, IError, IErrorWithAction} from "./models/IError";
+import {ErrorTypesEnum, ErrorWithAction} from "./models/IError";
 import {IAccessTokenData} from "./models/DTO/ITokenModels";
 import axios from "axios";
 import {ILoginResponse} from "./models/responses/IAuthResponses";
-import {RedirectService} from "./RedirectService";
 import {Result} from "./result/Result";
 
 /**
@@ -54,7 +53,7 @@ export class TokenService {
 
             const refreshToken = this.getRefreshToken()
 
-            if (refreshToken === null && RedirectService.getPath() !== "/") {
+            if (!refreshToken) {
                 const error = new ErrorWithAction("redirect", "Авторизуйтесь", ErrorTypesEnum.Critical, "/login")
                 return Result.withError(error)
             }
