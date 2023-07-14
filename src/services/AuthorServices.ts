@@ -1,9 +1,9 @@
 import axios from "axios";
 import {IAuthorDTO} from "./models/DTO/IAuthorModels";
-import {TokenService} from "./TokenService";
 import {ICreateAuthorRequest, ISearchAuthorRequest} from "./models/requests/IAuthorRequests";
 import {ErrorService} from "./ErrorService";
 import {EmptyResult, Result} from "./result/Result";
+import HttpRequest from "./http/HttpRequest";
 
 /**
  * Сервис для работы с авторами
@@ -50,19 +50,21 @@ export class AuthorServices {
      * @returns null При успешном срабатывании
      */
     static async createAuthorAsync(data: ICreateAuthorRequest): Promise<EmptyResult> {
-        try {
+        const request = HttpRequest.create<void>()
+            .withPostMethod()
+            .withUrl("/authors")
+            .withBody(data)
+            .withAuthorization()
 
-            await axios.post(process.env.REACT_APP_URL_API + "/authors", data , {
-                headers: {
-                    Authorization: await TokenService.getAccessTokenAsync()
-                }
-            })
 
-            return EmptyResult.ok()
+        const result = await request.sendAsync()
+
+        if (result.hasError()) {
+            const error = result.getError()
+            return EmptyResult.withError(error)
         }
-        catch (err: any) {
-            return EmptyResult.withError(ErrorService.toServiceError(err, "AuthorService"))
-        }
+
+        return EmptyResult.ok()
     }
 
     /**
@@ -73,20 +75,23 @@ export class AuthorServices {
      */
 
     static async updateAuthorAsync(id: number, name: string): Promise<EmptyResult> {
-        try {
-            await axios.put(process.env.REACT_APP_URL_API + `/authors/${id}`, {
+
+        const request = HttpRequest.create<void>()
+            .withUrl(`/authors/${id}`)
+            .withPutMethod()
+            .withAuthorization()
+            .withBody({
                 name: name
-            }, {
-                headers: {
-                    Authorization: await TokenService.getAccessTokenAsync()
-                }
             })
 
-            return EmptyResult.ok()
+        const result = await request.sendAsync()
+
+        if (result.hasError()) {
+            const error = result.getError()
+            return EmptyResult.withError(error)
         }
-        catch (err: any) {
-            return EmptyResult.withError(ErrorService.toServiceError(err, "AuthorService"))
-        }
+
+        return EmptyResult.ok()
     }
 
     /**
@@ -95,18 +100,20 @@ export class AuthorServices {
      * @returns Ошибку или null
      */
     static async deleteAuthorAsync(id: number): Promise<EmptyResult> {
-        try {
-            await axios.delete(process.env.REACT_APP_URL_API + `/authors/${id}`, {
-                headers: {
-                    Authorization: await TokenService.getAccessTokenAsync()
-                }
-            })
 
-            return EmptyResult.ok()
+        const request = HttpRequest.create<void>()
+            .withUrl(`/authors/${id}`)
+            .withDeleteMethod()
+            .withAuthorization()
+
+        const result = await request.sendAsync()
+
+        if (result.hasError()) {
+            const error = result.getError()
+            return EmptyResult.withError(error)
         }
-        catch (err: any) {
-            return EmptyResult.withError(ErrorService.toServiceError(err, "AuthorService"))
-        }
+
+        return EmptyResult.ok()
     }
 
     /**
@@ -115,17 +122,17 @@ export class AuthorServices {
      * @returns Массив из IAuthorDTO или ошибку в формате IError
      */
     static async searchAuthorWithParamsAsync(data: ISearchAuthorRequest): Promise<Result<IAuthorDTO[]>> {
-        try {
-            const response = await axios.post(process.env.REACT_APP_URL_API + "/authors/get-with-params", data, {
-                headers: {
-                    Authorization: await TokenService.getAccessTokenAsync()
-                }
-            })
+        const request = HttpRequest.create<any>()
+            .withUrl("/authors/get-with-params")
+            .withBody(data)
 
-            return Result.ok(response.data)
+        const result = await request.sendAsync()
+
+        if (result.hasError()) {
+            const error = result.getError()
+            return Result.withError(error)
         }
-        catch (err: any) {
-            return Result.withError(ErrorService.toServiceError(err, "AuthorService"))
-        }
+
+        return Result.ok(result.unwrap())
     }
 }

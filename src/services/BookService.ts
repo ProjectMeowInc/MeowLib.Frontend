@@ -5,6 +5,7 @@ import {ErrorService} from "./ErrorService";
 import {IBooksResponse} from "./models/responses/IBookResponse";
 import {ICreateBookRequest, IUpdateBookRequest, IUpdateBookTagsRequest} from "./models/requests/IBookRequests";
 import {EmptyResult, Result} from "./result/Result";
+import HttpRequest from "./http/HttpRequest";
 
 /**
  * Сервис для работы с книгами
@@ -16,18 +17,16 @@ export class BookService {
      * @return массив из книг или IError
      */
     static async getBooksAsync(): Promise<Result<IBooksResponse>> {
-        try {
-            const response = await axios.get<IBooksResponse>(process.env.REACT_APP_URL_API + "/books", {
-                headers: {
-                    Authorization: await TokenService.getAccessTokenAsync()
-                }
-            })
+        const result = await HttpRequest.create<IBooksResponse>()
+            .withUrl("/books")
+            .sendAsync()
 
-            return Result.ok(response.data)
+        if (result.hasError()) {
+            const error = result.getError()
+            return Result.withError(error)
         }
-        catch (err: any) {
-            return Result.withError(ErrorService.toServiceError(err, "BookService"))
-        }
+
+        return Result.ok(result.unwrap())
     }
 
     /**
