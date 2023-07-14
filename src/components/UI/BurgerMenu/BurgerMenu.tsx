@@ -4,6 +4,7 @@ import {IAccessTokenData} from "../../../services/models/DTO/ITokenModels";
 import {TokenService} from "../../../services/TokenService";
 import {UserRolesEnum} from "../../../services/models/DTO/IUserModels";
 import {Link} from "react-router-dom";
+import {RedirectService} from "../../../services/RedirectService";
 
 const BurgerMenu = () => {
 
@@ -11,11 +12,17 @@ const BurgerMenu = () => {
     const [userData, setUserData] = useState<IAccessTokenData | null>(null)
 
     useEffect(() => {
-        TokenService.getAccessTokenAsync().then(accessToken => {
-            if (accessToken) {
-                const accessTokenData = TokenService.parseAccessToken(accessToken)
-                setUserData(accessTokenData)
+        TokenService.getAccessTokenAsync().then(getAccessTokenResult => {
+            if (getAccessTokenResult.tryCatchError()) {
+                return
             }
+
+            const accessTokenData = TokenService.parseAccessToken(getAccessTokenResult.unwrap())
+            if (!accessTokenData) {
+                return RedirectService.redirectToLogin()
+            }
+
+            setUserData(accessTokenData)
         })
     }, [])
 
