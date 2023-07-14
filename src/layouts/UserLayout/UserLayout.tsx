@@ -1,8 +1,8 @@
 import React from 'react';
-import BurgerMenu from "../../components/BurgerMenu/BurgerMenu";
+import BurgerMenu from "../../components/UI/BurgerMenu/BurgerMenu";
 import styles from "./userLayout.module.css"
 import {Outlet} from "react-router-dom";
-import Footer from "../../components/Footer/Footer";
+import Footer from "../../components/UI/Footer/Footer";
 
 const UserLayout = () => {
     return (

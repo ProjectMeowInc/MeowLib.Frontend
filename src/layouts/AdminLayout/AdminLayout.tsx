@@ -17,13 +17,13 @@ const AdminLayout = () => {
         let accessToken: string;
 
         async function fetchData(): Promise<void> {
-            const result = await TokenService.getAccessTokenAsync()
+            const getAccessTokenResult = await TokenService.getAccessTokenAsync()
 
-            if (result === null) {
+            if (getAccessTokenResult.tryCatchError()) {
                 return
             }
 
-            accessToken = result
+            accessToken = getAccessTokenResult.unwrap()
         }
 
         fetchData().then(() => {
