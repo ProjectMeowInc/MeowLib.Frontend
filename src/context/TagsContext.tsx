@@ -6,13 +6,13 @@ interface ITagContext {
     checkTagIsSelected: (tagId: number) => boolean
 }
 
-interface ITagContextProps {
+export const TagsContext = createContext<ITagContext>({} as ITagContext)
+
+interface ITagContextProviderProps {
     children: ReactNode
 }
 
-export const TagsContext = createContext<ITagContext>({} as ITagContext)
-
-export const TagContextProvider = ({children}: ITagContextProps) => {
+export const TagContextProvider = ({children}: ITagContextProviderProps) => {
 
     const [selectedTags, setSelectedTags] = useState<number[]>([])
 
