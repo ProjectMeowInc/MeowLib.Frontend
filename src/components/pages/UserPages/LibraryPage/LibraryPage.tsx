@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import styles from "./libraryPage.module.css";
-import Input from "../../../UsersComponents/Input/Input";
+import Input from "../../../UI/Input/Input";
 import {IBookDTO} from "../../../../services/models/DTO/IBookDTO";
 import {BookService} from "../../../../services/BookService";
-import LibraryBookItem from "../../../UsersComponents/LibraryBookItem/LibraryBookItem";
+import LibraryBookItem from "../../../UI/LibraryBookItem/LibraryBookItem";
 
 const LibraryPage = () => {
 
