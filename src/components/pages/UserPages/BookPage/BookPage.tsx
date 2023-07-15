@@ -9,6 +9,7 @@ import Preloader from "../../../UI/Preloader/Preloader";
 import styles from "./bookPage.module.css"
 import TagItem from "../../../UI/TagItem/TagItem";
 import ChapterItem from "../../../UI/ChapterItem/ChapterItem";
+import {AlertService} from "../../../../services/AlertService";
 
 const BookPage = () => {
     const [book, setBook] = useState<IBook| null>(null)
@@ -39,6 +40,21 @@ const BookPage = () => {
 
     }, [id])
 
+    async function AddToFavoriteHandler() {
+
+        if (id === undefined) {
+            return RedirectService.redirectToNotFoundPage()
+        }
+
+        BookService.addStatusToBookAsync(parseInt(id), "Favorite").then(addStatusResult => {
+            if (addStatusResult.tryCatchError()) {
+                return
+            }
+
+            AlertService.successMessage("Книга добавлена в избранное")
+        })
+    }
+
     if (book === null) {
         return (
             <Preloader/>
@@ -54,12 +70,16 @@ const BookPage = () => {
                         : <div className={styles.img_not_found}>Нет изображения</div>
                 }
 
-                <button className={styles.add_to_favorites}>Добавить в избранное</button>
+                <button onClick={AddToFavoriteHandler} className={styles.add_to_favorites}>Добавить в избранное</button>
             </div>
             <div className={styles.right}>
                 <h1>{book.name}</h1>
+
+                <p className={styles.author}>{book.author && book.author.name}</p>
+
                 <p className={styles.caption}>Описание</p>
                 <p className={styles.description}>{book.description}</p>
+
                 <div className={styles.tags}>
                     {
                         book.tags.map(tag => (
