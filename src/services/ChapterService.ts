@@ -2,6 +2,7 @@ import {ICreateChapterRequest, IUpdateChapterTextRequest} from "./models/request
 import {IChapter, IChapterDTO} from "./models/DTO/IChapterDTO";
 import {EmptyResult, Result} from "./result/Result";
 import HttpRequest from "./http/HttpRequest";
+import {IGetChaptersResponse} from "./models/responses/IChapterResponses";
 
 /**
  * Сервис для работы с главами
@@ -36,7 +37,7 @@ export class ChapterService {
      */
     static async getChaptersAsync(bookId: number): Promise<Result<IChapterDTO[]>> {
 
-        const result = await HttpRequest.create<IChapterDTO[]>()
+        const result = await HttpRequest.create<IGetChaptersResponse>()
             .withUrl(`/books/${bookId}/chapters`)
             .withAuthorization()
             .sendAsync()
@@ -48,7 +49,7 @@ export class ChapterService {
 
         const chapters = result.unwrap()
 
-        return Result.ok(chapters)
+        return Result.ok(chapters.items)
     }
 
     /**
