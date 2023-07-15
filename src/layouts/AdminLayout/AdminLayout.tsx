@@ -7,7 +7,7 @@ import {AuthorizationContext} from "../../context/AuthorizationContext";
 const AdminLayout = () => {
     const {user} = useContext(AuthorizationContext)
 
-    if (user && user.hasAdminAccess()) {
+    if (user && !user.hasAdminAccess()) {
         RedirectService.redirectToLogin()
     }
 
