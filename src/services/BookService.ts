@@ -3,6 +3,7 @@ import {IBooksResponse} from "./models/responses/IBookResponse";
 import {ICreateBookRequest, IUpdateBookRequest, IUpdateBookTagsRequest} from "./models/requests/IBookRequests";
 import {EmptyResult, Result} from "./result/Result";
 import HttpRequest from "./http/HttpRequest";
+import {UserBookStatus} from "./models/UserBookStatus";
 
 /**
  * Сервис для работы с книгами
@@ -174,6 +175,25 @@ export class BookService {
         if (result.hasError()) {
             const error = result.getError()
             return EmptyResult.withError(error)
+        }
+
+        return EmptyResult.ok()
+    }
+
+    /**
+     * Метод для добавления книги в избранное
+     * @param bookId id книги
+     * @param status статус книги
+     */
+    static async addStatusToBookAsync(bookId: number, status: UserBookStatus):Promise<EmptyResult> {
+        const result = await new HttpRequest<void>()
+            .withUrl("/users/favorite")
+            .withBody({bookId: bookId, status: status})
+            .withAuthorization()
+            .sendAsync()
+
+        if (result.hasError()) {
+            return EmptyResult.withError(result.getError())
         }
 
         return EmptyResult.ok()
