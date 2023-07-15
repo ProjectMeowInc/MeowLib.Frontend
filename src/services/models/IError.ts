@@ -9,11 +9,8 @@ import {AlertService} from "../AlertService";
  * - Error - ошибка влияет на взаимодействие пользователя с сайтом.
  * - Critical - критическая ошибка. Что-то, что нельзя контролируемого обработать. Например: неожиданный ответ от сервера.
  */
-export enum ErrorTypesEnum {
-    Warning = 0,
-    Error = 1,
-    Critical = 2
-}
+
+export type ErrorTypes = "Warning" | "Error" | "Critical"
 
 /**
  * Интерфейс для ошибок. 
@@ -22,7 +19,7 @@ export enum ErrorTypesEnum {
  */
 export interface IError {
     displayMessage: string
-    errorType: ErrorTypesEnum
+    errorType: ErrorTypes
     catchError: () => void
 }
 
@@ -37,25 +34,25 @@ export interface IErrorWithAction extends IError {
 
 export class Error implements IError {
     displayMessage: string;
-    errorType: ErrorTypesEnum;
+    errorType: ErrorTypes;
 
-    constructor(displayMessage: string, errorType: ErrorTypesEnum) {
+    constructor(displayMessage: string, errorType: ErrorTypes) {
         this.displayMessage = displayMessage
         this.errorType = errorType
     }
 
     catchError(): void {
-        if (this.errorType === ErrorTypesEnum.Warning) {
+        if (this.errorType === "Warning") {
             AlertService.warningMessage(this.displayMessage)
             return
         }
 
-        if (this.errorType === ErrorTypesEnum.Error) {
+        if (this.errorType === "Error") {
             AlertService.warningMessage(this.displayMessage)
             return
         }
 
-        if (this.errorType === ErrorTypesEnum.Critical) {
+        if (this.errorType === "Critical") {
             AlertService.errorMessage(this.displayMessage)
         }
     }
@@ -68,10 +65,10 @@ export class Error implements IError {
 export class ErrorWithAction implements IErrorWithAction {
     action: "redirect" | "reload";
     displayMessage: string;
-    errorType: ErrorTypesEnum;
+    errorType: ErrorTypes;
     param?: string
 
-    constructor(action: "redirect" | "reload", displayMessage: string, errorType: ErrorTypesEnum, param?: string) {
+    constructor(action: "redirect" | "reload", displayMessage: string, errorType: ErrorTypes, param?: string) {
         this.action = action
         this.displayMessage = displayMessage
         this.errorType = errorType

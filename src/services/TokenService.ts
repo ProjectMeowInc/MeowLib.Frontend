@@ -1,6 +1,6 @@
 import jwtDecode from "jwt-decode";
 import Cookies from "js-cookie";
-import {ErrorTypesEnum, ErrorWithAction} from "./models/IError";
+import {ErrorWithAction} from "./models/IError";
 import {IAccessTokenData} from "./models/DTO/ITokenModels";
 import {Result} from "./result/Result";
 import {ILoginDTO} from "./models/DTO/ILoginDTO";
@@ -52,7 +52,7 @@ export class TokenService {
         const refreshToken = this.getRefreshToken()
 
         if (!refreshToken) {
-            const error = new ErrorWithAction("redirect", "Авторизуйтесь", ErrorTypesEnum.Critical, "/login")
+            const error = new ErrorWithAction("redirect", "Авторизуйтесь", "Critical", "/login")
             return Result.withError(error)
         }
 
