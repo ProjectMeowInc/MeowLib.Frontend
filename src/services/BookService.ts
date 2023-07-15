@@ -185,7 +185,7 @@ export class BookService {
      * @param bookId id книги
      * @param status статус книги
      */
-    static async addStatusToBookAsync(bookId: number, status: UserBookStatus):Promise<EmptyResult> {
+    static async addStatusToBookAsync(bookId: number, status: UserBookStatus): Promise<EmptyResult> {
         const result = await new HttpRequest<void>()
             .withUrl("/users/favorite")
             .withBody({bookId: bookId, status: status})
