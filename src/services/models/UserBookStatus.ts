@@ -1,0 +1,1 @@
+export type UserBookStatus = "InPlans" | "ReadingNow" | "Favorite" | "Read"

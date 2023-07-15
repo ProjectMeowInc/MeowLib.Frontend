@@ -11,3 +11,7 @@
     width: 310px;
     height: 62px;
 }
+
+.wrapper {
+    min-height: 90vh;
+}
