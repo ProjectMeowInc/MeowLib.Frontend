@@ -1,13 +1,11 @@
 import jwtDecode from "jwt-decode";
 import Cookies from "js-cookie";
-import {ErrorService} from "./ErrorService";
 import {ErrorTypesEnum, ErrorWithAction} from "./models/IError";
 import {IAccessTokenData} from "./models/DTO/ITokenModels";
-import axios from "axios";
-import {ILoginResponse} from "./models/responses/IAuthResponses";
 import {Result} from "./result/Result";
 import {ILoginDTO} from "./models/DTO/ILoginDTO";
 import {UserRoles} from "./models/UserRoles";
+import HttpRequest from "./http/HttpRequest";
 
 /**
  * Сервис для работы с токеном
@@ -50,33 +48,25 @@ export class TokenService {
      * @returns ILoginResponse или IError
      */
     static async updateAuthAsync(): Promise<Result<ILoginDTO>> {
-        try {
 
-            const refreshToken = this.getRefreshToken()
+        const refreshToken = this.getRefreshToken()
 
-            if (!refreshToken) {
-                const error = new ErrorWithAction("redirect", "Авторизуйтесь", ErrorTypesEnum.Critical, "/login")
-                return Result.withError(error)
-            }
-
-            const response = await axios.post<ILoginResponse>(process.env.REACT_APP_URL_API + "/authorization/update-auth", {
-                refreshToken: refreshToken
-            })
-
-            return Result.ok(response.data)
-        }
-        catch (err: any) {
-
-            if (err.isAxiosError) {
-                if (err.response.status === 401) {
-                    const error = new ErrorWithAction("redirect", "Пожалуйста авторизуйтесь снова", ErrorTypesEnum.Critical, "/login")
-                    return Result.withError(error)
-                }
-            }
-
-            const error = ErrorService.toServiceError(err, "TokenService")
+        if (!refreshToken) {
+            const error = new ErrorWithAction("redirect", "Авторизуйтесь", ErrorTypesEnum.Critical, "/login")
             return Result.withError(error)
         }
+
+        const result = await new HttpRequest<ILoginDTO>()
+            .withUrl("/authorization/update-auth")
+            .withPostMethod()
+            .withBody({refreshToken: refreshToken})
+            .sendAsync()
+
+        if (result.hasError()) {
+            return Result.withError(result.getError())
+        }
+
+        return Result.ok(result.unwrap())
     }
 
     /**

@@ -1,7 +1,5 @@
-import axios from "axios";
 import {IAuthorDTO} from "./models/DTO/IAuthorModels";
 import {ICreateAuthorRequest, ISearchAuthorRequest} from "./models/requests/IAuthorRequests";
-import {ErrorService} from "./ErrorService";
 import {EmptyResult, Result} from "./result/Result";
 import HttpRequest from "./http/HttpRequest";
 
@@ -15,17 +13,20 @@ export class AuthorServices {
      * @returns Возвращает массив объектов типа IAuthorDTO
      */
     static async getAuthorsAsync(): Promise<Result<IAuthorDTO[]>> {
-        try {
-            const response = await axios.get<IAuthorDTO[]>(process.env.REACT_APP_URL_API + "/authors")
 
-            //Сортировка авторов для вывода от большего к меньшему
+        const result = await new HttpRequest<IAuthorDTO[]>()
+            .withUrl("/authors")
+            .withGetMethod()
+            .sendAsync()
 
-            const sortedAuthors = response.data.sort((a, b) => b.id - a.id)
-
-            return Result.ok(sortedAuthors)
-        } catch (err: any) {
-            return Result.withError(ErrorService.toServiceError(err,"AuthorService"))
+        if (result.hasError()) {
+            return Result.withError(result.getError())
         }
+
+        const authors = result.unwrap()
+        const sortedAuthors = authors.sort((a, b) => b.id - a.id)
+
+        return Result.ok(sortedAuthors)
     }
 
     /**
@@ -34,14 +35,17 @@ export class AuthorServices {
      * @returns данные типа IAuthorDTO или ошибку типа IError
      */
     static async getAuthorAsync(id: number): Promise<Result<IAuthorDTO>> {
-        try {
-            const response = await axios.get<IAuthorDTO>(process.env.REACT_APP_URL_API + `/authors/${id}`)
 
-            return Result.ok(response.data)
+        const result = await new HttpRequest<IAuthorDTO>()
+            .withUrl(`/authors/${id}`)
+            .withGetMethod()
+            .sendAsync()
+
+        if (result.hasError()) {
+            return Result.withError(result.getError())
         }
-        catch (err: any) {
-            return Result.withError(ErrorService.toServiceError(err,"AuthorService"))
-        }
+
+        return Result.ok(result.unwrap())
     }
 
     /**
