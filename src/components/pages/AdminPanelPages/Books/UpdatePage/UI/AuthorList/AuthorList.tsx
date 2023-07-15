@@ -1,13 +1,13 @@
 import React from 'react';
-import {IAuthorDTO} from "../../../../../../services/models/DTO/IAuthorModels";
+import {IAuthorDTO} from "../../../../../../../services/models/DTO/IAuthorModels";
 import AuthorListItem from "../AuthorListItem/AuthorListItem";
 import styles from "./aurhorList.module.css"
 
-interface IAuthorList {
+interface IAuthorListProps {
     authorList: IAuthorDTO[]
 }
 
-const AuthorList = ({authorList}: IAuthorList) => {
+const AuthorList = ({authorList}: IAuthorListProps) => {
     return (
         <div className={styles.authors}>
             {

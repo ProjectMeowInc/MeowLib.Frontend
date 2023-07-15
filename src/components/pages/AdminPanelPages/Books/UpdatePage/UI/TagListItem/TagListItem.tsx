@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {ITagDTO} from "../../../../../../services/models/DTO/ITagDTO";
+import {ITagDTO} from "../../../../../../../services/models/DTO/ITagDTO";
 import styles from "./tagListItem.module.css";
-import {TagsContext} from "../../../../../../context/TagsContext";
+import {TagsContext} from "../../../../../../../context/TagsContext";
 
 const TagListItem = ({id, name, description}: ITagDTO) => {
 

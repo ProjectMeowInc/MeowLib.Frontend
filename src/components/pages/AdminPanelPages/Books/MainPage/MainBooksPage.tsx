@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import styles from "./mainPage.module.css";
 import {Link} from "react-router-dom";
 import Preloader from "../../../../UI/Preloader/Preloader";
-import BooksListItem from "../UI/BookListItem/BooksListItem";
+import BooksListItem from "./UI/BookListItem/BooksListItem";
 import {BookService} from "../../../../../services/BookService";
 import {IBookDTO} from "../../../../../services/models/DTO/IBookDTO";
 

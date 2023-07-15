@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import AuthorListItem from "../UI/AuthorPage/AuthorListItem";
+import AuthorListItem from "./UI/AuthorListItem/AuthorListItem";
 import styles from "./authorsPage.module.css"
 import {AuthorServices} from "../../../../../services/AuthorServices";
 import {IAuthorDTO} from "../../../../../services/models/DTO/IAuthorModels";
