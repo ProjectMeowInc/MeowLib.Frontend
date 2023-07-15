@@ -3,7 +3,7 @@ import {ITagDTO} from "../../../../../../../services/models/DTO/ITagDTO";
 import styles from "./tagListItem.module.css";
 import {TagsContext} from "../../../../../../../context/TagsContext";
 
-const TagListItem = ({id, name, description}: ITagDTO) => {
+const TagListItem = ({id, name}: ITagDTO) => {
 
     const [isChecked, setIsChecked] = useState<boolean>(false)
     const {setSelectedTags, checkTagIsSelected} = useContext(TagsContext)

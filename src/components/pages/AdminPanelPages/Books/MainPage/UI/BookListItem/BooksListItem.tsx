@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 import {IBookDTO} from "../../../../../../../services/models/DTO/IBookDTO";
 import {BookService} from "../../../../../../../services/BookService";
 
-const BooksListItem = ({id, name, description}: IBookDTO) => {
+const BooksListItem = ({id, name}: IBookDTO) => {
     function DeleteHandler () {
         BookService.deleteBookAsync(id).then(deleteBookResult => {
             if (deleteBookResult.tryCatchError()) {
