@@ -52,7 +52,7 @@ export class RedirectService {
     }
 
     /**
-     * Метод для редиректа на предидущую страницу с задержкой в 3с
+     * Метод для редиректа на предыдущую страницу с задержкой в 3с
      */
     static delayRedirectToPrevPage(): void {
         setTimeout(() => {

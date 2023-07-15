@@ -1,0 +1,60 @@
+.main {
+    width: 100%;
+    height: 90vh;
+    background-image: url("../../../../../public/img/mainBackGround.png");
+    background-size: cover;
+    display: flex;
+}
+
+.main_left {
+    width: 22vw;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    color: #FFF;
+    padding-left: 45px;
+    font-family: Comfortaa, serif;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: 2px;
+}
+
+.main_right {
+    width: 78vw;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-family: Comfortaa, serif;
+    font-size: 36px;
+}
+
+.wrapper {
+    width: 75%;
+    margin: 0 auto;
+}
+
+.books {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 70%;
+    height: 50%;
+}
+
+.update_caption {
+    margin-top: 100px;
+    font-family: Raleway, serif;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.last_updates {
+    width: 100%;
+}

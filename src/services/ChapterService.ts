@@ -1,11 +1,7 @@
-import {IError} from "./models/IError";
 import {ICreateChapterRequest, IUpdateChapterTextRequest} from "./models/requests/IChapterRequests";
-import {ErrorService} from "./ErrorService";
-import axios from "axios";
-import {TokenService} from "./TokenService";
-import {IGetChaptersResponse} from "./models/responses/IChapterResponses";
 import {IChapter, IChapterDTO} from "./models/DTO/IChapterDTO";
 import {EmptyResult, Result} from "./result/Result";
+import HttpRequest from "./http/HttpRequest";
 
 /**
  * Сервис для работы с главами
@@ -18,18 +14,19 @@ export class ChapterService {
      * @param data данные необходимые для создания главы
      */
     static async createChapterAsync(id: number, data: ICreateChapterRequest): Promise<EmptyResult> {
-        try {
-            await axios.post(process.env.REACT_APP_URL_API + `/books/${id}/chapters`, data, {
-                headers: {
-                    Authorization: await TokenService.getAccessTokenAsync()
-                }
-            })
+        const result = await HttpRequest.create<void>()
+            .withUrl(`/books/${id}/chapters`)
+            .withPostMethod()
+            .withAuthorization()
+            .withBody(data)
+            .sendAsync()
 
-            return EmptyResult.ok();
+        if (result.hasError()) {
+            const error = result.getError()
+            return EmptyResult.withError(error)
         }
-        catch (err: any) {
-            return EmptyResult.withError(ErrorService.toServiceError(err, "ChapterService"))
-        }
+
+        return EmptyResult.ok()
     }
 
     /**
@@ -38,18 +35,20 @@ export class ChapterService {
      * @returns IGetChapters или IError
      */
     static async getChaptersAsync(bookId: number): Promise<Result<IChapterDTO[]>> {
-        try {
-            const response = await axios.get<IGetChaptersResponse>(process.env.REACT_APP_URL_API + `/books/${bookId}/chapters`, {
-                headers: {
-                    Authorization: await TokenService.getAccessTokenAsync()
-                }
-            })
 
-            return Result.ok(response.data.items)
+        const result = await HttpRequest.create<IChapterDTO[]>()
+            .withUrl(`/books/${bookId}/chapters`)
+            .withAuthorization()
+            .sendAsync()
+
+        if (result.hasError()) {
+            const error = result.getError()
+            return Result.withError(error)
         }
-        catch (err: any) {
-            return Result.withError(ErrorService.toServiceError(err, "ChapterService"))
-        }
+
+        const chapters = result.unwrap()
+
+        return Result.ok(chapters)
     }
 
     /**
@@ -60,18 +59,20 @@ export class ChapterService {
      * @returns IError или null
      */
     static async updateChapterTextAsync(bookId: number, chapterId: number, data: IUpdateChapterTextRequest): Promise<EmptyResult>  {
-        try {
-            await axios.put(process.env.REACT_APP_URL_API + `/books/${bookId}/chapters/${chapterId}/text`, data, {
-                headers: {
-                    Authorization: await TokenService.getAccessTokenAsync()
-                }
-            })
 
-            return EmptyResult.ok()
+        const result = await HttpRequest.create<void>()
+            .withUrl(`/books/${bookId}/chapters/${chapterId}/text`)
+            .withBody(data)
+            .withAuthorization()
+            .withPutMethod()
+            .sendAsync()
+
+        if (result.hasError()) {
+            const error = result.getError()
+            return EmptyResult.withError(error)
         }
-        catch (err: any) {
-            return EmptyResult.withError(ErrorService.toServiceError(err, "ChapterService"))
-        }
+
+        return EmptyResult.ok()
     }
 
     /**
@@ -81,18 +82,19 @@ export class ChapterService {
      * @returns IError или null
      */
     static async deleteChapterAsync(bookId: number, chapterId: number): Promise<EmptyResult> {
-        try {
-            await axios.delete(process.env.REACT_APP_URL_API + `/books/${bookId}/chapters/${chapterId}`, {
-                headers: {
-                    Authorization: await TokenService.getAccessTokenAsync()
-                }
-            })
 
-            return EmptyResult.ok()
+        const result = await HttpRequest.create<void>()
+            .withUrl(`/books/${bookId}/chapters/${chapterId}`)
+            .withAuthorization()
+            .withDeleteMethod()
+            .sendAsync()
+
+        if (result.hasError()) {
+            const error = result.getError()
+            return EmptyResult.withError(error)
         }
-        catch (err: any) {
-            return EmptyResult.withError(ErrorService.toServiceError(err, "ChapterService"))
-        }
+
+        return EmptyResult.ok()
     }
 
     /**
@@ -102,13 +104,16 @@ export class ChapterService {
      * @returns IChapter или null
      */
     static async getChapterAsync(bookId: number, chapterId: number): Promise<Result<IChapter>> {
-        try {
-            const response = await axios.get<IChapter>(process.env.REACT_APP_URL_API + `/books/${bookId}/chapters/${chapterId}`)
 
-            return Result.ok(response.data)
+        const result = await new HttpRequest<IChapter>()
+            .withUrl(`/books/${bookId}/chapters/${chapterId}`)
+            .withGetMethod()
+            .sendAsync()
+
+        if (result.hasError()) {
+            return Result.withError(result.getError())
         }
-        catch (err: any) {
-            return Result.withError(ErrorService.toServiceError(err, "ChapterService"))
-        }
+
+        return Result.ok(result.unwrap())
     }
 }

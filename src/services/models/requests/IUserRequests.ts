@@ -7,7 +7,7 @@ export interface ISignInRequest {
 }
 
 /**
- *  Интерфес описывает запрос на логин
+ *  Интерфейс описывает запрос на логин
  */
 export interface ILogInRequest {
     login: string

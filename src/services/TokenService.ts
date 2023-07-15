@@ -1,13 +1,11 @@
-import {UserRolesEnum} from "./models/DTO/IUserModels";
 import jwtDecode from "jwt-decode";
 import Cookies from "js-cookie";
-import {ErrorService} from "./ErrorService";
-import {ErrorTypesEnum, ErrorWithAction, IError, IErrorWithAction} from "./models/IError";
+import {ErrorWithAction} from "./models/IError";
 import {IAccessTokenData} from "./models/DTO/ITokenModels";
-import axios from "axios";
-import {ILoginResponse} from "./models/responses/IAuthResponses";
-import {AlertService} from "./AlertService";
-import {RedirectService} from "./RedirectService";
+import {Result} from "./result/Result";
+import {ILoginDTO} from "./models/DTO/ILoginDTO";
+import {UserRoles} from "./models/UserRoles";
+import HttpRequest from "./http/HttpRequest";
 
 /**
  * Сервис для работы с токеном
@@ -35,12 +33,12 @@ export class TokenService {
             return null
         }
 
-        const parsedRole = userRole as keyof typeof UserRolesEnum;
+        const parsedRole = userRole as UserRoles;
 
         return {
             id: Number(id),
             login: String(login),
-            userRole: UserRolesEnum[parsedRole],
+            userRole: parsedRole,
             exp: Number(exp)
         }
     }
@@ -49,100 +47,77 @@ export class TokenService {
      * Метод для обновления access и refresh токена
      * @returns ILoginResponse или IError
      */
-    static async updateAuthAsync(): Promise<ILoginResponse | IError> {
-        try {
+    static async updateAuthAsync(): Promise<Result<ILoginDTO>> {
 
-            const refreshToken = this.getRefreshToken()
+        const refreshToken = this.getRefreshToken()
 
-            if (refreshToken === null && RedirectService.getPath() !== "/") {
-                return new ErrorWithAction("redirect", "Авторизуйтесь", ErrorTypesEnum.Critical, "/login")
-            }
-
-            const response = await axios.post<ILoginResponse>(process.env.REACT_APP_URL_API + "/authorization/update-auth", {
-                refreshToken: refreshToken
-            })
-
-            return response.data
+        if (!refreshToken) {
+            const error = new ErrorWithAction("redirect", "Авторизуйтесь", "Critical", "/login")
+            return Result.withError(error)
         }
-        catch (err: any) {
 
-            if (err.isAxiosError) {
-                if (err.response.status === 401) {
-                    const error: IErrorWithAction = new ErrorWithAction("redirect", "Пожалуйста авторизуйтесь снова", ErrorTypesEnum.Critical, )
+        const result = await new HttpRequest<ILoginDTO>()
+            .withUrl("/authorization/update-auth")
+            .withPostMethod()
+            .withBody({refreshToken: refreshToken})
+            .sendAsync()
 
-                    return error
-                }
-            }
-
-            return ErrorService.toServiceError(err, "TokenService")
+        if (result.hasError()) {
+            return Result.withError(result.getError())
         }
+
+        return Result.ok(result.unwrap())
     }
 
     /**
      * Метод для получения access токена
      * @returns строку при наличии токена
      */
-    static async getAccessTokenAsync(): Promise<string | null> {
+    static async getAccessTokenAsync(): Promise<Result<string>> {
         const token = Cookies.get("AccessToken")
 
         if(token === undefined) {
 
-            const updateResult = await this.updateAuthAsync()
+            const updateAuthResult = await this.updateAuthAsync()
 
-            if (ErrorService.isError(updateResult)) {
-                if (ErrorService.isActionError(updateResult)) {
-                    updateResult.execute()
-                    return null
-                }
-
-                if (updateResult.errorType === ErrorTypesEnum.Critical) {
-                    AlertService.errorMessage("Это пизда " + updateResult.displayMessage)
-                    return null
-                }
-
-                AlertService.warningMessage(updateResult.displayMessage)
-                return null
+            if (updateAuthResult.hasError()) {
+                const error = updateAuthResult.getError()
+                return Result.withError(error)
             }
 
-            this.setRefreshToken(updateResult.refreshToken)
-            this.setAccessToken(updateResult.accessToken)
+            const updatedTokens = updateAuthResult.unwrap()
 
-            return updateResult.accessToken
+            this.setRefreshToken(updatedTokens.refreshToken)
+            this.setAccessToken(updatedTokens.accessToken)
+
+            return Result.ok(updatedTokens.accessToken)
         }
 
         const decodedAccessToken = this.parseAccessToken(token)
 
         if (decodedAccessToken === null) {
-            return null
+            return Result.withErrorMessage("Ошибка парсинга токена")
         }
 
         const currentTime = Date.now() / 1000;
 
         if (currentTime - decodedAccessToken.exp > 0) {
-            const updateResult = await this.updateAuthAsync()
+            const updateAuthResult = await this.updateAuthAsync()
 
-            if (ErrorService.isError(updateResult)) {
-                if (ErrorService.isActionError(updateResult)) {
-                    updateResult.execute()
-                    return null
-                }
-
-                if (updateResult.errorType === ErrorTypesEnum.Critical) {
-                    AlertService.errorMessage("Это пизда " + updateResult.displayMessage)
-                    return null
-                }
-
-                AlertService.warningMessage(updateResult.displayMessage)
-                return null
+            if (updateAuthResult.hasError()) {
+                const error = updateAuthResult.getError()
+                return Result.withError(error)
             }
 
-            this.setRefreshToken(updateResult.refreshToken)
-            this.setAccessToken(updateResult.accessToken)
+            const updatedTokens = updateAuthResult.unwrap()
 
-            return updateResult.accessToken
+            this.setRefreshToken(updatedTokens.refreshToken)
+            this.setAccessToken(updatedTokens.accessToken)
+
+            return Result.ok(updatedTokens.accessToken)
         }
 
-        return token
+        return Result.ok(token)
     }
 
     /**
