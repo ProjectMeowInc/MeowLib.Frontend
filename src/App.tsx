@@ -23,6 +23,7 @@ import {AuthorContextProvider} from "./context/AuthorContext";
 import UserLayout from "./layouts/UserLayout/UserLayout";
 import MainPage from "./components/pages/UserPages/MainPage/MainPage";
 import LibraryPage from "./components/pages/UserPages/LibraryPage/LibraryPage";
+import BookPage from "./components/pages/UserPages/BookPage/BookPage";
 
 const App = () => {
   return (
@@ -64,7 +65,10 @@ const App = () => {
                 </Route>
                 <Route path={"/"} element={<UserLayout/>}>
                     <Route index element={<MainPage/>}/>
-                    <Route path={"/books"} element={<LibraryPage/>}/>
+                    <Route path={"/books"}>
+                        <Route index element={<LibraryPage/>}/>
+                        <Route path={":bookId"} element={<BookPage/>}/>
+                    </Route>
                 </Route>
                 <Route path={"*"} element={<NotFoundPage/>}/>
             </Route>
