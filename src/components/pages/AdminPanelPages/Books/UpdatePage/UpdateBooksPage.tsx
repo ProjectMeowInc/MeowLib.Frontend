@@ -31,7 +31,7 @@ const UpdateBooksPage = () => {
     useEffect(() => {
 
         if (params.bookId === undefined) {
-            return
+            return RedirectService.redirectToNotFoundPage()
         }
 
         BookService.getBookAsync(parseInt(params.bookId)).then(getBooksResult => {
