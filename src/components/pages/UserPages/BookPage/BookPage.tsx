@@ -10,6 +10,7 @@ import styles from "./bookPage.module.css"
 import TagItem from "../../../UI/TagItem/TagItem";
 import ChapterItem from "../../../UI/ChapterItem/ChapterItem";
 import {AlertService} from "../../../../services/AlertService";
+import SelectStatus from "./UI/SelectStatus/SelectStatus";
 
 const BookPage = () => {
     const [book, setBook] = useState<IBook| null>(null)
@@ -70,7 +71,7 @@ const BookPage = () => {
                         : <div className={styles.img_not_found}>Нет изображения</div>
                 }
 
-                <button onClick={AddToFavoriteHandler} className={styles.add_to_favorites}>Добавить в избранное</button>
+                <SelectStatus/>
             </div>
             <div className={styles.right}>
                 <h1>{book.name}</h1>
