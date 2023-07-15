@@ -12,7 +12,9 @@ const UserLayout = () => {
                 <img src="/img/LogoBlack.png" alt=""/>
             </div>
 
-            <Outlet/>
+            <div className={styles.wrapper}>
+                <Outlet/>
+            </div>
 
             <Footer/>
         </div>
