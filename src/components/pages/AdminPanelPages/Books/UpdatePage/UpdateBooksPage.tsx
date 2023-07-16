@@ -116,11 +116,7 @@ const UpdateBooksPage = () => {
 
             const error = updateBookResult.getError();
 
-            if (!error.isHttpError()) {
-                return error.catchError()
-            }
-
-            if (!error.isValidationErrorResponse()) {
+            if (!error.isHttpError() || !error.isValidationErrorResponse()) {
                 return error.catchError()
             }
 
