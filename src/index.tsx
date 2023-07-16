@@ -7,6 +7,7 @@ import {ToastContainer} from "react-toastify";
 import {Tooltip} from "react-tooltip";
 import 'react-tooltip/dist/react-tooltip.css'
 import {AuthorizationContextProvider} from "./context/AuthorizationContext";
+import {SettingsContextProvider} from "./context/SettingsContext";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -14,7 +15,9 @@ const root = ReactDOM.createRoot(
 root.render(
     <BrowserRouter>
         <AuthorizationContextProvider>
-            <App/>
+            <SettingsContextProvider>
+                <App/>
+            </SettingsContextProvider>
         </AuthorizationContextProvider>
         <ToastContainer/>
         <Tooltip id={"my-tooltip"}/>

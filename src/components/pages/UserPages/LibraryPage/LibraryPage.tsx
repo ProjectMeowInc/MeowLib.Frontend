@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import styles from "./libraryPage.module.css";
-import Input from "../../../UI/Input/Input";
+import SearchInput from "../../../UI/SearchInput/SearchInput";
 import {IBookDTO} from "../../../../services/models/DTO/IBookDTO";
 import {BookService} from "../../../../services/BookService";
 import LibraryBookItem from "../../../UI/LibraryBookItem/LibraryBookItem";
@@ -26,7 +26,7 @@ const LibraryPage = () => {
             <h1 className={styles.caption}>Библиотека ранобэ</h1>
 
             <div className={styles.search}>
-                <Input placeholder={"Что ищем, семпай?"} type={"text"}/>
+                <SearchInput placeholder={"Что ищем, семпай?"} type={"text"}/>
                 <img className={styles.send} src="/img/send.svg" alt=""/>
             </div>
             <div className={styles.books}>

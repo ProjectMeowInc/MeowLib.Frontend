@@ -31,7 +31,11 @@ export default class SettingsService {
 
     private static getNewSettings(): IUserSettings {
         return {
-            theme: "white"
+            theme: "white",
+            reader: {
+                fontSize: 19,
+                lineHeight: 15
+            }
         }
     }
 }
