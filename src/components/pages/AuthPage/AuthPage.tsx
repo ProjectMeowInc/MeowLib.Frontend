@@ -98,5 +98,3 @@ const AuthPage = () => {
 };
 
 export default AuthPage;
-
-//<button >Отправить</button>
