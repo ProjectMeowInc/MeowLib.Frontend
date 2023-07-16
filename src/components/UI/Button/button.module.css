@@ -9,7 +9,7 @@
     font-family: "Ubuntu", serif;
     cursor: pointer;
     user-select: none;
-    transition: opacity 1s;
+    transition: opacity .7s;
 }
 
 .button_locked {
@@ -23,5 +23,5 @@
     font-size: 14px;
     font-family: "Ubuntu", serif;
     user-select: none;
-    transition: opacity 1s;
+    transition: opacity .7s;
 }
