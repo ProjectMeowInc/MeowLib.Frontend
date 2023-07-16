@@ -1,4 +1,4 @@
-import {Error, IError, IErrorWithAction} from "./models/IError";
+import {Error, IError, IErrorWithAction} from "./error/IError";
 import {AxiosError} from "axios";
 import {IBaseErrorResponse} from "./models/responses/errors/IBaseErrorResponse";
 import {LogService} from "./LogService";
