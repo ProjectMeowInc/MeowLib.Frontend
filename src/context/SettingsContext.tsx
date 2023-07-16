@@ -1,7 +1,6 @@
 import {createContext, Dispatch, ReactNode, SetStateAction, useEffect, useState} from "react";
 import IUserSettings from "../services/settings/UserSettings";
 import SettingsService from "../services/SettingsService";
-import {set} from "js-cookie";
 
 export const SettingsContext = createContext<ISettingsContext>({} as  ISettingsContext)
 
@@ -26,7 +25,7 @@ export function SettingsContextProvider({children}: ISettingsContextProviderProp
 
     useEffect(() => {
         SettingsService.updateUserSettings({
-            theme: settings.theme,
+            ...settings,
             reader: {
                 fontSize: fontSize,
                 lineHeight: lineHeight
