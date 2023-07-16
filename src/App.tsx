@@ -1,6 +1,6 @@
 import React from 'react';
 import {Route, Routes} from "react-router-dom";
-import AuthPage from "./components/pages/AuthPage/AuthPage";
+import AuthPage from "./components/pages/AuthPages/AuthPage";
 import AdminPage from "./components/pages/AdminPanelPages/AdminPage/AdminPage";
 import AuthorPage from "./components/pages/AdminPanelPages/Authors/MainPage/AuthorPage";
 import AdminLayout from "./layouts/AdminLayout/AdminLayout";
