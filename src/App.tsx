@@ -24,6 +24,7 @@ import UserLayout from "./layouts/UserLayout/UserLayout";
 import MainPage from "./components/pages/UserPages/MainPage/MainPage";
 import LibraryPage from "./components/pages/UserPages/LibraryPage/LibraryPage";
 import BookPage from "./components/pages/UserPages/BookPage/BookPage";
+import ChapterPage from "./components/pages/UserPages/ChapterPage/ChapterPage";
 
 const App = () => {
   return (
@@ -67,7 +68,10 @@ const App = () => {
                     <Route index element={<MainPage/>}/>
                     <Route path={"/books"}>
                         <Route index element={<LibraryPage/>}/>
-                        <Route path={":bookId"} element={<BookPage/>}/>
+                        <Route path={":bookId"}>
+                            <Route index element={<BookPage/>}/>
+                            <Route path={"chapter/:chapterId"} element={<ChapterPage/>}/>
+                        </Route>
                     </Route>
                 </Route>
                 <Route path={"*"} element={<NotFoundPage/>}/>
