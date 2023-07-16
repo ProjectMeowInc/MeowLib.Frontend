@@ -1,3 +1,21 @@
 .input {
+    border-radius: 5px;
+    outline: none;
+    min-height: 30px;
+    width: 95%;
+    border: none;
+    background-color: #E8F0FE;
+    padding: 5px 5px;
+    margin-top: 5px;
+    font-family: Ubuntu, serif;
+    font-size: 16px;
+}
 
+.input:focus {
+    outline: none;
+}
+
+.text {
+    font-family: "Ubuntu", serif;
+    font-size: 16px;
 }

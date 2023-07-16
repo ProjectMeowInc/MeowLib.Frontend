@@ -2,12 +2,19 @@ import React, {useState} from 'react';
 import classes from "./input.module.css"
 
 interface IInputProps {
-    text: string
+    text?: string
     isSilentInput?: boolean,
     validateFunction?: (value: string) => boolean
+    displayError?: boolean
+    placeholder?: string
+    onChange?: (value: string) => void
+    styles?: {
+        textColor?: string
+        marginTop?: number
+    }
 }
 
-const Input = ({text, isSilentInput, validateFunction}: IInputProps) => {
+const Input = ({text, isSilentInput, validateFunction, displayError, placeholder, onChange, styles}: IInputProps) => {
 
     const [input, setInput] = useState<string>("")
     const [error, setError] = useState<string | null>(null)
@@ -30,6 +37,7 @@ const Input = ({text, isSilentInput, validateFunction}: IInputProps) => {
 
     function ChangeHandler(value: string) {
         setInput(value)
+        onChange?.call(null, value)
 
         if (!validateFunction) {
             return;
@@ -41,17 +49,20 @@ const Input = ({text, isSilentInput, validateFunction}: IInputProps) => {
     }
 
     return (
-        <div>
-            <div>
+        <div style={{marginTop: styles?.marginTop}}>
+            <div className={classes.text}>
                 {text}
             </div>
             <input
                 type={isSilentInput ? "password" : "text"}
                 onKeyDown={KeyDownHandler}
                 onChange={(ctx) => ChangeHandler(ctx.target.value)}
+                className={classes.input}
+                placeholder={placeholder}
+                style={{color: styles?.textColor}}
             />
             {
-                error && (
+                displayError && error && (
                     <div>
                         Ошибка: {error}
                     </div>
