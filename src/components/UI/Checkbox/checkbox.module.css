@@ -1,0 +1,29 @@
+.checkbox_wrapper {
+    display: flex;
+    margin-top: 15px;
+    vertical-align: center;
+}
+
+.checkbox {
+    width: 15px;
+    height: 15px;
+    border: 1px solid rgba(107, 107, 107, 0.23);
+    border-radius: 2px;
+    margin-right: 10px;
+    transition: all 0.7s;
+}
+
+.checkbox_checked {
+    width: 15px;
+    height: 15px;
+    border: 1px solid rgba(107, 107, 107, 0.23);
+    background-color: #6D5BFD;
+    border-radius: 2px;
+    margin-right: 10px;
+    transition: all 0.7s;
+}
+
+.text {
+    font-family: "Ubuntu", serif;
+    font-size: 15px;
+}
