@@ -1,4 +1,4 @@
-import {IError} from "../models/IError";
+import {IError} from "../error/IError";
 import {ErrorService} from "../ErrorService";
 
 /**

@@ -1,7 +1,9 @@
 import {Result} from "../result/Result";
-import axios, {AxiosRequestConfig} from "axios";
+import axios, {AxiosRequestConfig, AxiosResponse} from "axios";
 import {TokenService} from "../TokenService";
 import {ErrorService} from "../ErrorService";
+import {IValidationErrorResponse} from "../models/responses/errors/IValidationErrorResponse";
+import {HttpError} from "../error/IError";
 
 type MethodTypes = "GET" | "POST" | "PUT" | "DELETE"
 
@@ -47,6 +49,18 @@ export default class HttpRequest<TContent> {
             return Result.ok(result.data)
         }
         catch (err: any) {
+            if (axios.isAxiosError(err)) {
+                if (err.response?.status === 403) {
+                    const validationError = err.response as AxiosResponse<IValidationErrorResponse>;
+                    if (!validationError) {
+                        throw new Error("Ошибка")
+                    }
+
+                    const response = validationError.data
+                    return Result.withError(new HttpError(response.errorMessage, err.response.status, response))
+                }
+            }
+
             return Result.withError(ErrorService.toServiceError(err, "HttpRequest"))
         }
     }

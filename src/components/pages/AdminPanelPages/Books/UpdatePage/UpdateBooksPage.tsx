@@ -109,13 +109,21 @@ const UpdateBooksPage = () => {
         if (bookData !== null) {
             const updateBookResult = await BookService.updateBookAsync(parseInt(params.bookId), bookData)
 
-            if (updateBookResult.tryCatchError()) {
-                return
+            if (!updateBookResult.hasError()) {
+                AlertService.successMessage("Книга успешно обновлена")
+                return RedirectService.delayRedirect("/admin/books")
+            }
+
+            const error = updateBookResult.getError();
+
+            if (!error.isHttpError() || !error.isValidationErrorResponse()) {
+                return error.catchError()
+            }
+
+            for (let err of error.content.validationErrors) {
+                AlertService.errorMessage(`${err.propertyName}: ${err.message}`)
             }
         }
-
-        AlertService.successMessage("Книга успешно обновлена")
-        return RedirectService.delayRedirect("/admin/books")
     }
 
     function UpdateInformationHandler(updateBookData: IUpdateBookRequest) {

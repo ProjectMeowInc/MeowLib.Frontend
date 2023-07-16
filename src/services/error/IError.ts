@@ -1,6 +1,7 @@
 import {RedirectService} from "../RedirectService";
 import {LogService} from "../LogService";
 import {AlertService} from "../AlertService";
+import {IValidationErrorResponse} from "../models/responses/errors/IValidationErrorResponse";
 
 /**
  * Перечесление возможных типов ошибок.
@@ -9,7 +10,6 @@ import {AlertService} from "../AlertService";
  * - Error - ошибка влияет на взаимодействие пользователя с сайтом.
  * - Critical - критическая ошибка. Что-то, что нельзя контролируемого обработать. Например: неожиданный ответ от сервера.
  */
-
 export type ErrorTypes = "Warning" | "Error" | "Critical"
 
 /**
@@ -21,6 +21,7 @@ export interface IError {
     displayMessage: string
     errorType: ErrorTypes
     catchError: () => void
+    isHttpError(): this is HttpError
 }
 
 /**
@@ -33,8 +34,8 @@ export interface IErrorWithAction extends IError {
 }
 
 export class Error implements IError {
-    displayMessage: string;
-    errorType: ErrorTypes;
+    displayMessage: string
+    errorType: ErrorTypes
 
     constructor(displayMessage: string, errorType: ErrorTypes) {
         this.displayMessage = displayMessage
@@ -57,6 +58,13 @@ export class Error implements IError {
         }
     }
 
+    isHttpError(): this is HttpError {
+        if (typeof(this) === "string") {
+            return false;
+        }
+
+        return "statusCode" in this && "content" in this
+    }
 }
 
 /**
@@ -109,5 +117,23 @@ export class ErrorWithAction implements IErrorWithAction {
         }
     }
 
+    isHttpError(): this is HttpError {
+        return false;
+    }
+}
 
+export class HttpError<TContent = any> extends Error {
+
+    statusCode: number
+    content: TContent
+
+    constructor(displayMessage: string, statusCode: number, content: TContent) {
+        super(displayMessage, "Error");
+        this.statusCode = statusCode
+        this.content = content
+    }
+
+    public isValidationErrorResponse(): this is HttpError<IValidationErrorResponse> {
+        return this instanceof(HttpError<IValidationErrorResponse>)
+    }
 }

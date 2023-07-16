@@ -1,6 +1,6 @@
 import jwtDecode from "jwt-decode";
 import Cookies from "js-cookie";
-import {ErrorWithAction} from "./models/IError";
+import {ErrorWithAction} from "./error/IError";
 import {IAccessTokenData} from "./models/DTO/ITokenModels";
 import {Result} from "./result/Result";
 import {ILoginDTO} from "./models/DTO/ILoginDTO";
