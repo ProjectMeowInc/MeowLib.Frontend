@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import styles from "./authPage.module.css"
 import AuthForm from "./UI/AuthForm/AuthForm";
 

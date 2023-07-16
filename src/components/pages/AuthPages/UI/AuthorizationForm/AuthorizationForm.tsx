@@ -5,7 +5,6 @@ import {AuthService} from "../../../../../services/AuthService";
 import {TokenService} from "../../../../../services/TokenService";
 import {RedirectService} from "../../../../../services/RedirectService";
 import styles from "./authorizationForm.module.css"
-import Separator from "../Separator/Separator";
 import Checkbox from "../../../../UI/Checkbox/Checkbox";
 
 const AuthorizationForm = () => {
