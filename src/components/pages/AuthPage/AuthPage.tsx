@@ -5,6 +5,7 @@ import {AlertService} from "../../../services/AlertService";
 import {AuthService} from "../../../services/AuthService";
 import {RedirectService} from "../../../services/RedirectService";
 import Button from "../../UI/Button/Button";
+import Input from "../../UI/Input/Input";
 
 const AuthPage = () => {
 
@@ -67,6 +68,10 @@ const AuthPage = () => {
 
                    <input onChange={(ctx) => setLogin(ctx.target.value)} className={styles.input} type="text" placeholder={"Введите логин"}/>
                    <input onChange={(ctx) => setPassword(ctx.target.value)} className={styles.input} type="password" placeholder={"Введите пароль"}/>
+
+                   <Input text={"test"} validateFunction={(value) => {
+                       return value.length > 10
+                   }}/>
 
                    <hr className={styles.separator}/>
 
