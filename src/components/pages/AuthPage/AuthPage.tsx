@@ -4,6 +4,7 @@ import {TokenService} from "../../../services/TokenService";
 import {AlertService} from "../../../services/AlertService";
 import {AuthService} from "../../../services/AuthService";
 import {RedirectService} from "../../../services/RedirectService";
+import Button from "../../UI/Button/Button";
 
 const AuthPage = () => {
 
@@ -14,7 +15,6 @@ const AuthPage = () => {
 
     async function ClickHandler (login: string, password: string, isLogin: boolean): Promise<void> {
         if(isLogin) {
-
             const authorizationResult = await AuthService.authorizationAsync({login, password, isLongSession})
 
             if (authorizationResult.tryCatchError()) {
@@ -79,7 +79,12 @@ const AuthPage = () => {
                            </label>
                    }
 
-                   <button onClick={async () => ClickHandler(login, password, isLoginPage)} className={styles.button}>Отправить</button>
+                   <Button
+                       styles={{marginTop: 25}}
+                       lockFunction={async () => await ClickHandler(login, password, isLoginPage)}
+                   >
+                        Отправить
+                   </Button>
                </div>
 
             </div>
@@ -88,3 +93,5 @@ const AuthPage = () => {
 };
 
 export default AuthPage;
+
+//<button >Отправить</button>

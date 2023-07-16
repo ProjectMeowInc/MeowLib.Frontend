@@ -74,7 +74,7 @@ const UpdateBooksPage = () => {
 
             setChapters(getChaptersResult.unwrap())
         })
-    }, [])
+    }, [params.bookId])
 
     async function SubmitHandlerAsync () {
 
