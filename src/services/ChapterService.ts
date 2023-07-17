@@ -1,8 +1,8 @@
-import {ICreateChapterRequest, IUpdateChapterTextRequest} from "./models/requests/IChapterRequests";
+import {ICreateChapterRequest, IUpdateChapterTextRequest} from "./models/requests/ChapterRequests";
 import {IChapter, IChapterDTO} from "./models/DTO/IChapterDTO";
 import {EmptyResult, Result} from "./result/Result";
 import HttpRequest from "./http/HttpRequest";
-import {IGetChaptersResponse} from "./models/responses/IChapterResponses";
+import {IGetChaptersResponse} from "./models/responses/ChapterResponses";
 
 /**
  * Сервис для работы с главами

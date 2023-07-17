@@ -1,5 +1,5 @@
 import {ITagDTO} from "./models/DTO/ITagDTO";
-import {ICreateTagRequest, IUpdateTagRequest} from "./models/requests/ITagRequests";
+import {ICreateTagRequest, IUpdateTagRequest} from "./models/requests/TagRequests";
 import {EmptyResult, Result} from "./result/Result";
 import HttpRequest from "./http/HttpRequest";
 
@@ -10,7 +10,7 @@ export class TagsService {
 
     /**
      * Метод для получения списка тегов
-     * @returns данные в виде IGetTagsResponse или ошибку
+     * @returns данные в виде GetTagsResponse или ошибку
      */
     static async getAllTagsAsync(): Promise<Result<ITagDTO[]>> {
 

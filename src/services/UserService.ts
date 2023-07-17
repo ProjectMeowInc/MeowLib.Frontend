@@ -1,4 +1,4 @@
-import {IUpdateUserInfoRequest} from './models/requests/IUserRequests';
+import {IUpdateUserInfoRequest} from './models/requests/UserRequests';
 import {IUserDTO} from "./models/DTO/IUserModels";
 import {Result} from "./result/Result";
 import HttpRequest from "./http/HttpRequest";

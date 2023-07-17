@@ -1,4 +1,4 @@
-import {ISendLogRequest} from "./models/requests/ISendLogRequest";
+import {SendLogRequest} from "./models/requests/SendLogRequest";
 import {EmptyResult} from "./result/Result";
 import HttpRequest from "./http/HttpRequest";
 
@@ -12,7 +12,7 @@ export class LogService {
      * @param data тело ошибки
      * @returns null при успехе или ошибка
      */
-    static async sendLogAsync(data: ISendLogRequest): Promise<EmptyResult> {
+    static async sendLogAsync(data: SendLogRequest): Promise<EmptyResult> {
 
         const result = await HttpRequest.create<void>()
             .withUrl("/logs")

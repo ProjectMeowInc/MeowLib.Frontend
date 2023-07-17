@@ -1,5 +1,5 @@
 import {IAuthorDTO} from "./models/DTO/IAuthorModels";
-import {ICreateAuthorRequest, ISearchAuthorRequest} from "./models/requests/IAuthorRequests";
+import {ICreateAuthorRequest, ISearchAuthorRequest} from "./models/requests/AuthorRequests";
 import {EmptyResult, Result} from "./result/Result";
 import HttpRequest from "./http/HttpRequest";
 

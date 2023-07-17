@@ -1,5 +1,5 @@
-import {ILogInRequest, ISignInRequest} from "./models/requests/IUserRequests";
-import {ILoginResponse} from "./models/responses/IAuthResponses";
+import {ILogInRequest, ISignInRequest} from "./models/requests/UserRequests";
+import {ILoginResponse} from "./models/responses/AuthResponses";
 import {EmptyResult, Result} from "./result/Result";
 import HttpRequest from "./http/HttpRequest";
 import {ILoginDTO} from "./models/DTO/ILoginDTO";
