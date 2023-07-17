@@ -8,13 +8,14 @@ interface IInputInputWithIconProps {
     displayError?: boolean
     placeholder?: string
     onChange?: (value: string) => void
+    imageName: string
     styles?: {
         textColor?: string
         marginTop?: number
     }
 }
 
-const InputWithIcon = ({isSilentInput, validateFunction, displayError, placeholder, onChange, styles}: IInputInputWithIconProps) => {
+const InputWithIcon = ({isSilentInput, imageName, validateFunction, displayError, placeholder, onChange, styles}: IInputInputWithIconProps) => {
 
     const [input, setInput] = useState<string>("")
     const [error, setError] = useState<string | null>(null)
@@ -52,7 +53,7 @@ const InputWithIcon = ({isSilentInput, validateFunction, displayError, placehold
         <div>
             <div className={classes.input_wrapper}>
                 <div className={classes.img}>
-                    <img src="/img/free-icon-home-5381665.png" alt=""/>
+                    <img src={`/img/${imageName}`} alt=""/>
                 </div>
                 <input className={classes.input}
                     onChange={ctx => ChangeHandler(ctx.target.value)}
