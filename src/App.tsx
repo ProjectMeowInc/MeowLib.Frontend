@@ -25,6 +25,7 @@ import MainPage from "./components/pages/UserPages/MainPage/MainPage";
 import LibraryPage from "./components/pages/UserPages/LibraryPage/LibraryPage";
 import BookPage from "./components/pages/UserPages/BookPage/BookPage";
 import ChapterPage from "./components/pages/UserPages/ChapterPage/ChapterPage";
+import UserPage from "./components/pages/UserPages/UserPage/UserPage";
 
 const App = () => {
   return (
@@ -73,6 +74,7 @@ const App = () => {
                             <Route path={"chapter/:chapterId"} element={<ChapterPage/>}/>
                         </Route>
                     </Route>
+                    <Route path={"user"} element={<UserPage/>}/>
                 </Route>
                 <Route path={"*"} element={<NotFoundPage/>}/>
             </Route>
