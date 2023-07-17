@@ -1,0 +1,31 @@
+.list {
+    width: 75%;
+    min-height: 50vh;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 50px;
+}
+
+.status_block {
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.status_active {
+    font-weight: 600;
+    transition: .2s all;
+}
+
+.status {
+    font-weight: 400;
+    transition: .2s all;
+}
+
+.books {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}

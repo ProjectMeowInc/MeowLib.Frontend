@@ -1,0 +1,20 @@
+.menu {
+    width: 15%;
+    height: 10vh;
+    border-radius: 7px;
+    font-size: 20px;
+}
+
+.menu_item {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    transition: .5s all;
+    cursor: pointer;
+    border-radius: 7px;
+    padding-left: 30px;
+}
+
+.menu_item:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
