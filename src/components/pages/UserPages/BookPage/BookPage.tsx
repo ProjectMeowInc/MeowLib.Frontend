@@ -41,21 +41,6 @@ const BookPage = () => {
 
     }, [id])
 
-    async function AddToFavoriteHandler() {
-
-        if (id === undefined) {
-            return RedirectService.redirectToNotFoundPage()
-        }
-
-        BookService.addStatusToBookAsync(parseInt(id), "Favorite").then(addStatusResult => {
-            if (addStatusResult.tryCatchError()) {
-                return
-            }
-
-            AlertService.successMessage("Книга добавлена в избранное")
-        })
-    }
-
     if (book === null) {
         return (
             <Preloader/>

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import styles from "./createBookPage.module.css"
-import {ICreateBookRequest} from "../../../../../services/models/requests/IBookRequests";
+import {ICreateBookRequest} from "../../../../../services/models/requests/BookRequests";
 import {BookService} from "../../../../../services/BookService";
 import {AlertService} from "../../../../../services/AlertService";
 import {RedirectService} from "../../../../../services/RedirectService";

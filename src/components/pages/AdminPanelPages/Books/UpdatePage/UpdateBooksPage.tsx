@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Link, useParams} from "react-router-dom";
 import Preloader from "../../../../UI/Preloader/Preloader";
 import styles from "./updateBooksPage.module.css";
-import {IUpdateBookRequest} from "../../../../../services/models/requests/IBookRequests";
+import {IUpdateBookRequest} from "../../../../../services/models/requests/BookRequests";
 import {BookService} from "../../../../../services/BookService";
 import {RedirectService} from "../../../../../services/RedirectService";
 import {AlertService} from "../../../../../services/AlertService";

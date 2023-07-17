@@ -5,7 +5,7 @@ import {AuthorServices} from "../../../../../services/AuthorServices";
 import {IAuthorDTO} from "../../../../../services/models/DTO/IAuthorModels";
 import Preloader from "../../../../UI/Preloader/Preloader";
 import {Link} from "react-router-dom";
-import {ISearchAuthorRequest} from "../../../../../services/models/requests/IAuthorRequests";
+import {ISearchAuthorRequest} from "../../../../../services/models/requests/AuthorRequests";
 
 const AuthorPage = () => {
 

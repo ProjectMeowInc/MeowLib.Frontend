@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import styles from "./createPage.module.css";
 import {ChapterService} from "../../../../../services/ChapterService";
 import {useParams} from "react-router-dom";
-import {ICreateChapterRequest} from "../../../../../services/models/requests/IChapterRequests";
+import {ICreateChapterRequest} from "../../../../../services/models/requests/ChapterRequests";
 import {RedirectService} from "../../../../../services/RedirectService";
 import {AlertService} from "../../../../../services/AlertService";
 

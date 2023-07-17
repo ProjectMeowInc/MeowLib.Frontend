@@ -4,6 +4,7 @@ import LibraryBookItem from "../../../../../UI/LibraryBookItem/LibraryBookItem";
 import {IUserBooksStatusDTO} from "../../../../../../services/models/DTO/IUserBooksStatusDTO";
 import {UserBookStatus} from "../../../../../../services/models/UserBookStatus";
 import {BookService} from "../../../../../../services/BookService";
+import {UserFavoriteService} from "../../../../../../services/UserFavoriteService";
 
 const LibraryList = () => {
 
@@ -11,7 +12,7 @@ const LibraryList = () => {
     const [bookStatus, setBookStatus] = useState<UserBookStatus>("InPlans")
 
     useEffect(() => {
-        BookService.getBooksStatusAsync().then(getBooksStatus => {
+        UserFavoriteService.getUserFavorite().then(getBooksStatus => {
             if (getBooksStatus.tryCatchError()) {
                 return
             }
@@ -31,8 +32,8 @@ const LibraryList = () => {
                 <p className={bookStatus === "ReadingNow" ? styles.status_active : styles.status}
                    onClick={() => setBookStatus("ReadingNow")}>Читаю</p>
 
-                <p className={bookStatus === "Favorite" ? styles.status_active : styles.status}
-                   onClick={() => setBookStatus("Favorite")}>Избранное</p>
+                <p className={bookStatus === "Favourite" ? styles.status_active : styles.status}
+                   onClick={() => setBookStatus("Favourite")}>Избранное</p>
 
                 <p className={bookStatus === "Read" ? styles.status_active : styles.status}
                    onClick={() => setBookStatus("Read")}>Прочитано</p>
