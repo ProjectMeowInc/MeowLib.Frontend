@@ -67,10 +67,3 @@ const AuthorizationForm = () => {
 };
 
 export default AuthorizationForm;
-
-//!isLoginPage
-//                         ? <></>
-//                         : <label className={styles.label}>
-//                             <input onClick={() => setIsLongSession(prevState => !prevState)} type="checkbox"/>
-//                             <p>Запомнить меня</p>
-//                         </label>
