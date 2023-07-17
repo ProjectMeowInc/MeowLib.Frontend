@@ -2,14 +2,14 @@ import React, {useEffect, useState} from 'react';
 import AuthorListItem from "./UI/AuthorListItem/AuthorListItem";
 import styles from "./authorsPage.module.css"
 import {AuthorServices} from "../../../../../services/AuthorServices";
-import {IAuthorDto} from "../../../../../services/models/entities/AuthorModels";
+import {IAuthor} from "../../../../../services/models/entities/AuthorModels";
 import Preloader from "../../../../UI/Preloader/Preloader";
 import {Link} from "react-router-dom";
 import {ISearchAuthorRequest} from "../../../../../services/models/requests/AuthorRequests";
 
 const AuthorPage = () => {
 
-    const [authorsList, setAuthorsList] = useState<IAuthorDto[] | null>(null)
+    const [authorsList, setAuthorsList] = useState<IAuthor[] | null>(null)
 
     useEffect( () => {
         AuthorServices.getAuthorsAsync().then(getAuthorsResult => {

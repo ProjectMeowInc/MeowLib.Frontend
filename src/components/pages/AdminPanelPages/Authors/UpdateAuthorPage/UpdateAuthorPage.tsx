@@ -3,13 +3,13 @@ import styles from "../CreateAuthorPage/createAuthorPage.module.css";
 import {AlertService} from "../../../../../services/AlertService";
 import {AuthorServices} from "../../../../../services/AuthorServices";
 import {useNavigate, useParams} from "react-router-dom";
-import {IAuthorDto} from "../../../../../services/models/entities/AuthorModels";
+import {IAuthor} from "../../../../../services/models/entities/AuthorModels";
 import Preloader from "../../../../UI/Preloader/Preloader";
 import {RedirectService} from "../../../../../services/RedirectService";
 
 const UpdateAuthorPage = () => {
 
-    const [author, setAuthor] = useState<IAuthorDto | null>(null)
+    const [author, setAuthor] = useState<IAuthor | null>(null)
     const params = useParams()
     const navigate = useNavigate()
 

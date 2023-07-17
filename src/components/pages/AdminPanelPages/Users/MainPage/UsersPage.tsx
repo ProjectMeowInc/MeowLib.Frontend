@@ -2,12 +2,12 @@ import React, {useEffect, useState} from 'react';
 import styles from "./userPage.module.css"
 import Preloader from "../../../../UI/Preloader/Preloader";
 import {UserService} from "../../../../../services/UserService";
-import {IUserDto} from "../../../../../services/models/entities/UserModels";
+import {IUser} from "../../../../../services/models/entities/UserModels";
 import UserPageListItem from "./UI/UserPageLIstItem/UserPageListItem";
 
 const UsersPage = () => {
 
-    const [userList, setUserList] = useState<IUserDto[] | null>(null)
+    const [userList, setUserList] = useState<IUser[] | null>(null)
 
     useEffect(() => {
         UserService.getUsersAsync().then(getUserResult => {

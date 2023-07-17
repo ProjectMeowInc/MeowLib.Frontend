@@ -11,7 +11,7 @@ import {IChapterDto} from "../../../../../services/models/entities/ChapterModels
 import TagList from "./UI/TagList/TagList";
 import {TagsContext} from "../../../../../context/TagsContext";
 import AuthorList from "./UI/AuthorList/AuthorList";
-import {IAuthorDto} from "../../../../../services/models/entities/AuthorModels";
+import {IAuthor} from "../../../../../services/models/entities/AuthorModels";
 import {AuthorContext} from "../../../../../context/AuthorContext";
 import {TagsService} from "../../../../../services/TagsService";
 import {ITagDto} from "../../../../../services/models/entities/TagModels";
@@ -22,7 +22,7 @@ const UpdateBooksPage = () => {
     const [bookData, setBookData] = useState<IUpdateBookRequest | null>(null)
     const [chapters, setChapters] = useState<IChapterDto[] | null>(null)
     const [tagList, setTagList] = useState<ITagDto[] | null>(null)
-    const [authorList, setAuthorList] = useState<IAuthorDto[] | null>(null)
+    const [authorList, setAuthorList] = useState<IAuthor[] | null>(null)
     const [image, setImage] = useState<FormData | null>(null)
     const params = useParams()
     const {selectedTags, setSelectedTags} = useContext(TagsContext)

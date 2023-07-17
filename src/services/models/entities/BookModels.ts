@@ -1,15 +1,15 @@
 import {ITagModel} from "./TagModels";
-import {IAuthorDto} from "./AuthorModels";
+import {IAuthor} from "./AuthorModels";
 
 /**
  * Интерфейс описывающий книгу
  */
-export interface IBookModel {
+export interface IBook {
     id: number
     name: string
     description: string
     imageUrl: string | null
-    author: IAuthorDto | null
+    author: IAuthor | null
     tags: ITagModel[]
 }
 

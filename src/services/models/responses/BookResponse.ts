@@ -1,4 +1,4 @@
-import {IAuthorDto} from "../entities/AuthorModels";
+import {IAuthor} from "../entities/AuthorModels";
 import {ITagModel} from "../entities/TagModels";
 import {IBookDto} from "../entities/BookModels";
 
@@ -9,7 +9,7 @@ interface BookResponse {
     id: number
     name: string
     description: string
-    author: IAuthorDto,
+    author: IAuthor,
     tags: ITagModel[]
 }
 

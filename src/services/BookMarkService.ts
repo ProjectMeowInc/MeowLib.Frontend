@@ -1,6 +1,6 @@
 import {EmptyResult, Result} from "./result/Result";
 import HttpRequest from "./http/HttpRequest";
-import {IBookmarkDto} from "./models/entities/BookmarkModels";
+import {IBookmark} from "./models/entities/BookmarkModels";
 
 /**
  * Написан сервис для работы с закладками
@@ -30,8 +30,8 @@ export class BookMarkService {
      * Метод для получения закладки
      * @param bookId id книги
      */
-    static async getBookMarksAsync(bookId: number): Promise<Result<IBookmarkDto>> {
-        const result = await new HttpRequest<IBookmarkDto>()
+    static async getBookMarksAsync(bookId: number): Promise<Result<IBookmark>> {
+        const result = await new HttpRequest<IBookmark>()
             .withUrl(`/users/bookmarks/book/${bookId}`)
             .withGetMethod()
             .withAuthorization()

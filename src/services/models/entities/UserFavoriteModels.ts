@@ -4,7 +4,7 @@ import {IBookDto} from "./BookModels";
 /**
  * Интерфейс описывающий книги в списке пользователя
  */
-export interface IUserFavoriteDto {
+export interface IUserFavorite {
     status: UserBookStatus
     books: IBookDto[]
 }

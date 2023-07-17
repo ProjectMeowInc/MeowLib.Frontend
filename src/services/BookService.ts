@@ -1,4 +1,4 @@
-import {IBookModel, IBookDto} from "./models/entities/BookModels";
+import {IBook, IBookDto} from "./models/entities/BookModels";
 import {IBooksResponse} from "./models/responses/BookResponse";
 import {ICreateBookRequest, IUpdateBookRequest, IUpdateBookTagsRequest} from "./models/requests/BookRequests";
 import {EmptyResult, Result} from "./result/Result";
@@ -31,9 +31,9 @@ export class BookService {
      * @param id id книги
      * @returns книгу в виде IBook или ошибку в виде IError
      */
-    static async getBookAsync(id: number): Promise<Result<IBookModel>> {
+    static async getBookAsync(id: number): Promise<Result<IBook>> {
 
-        const result = await new HttpRequest<IBookModel>()
+        const result = await new HttpRequest<IBook>()
             .withUrl(`/books/${id}`)
             .withGetMethod()
             .sendAsync()

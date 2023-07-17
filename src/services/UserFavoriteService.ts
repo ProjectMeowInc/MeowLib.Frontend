@@ -2,7 +2,7 @@ import {EmptyResult, Result} from "./result/Result";
 import {ICreateUserFavoriteRequest} from "./models/requests/UserFavoriteRequests";
 import HttpRequest from "./http/HttpRequest";
 import {IGetUserFavoriteResponse} from "./models/responses/UserFavoriteResponses";
-import {IUserFavoriteDto} from "./models/entities/UserFavoriteModels";
+import {IUserFavorite} from "./models/entities/UserFavoriteModels";
 
 /**
  * Метод добавляет книги в список пользователя.
@@ -23,7 +23,7 @@ export class UserFavoriteService {
         return EmptyResult.ok();
     }
     
-    static async getUserFavorite(): Promise<Result<IUserFavoriteDto[]>> {
+    static async getUserFavorite(): Promise<Result<IUserFavorite[]>> {
 
         const result = await HttpRequest.create<IGetUserFavoriteResponse>()
             .withUrl("/users/favorite")

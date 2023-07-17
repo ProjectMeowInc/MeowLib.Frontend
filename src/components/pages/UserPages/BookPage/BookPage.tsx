@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
-import {IBookModel} from "../../../../services/models/entities/BookModels";
+import {IBook} from "../../../../services/models/entities/BookModels";
 import {RedirectService} from "../../../../services/RedirectService";
 import {BookService} from "../../../../services/BookService";
 import {IChapterDto} from "../../../../services/models/entities/ChapterModels";
@@ -12,7 +12,7 @@ import ChapterItem from "../../../UI/ChapterItem/ChapterItem";
 import SelectStatus from "./UI/SelectStatus/SelectStatus";
 
 const BookPage = () => {
-    const [book, setBook] = useState<IBookModel| null>(null)
+    const [book, setBook] = useState<IBook| null>(null)
     const [chapters, setChapters] = useState<IChapterDto[] | null>(null)
     const params = useParams()
     const id = params.bookId
