@@ -8,7 +8,7 @@ import {AlertService} from "../../../../../../services/AlertService";
 
 const Settings = () => {
 
-    const {fontSize, setFontSize, lineHeight, setLineHeight, settings} = useContext(SettingsContext)
+    const {fontSize, setFontSize, lineHeight, setLineHeight} = useContext(SettingsContext)
     const params = useParams()
 
     async function AddBookMarkHandler() {
