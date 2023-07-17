@@ -1,8 +1,8 @@
-import {IUserBooksStatusDTO} from "../DTO/IUserBooksStatusDTO";
+import {IUserFavoriteDto} from "../DTO/UserFavoriteModels";
 
 /**
  * Интерфейс книг пользователя
  */
 export interface IGetUserFavoriteResponse {
-    items: IUserBooksStatusDTO[]
+    items: IUserFavoriteDto[]
 }

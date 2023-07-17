@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import styles from "./libraryList.module.css";
 import LibraryBookItem from "../../../../../UI/LibraryBookItem/LibraryBookItem";
-import {IUserBooksStatusDTO} from "../../../../../../services/models/DTO/IUserBooksStatusDTO";
 import {UserBookStatus} from "../../../../../../services/models/UserBookStatus";
 import {UserFavoriteService} from "../../../../../../services/UserFavoriteService";
+import {IUserFavoriteDto} from "../../../../../../services/models/DTO/UserFavoriteModels";
 
 const LibraryList = () => {
 
-    const [userBooks, setUserBooks] = useState<IUserBooksStatusDTO[] | null>(null)
+    const [userBooks, setUserBooks] = useState<IUserFavoriteDto[] | null>(null)
     const [bookStatus, setBookStatus] = useState<UserBookStatus>("InPlans")
 
     useEffect(() => {

@@ -1,15 +1,8 @@
 import {EmptyResult, Result} from "./result/Result";
-import {IBookDTO} from "./models/DTO/IBookDTO";
-import {UserBookStatus} from "./models/UserBookStatus";
 import {ICreateUserFavoriteRequest} from "./models/requests/UserFavoriteRequests";
 import HttpRequest from "./http/HttpRequest";
 import {IGetUserFavoriteResponse} from "./models/responses/UserFavoriteResponses";
-import {IUserBooksStatusDTO} from "./models/DTO/IUserBooksStatusDTO";
-
-interface UserFavoriteDto {
-    book: IBookDTO
-    status: UserBookStatus
-}
+import {IUserFavoriteDto} from "./models/DTO/UserFavoriteModels";
 
 /**
  * Метод добавляет книги в список пользователя.
@@ -30,7 +23,7 @@ export class UserFavoriteService {
         return EmptyResult.ok();
     }
     
-    static async getUserFavorite(): Promise<Result<IUserBooksStatusDTO[]>> {
+    static async getUserFavorite(): Promise<Result<IUserFavoriteDto[]>> {
 
         const result = await HttpRequest.create<IGetUserFavoriteResponse>()
             .withUrl("/users/favorite")
