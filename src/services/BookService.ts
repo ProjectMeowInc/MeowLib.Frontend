@@ -3,7 +3,6 @@ import {IBooksResponse} from "./models/responses/BookResponse";
 import {ICreateBookRequest, IUpdateBookRequest, IUpdateBookTagsRequest} from "./models/requests/BookRequests";
 import {EmptyResult, Result} from "./result/Result";
 import HttpRequest from "./http/HttpRequest";
-import {IUserBooksStatusDTO} from "./models/DTO/IUserBooksStatusDTO";
 
 /**
  * Сервис для работы с книгами

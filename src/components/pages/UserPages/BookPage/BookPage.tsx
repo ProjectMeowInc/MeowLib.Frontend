@@ -9,7 +9,6 @@ import Preloader from "../../../UI/Preloader/Preloader";
 import styles from "./bookPage.module.css"
 import TagItem from "../../../UI/TagItem/TagItem";
 import ChapterItem from "../../../UI/ChapterItem/ChapterItem";
-import {AlertService} from "../../../../services/AlertService";
 import SelectStatus from "./UI/SelectStatus/SelectStatus";
 
 const BookPage = () => {

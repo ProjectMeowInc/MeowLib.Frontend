@@ -3,7 +3,6 @@ import styles from "./libraryList.module.css";
 import LibraryBookItem from "../../../../../UI/LibraryBookItem/LibraryBookItem";
 import {IUserBooksStatusDTO} from "../../../../../../services/models/DTO/IUserBooksStatusDTO";
 import {UserBookStatus} from "../../../../../../services/models/UserBookStatus";
-import {BookService} from "../../../../../../services/BookService";
 import {UserFavoriteService} from "../../../../../../services/UserFavoriteService";
 
 const LibraryList = () => {
