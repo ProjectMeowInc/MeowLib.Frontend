@@ -11,6 +11,9 @@
     border-radius: 2px;
     margin-right: 10px;
     transition: all 0.7s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .checkbox_checked {
@@ -21,9 +24,19 @@
     border-radius: 2px;
     margin-right: 10px;
     transition: all 0.7s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .text {
     font-family: "Ubuntu", serif;
     font-size: 15px;
+}
+
+.circle {
+    width: 7px;
+    height: 7px;
+    border-radius: 10px;
+    background-color: white;
 }
