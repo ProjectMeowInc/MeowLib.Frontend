@@ -1,5 +1,5 @@
 import {IUpdateUserInfoRequest} from './models/requests/UserRequests';
-import {IUserDTO} from "./models/DTO/IUserModels";
+import {IUserDto} from "./models/entities/UserModels";
 import {Result} from "./result/Result";
 import HttpRequest from "./http/HttpRequest";
 
@@ -12,9 +12,9 @@ export class UserService {
      * Метод для получения всех пользователей
      * @returns Возвращает ошибку или массив с пользователями
      */
-    static async getUsersAsync(): Promise<Result<IUserDTO[]>> {
+    static async getUsersAsync(): Promise<Result<IUserDto[]>> {
 
-        const result = await new HttpRequest<IUserDTO[]>()
+        const result = await new HttpRequest<IUserDto[]>()
             .withUrl("/users")
             .withAuthorization()
             .withGetMethod()
@@ -33,9 +33,9 @@ export class UserService {
      * @param data информация пользователя
      * @returns Возвращает IUserDTO или IError
      */
-    static async updateUserAsync(id: number, data: IUpdateUserInfoRequest): Promise<Result<IUserDTO>> {
+    static async updateUserAsync(id: number, data: IUpdateUserInfoRequest): Promise<Result<IUserDto>> {
 
-        const result = await new HttpRequest<IUserDTO>()
+        const result = await new HttpRequest<IUserDto>()
             .withUrl(`/users/${id}`)
             .withBody(data)
             .withPutMethod()

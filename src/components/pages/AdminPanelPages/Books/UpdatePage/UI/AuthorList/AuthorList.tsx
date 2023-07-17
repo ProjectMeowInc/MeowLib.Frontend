@@ -1,10 +1,10 @@
 import React from 'react';
-import {IAuthorDTO} from "../../../../../../../services/models/DTO/IAuthorModels";
+import {IAuthorDto} from "../../../../../../../services/models/entities/AuthorModels";
 import AuthorListItem from "../AuthorListItem/AuthorListItem";
 import styles from "./aurhorList.module.css"
 
 interface IAuthorListProps {
-    authorList: IAuthorDTO[]
+    authorList: IAuthorDto[]
 }
 
 const AuthorList = ({authorList}: IAuthorListProps) => {

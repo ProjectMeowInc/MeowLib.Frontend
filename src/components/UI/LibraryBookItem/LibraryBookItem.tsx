@@ -1,9 +1,9 @@
 import React from 'react';
-import {IBookDTO} from "../../../services/models/DTO/IBookDTO";
+import {IBookDto} from "../../../services/models/entities/BookModels";
 import styles from "./libraryBookIten.module.css";
 import {Link} from "react-router-dom";
 
-const LibraryBookItem = ({id, name, imageName}: IBookDTO) => {
+const LibraryBookItem = ({id, name, imageName}: IBookDto) => {
 
     return (
         <Link to={`/books/${id}`} className={styles.book}>

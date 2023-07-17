@@ -1,7 +1,7 @@
 /**
- * Интерфейс описывающий DTO главы
+ * Интерфейс описывающий entities главы
  */
-export interface IChapterDTO {
+export interface IChapterDto {
     id: number
     name: string
     releaseDate: Date
@@ -10,6 +10,6 @@ export interface IChapterDTO {
 /**
  * Интерфейс описывающий главу
  */
-export interface IChapter extends IChapterDTO {
+export interface IChapter extends IChapterDto {
     text: string
 }

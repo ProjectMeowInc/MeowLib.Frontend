@@ -2,7 +2,7 @@ import {EmptyResult, Result} from "./result/Result";
 import {ICreateUserFavoriteRequest} from "./models/requests/UserFavoriteRequests";
 import HttpRequest from "./http/HttpRequest";
 import {IGetUserFavoriteResponse} from "./models/responses/UserFavoriteResponses";
-import {IUserFavoriteDto} from "./models/DTO/UserFavoriteModels";
+import {IUserFavoriteDto} from "./models/entities/UserFavoriteModels";
 
 /**
  * Метод добавляет книги в список пользователя.

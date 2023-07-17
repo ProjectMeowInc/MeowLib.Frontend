@@ -7,22 +7,22 @@ import {BookService} from "../../../../../services/BookService";
 import {RedirectService} from "../../../../../services/RedirectService";
 import {AlertService} from "../../../../../services/AlertService";
 import ChapterListItem from "./UI/ChapterListItem/ChapterListItem";
-import {IChapterDTO} from "../../../../../services/models/DTO/IChapterDTO";
+import {IChapterDto} from "../../../../../services/models/entities/ChapterModels";
 import TagList from "./UI/TagList/TagList";
 import {TagsContext} from "../../../../../context/TagsContext";
 import AuthorList from "./UI/AuthorList/AuthorList";
-import {IAuthorDTO} from "../../../../../services/models/DTO/IAuthorModels";
+import {IAuthorDto} from "../../../../../services/models/entities/AuthorModels";
 import {AuthorContext} from "../../../../../context/AuthorContext";
 import {TagsService} from "../../../../../services/TagsService";
-import {ITagDTO} from "../../../../../services/models/DTO/ITagDTO";
+import {ITagDto} from "../../../../../services/models/entities/TagModels";
 import {AuthorServices} from "../../../../../services/AuthorServices";
 import {ChapterService} from "../../../../../services/ChapterService";
 
 const UpdateBooksPage = () => {
     const [bookData, setBookData] = useState<IUpdateBookRequest | null>(null)
-    const [chapters, setChapters] = useState<IChapterDTO[] | null>(null)
-    const [tagList, setTagList] = useState<ITagDTO[] | null>(null)
-    const [authorList, setAuthorList] = useState<IAuthorDTO[] | null>(null)
+    const [chapters, setChapters] = useState<IChapterDto[] | null>(null)
+    const [tagList, setTagList] = useState<ITagDto[] | null>(null)
+    const [authorList, setAuthorList] = useState<IAuthorDto[] | null>(null)
     const [image, setImage] = useState<FormData | null>(null)
     const params = useParams()
     const {selectedTags, setSelectedTags} = useContext(TagsContext)

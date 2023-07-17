@@ -1,4 +1,4 @@
-import {IAccessTokenData} from "./DTO/ITokenModels";
+import {IAccessTokenData} from "./entities/TokenModels";
 import {UserRoles} from "./UserRoles";
 
 export default class SessionUser {

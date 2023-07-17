@@ -1,8 +1,8 @@
-import {IChapterDTO} from "../DTO/IChapterDTO";
+import {IChapterDto} from "../entities/ChapterModels";
 
 /**
  * Интерфейс описывающий возвращаемый список глав
  */
 export interface IGetChaptersResponse {
-    items: IChapterDTO[]
+    items: IChapterDto[]
 }

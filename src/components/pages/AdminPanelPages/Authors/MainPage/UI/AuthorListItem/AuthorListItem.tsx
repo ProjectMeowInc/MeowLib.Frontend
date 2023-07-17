@@ -1,12 +1,12 @@
 import React from 'react';
 import styles from "./authorListItem.module.css"
-import {IAuthorDTO} from "../../../../../../../services/models/DTO/IAuthorModels";
+import {IAuthorDto} from "../../../../../../../services/models/entities/AuthorModels";
 import {AuthorServices} from "../../../../../../../services/AuthorServices";
 import {AlertService} from "../../../../../../../services/AlertService";
 import {Link} from "react-router-dom";
 import {RedirectService} from "../../../../../../../services/RedirectService";
 
-const AuthorListItem = ({id, name}: IAuthorDTO) => {
+const AuthorListItem = ({id, name}: IAuthorDto) => {
 
     function DeleteHandler () {
         AuthorServices.deleteAuthorAsync(id).then(deleteAuthorResult => {

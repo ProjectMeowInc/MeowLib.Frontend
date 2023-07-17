@@ -1,9 +1,9 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 import styles from "./userPage.module.css";
-import {IUserDTO} from "../../../../../../../services/models/DTO/IUserModels";
+import {IUserDto} from "../../../../../../../services/models/entities/UserModels";
 
-const UserPageListItem = ({id, login, role}: IUserDTO) => {
+const UserPageListItem = ({id, login, role}: IUserDto) => {
 
     return (
         <div className={styles.item} data-tooltip-id={"my-tooltip"}>

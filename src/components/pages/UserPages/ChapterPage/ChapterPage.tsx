@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
-import {IChapter} from "../../../../services/models/DTO/IChapterDTO";
+import {IChapter} from "../../../../services/models/entities/ChapterModels";
 import {ChapterService} from "../../../../services/ChapterService";
 import {RedirectService} from "../../../../services/RedirectService";
 import Preloader from "../../../UI/Preloader/Preloader";

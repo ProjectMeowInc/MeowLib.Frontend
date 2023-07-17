@@ -3,7 +3,7 @@ import styles from "./libraryList.module.css";
 import LibraryBookItem from "../../../../../UI/LibraryBookItem/LibraryBookItem";
 import {UserBookStatus} from "../../../../../../services/models/UserBookStatus";
 import {UserFavoriteService} from "../../../../../../services/UserFavoriteService";
-import {IUserFavoriteDto} from "../../../../../../services/models/DTO/UserFavoriteModels";
+import {IUserFavoriteDto} from "../../../../../../services/models/entities/UserFavoriteModels";
 
 const LibraryList = () => {
 

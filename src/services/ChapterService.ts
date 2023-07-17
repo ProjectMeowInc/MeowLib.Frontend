@@ -1,5 +1,5 @@
 import {ICreateChapterRequest, IUpdateChapterTextRequest} from "./models/requests/ChapterRequests";
-import {IChapter, IChapterDTO} from "./models/DTO/IChapterDTO";
+import {IChapter, IChapterDto} from "./models/entities/ChapterModels";
 import {EmptyResult, Result} from "./result/Result";
 import HttpRequest from "./http/HttpRequest";
 import {IGetChaptersResponse} from "./models/responses/ChapterResponses";
@@ -35,7 +35,7 @@ export class ChapterService {
      * @param bookId id книги
      * @returns IGetChapters или IError
      */
-    static async getChaptersAsync(bookId: number): Promise<Result<IChapterDTO[]>> {
+    static async getChaptersAsync(bookId: number): Promise<Result<IChapterDto[]>> {
 
         const result = await HttpRequest.create<IGetChaptersResponse>()
             .withUrl(`/books/${bookId}/chapters`)

@@ -1,9 +1,9 @@
 import React from 'react';
-import {IChapterDTO} from "../../../services/models/DTO/IChapterDTO";
+import {IChapterDto} from "../../../services/models/entities/ChapterModels";
 import styles from "./chapterItem.module.css"
 import {Link} from "react-router-dom";
 
-const ChapterItem = ({id, name, releaseDate}: IChapterDTO) => {
+const ChapterItem = ({id, name, releaseDate}: IChapterDto) => {
 
     const date = new Date(releaseDate)
 

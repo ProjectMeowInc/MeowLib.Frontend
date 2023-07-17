@@ -4,12 +4,12 @@ import {Link} from "react-router-dom";
 import Preloader from "../../../../UI/Preloader/Preloader";
 import BooksListItem from "./UI/BookListItem/BooksListItem";
 import {BookService} from "../../../../../services/BookService";
-import {IBookDTO} from "../../../../../services/models/DTO/IBookDTO";
+import {IBookDto} from "../../../../../services/models/entities/BookModels";
 
 
 const MainBooksPage = () => {
 
-    const [bookList, setBookList] = useState<IBookDTO[] | null>(null)
+    const [bookList, setBookList] = useState<IBookDto[] | null>(null)
 
     useEffect(() => {
         BookService.getBooksAsync().then(getBooksResult => {

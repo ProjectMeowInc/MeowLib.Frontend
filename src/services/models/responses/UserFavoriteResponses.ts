@@ -1,4 +1,4 @@
-import {IUserFavoriteDto} from "../DTO/UserFavoriteModels";
+import {IUserFavoriteDto} from "../entities/UserFavoriteModels";
 
 /**
  * Интерфейс книг пользователя

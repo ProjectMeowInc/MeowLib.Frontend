@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
-import {IBook} from "../../../../services/models/DTO/IBookDTO";
+import {IBookModel} from "../../../../services/models/entities/BookModels";
 import {RedirectService} from "../../../../services/RedirectService";
 import {BookService} from "../../../../services/BookService";
-import {IChapterDTO} from "../../../../services/models/DTO/IChapterDTO";
+import {IChapterDto} from "../../../../services/models/entities/ChapterModels";
 import {ChapterService} from "../../../../services/ChapterService";
 import Preloader from "../../../UI/Preloader/Preloader";
 import styles from "./bookPage.module.css"
@@ -12,8 +12,8 @@ import ChapterItem from "../../../UI/ChapterItem/ChapterItem";
 import SelectStatus from "./UI/SelectStatus/SelectStatus";
 
 const BookPage = () => {
-    const [book, setBook] = useState<IBook| null>(null)
-    const [chapters, setChapters] = useState<IChapterDTO[] | null>(null)
+    const [book, setBook] = useState<IBookModel| null>(null)
+    const [chapters, setChapters] = useState<IChapterDto[] | null>(null)
     const params = useParams()
     const id = params.bookId
 

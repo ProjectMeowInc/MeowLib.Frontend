@@ -1,9 +1,9 @@
 import React, {useContext} from 'react';
-import {IAuthorDTO} from "../../../../../../../services/models/DTO/IAuthorModels";
+import {IAuthorDto} from "../../../../../../../services/models/entities/AuthorModels";
 import styles from "./authorListItem.module.css";
 import {AuthorContext} from "../../../../../../../context/AuthorContext";
 
-const AuthorListItem = ({id, name}: IAuthorDTO) => {
+const AuthorListItem = ({id, name}: IAuthorDto) => {
 
     const {selectedAuthor, setSelectedAuthor} = useContext(AuthorContext)
 
