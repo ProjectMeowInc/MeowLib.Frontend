@@ -1,0 +1,32 @@
+.input {
+    border: none;
+    font-family: Ubuntu, serif;
+    width: 85%;
+    height: 45px;
+    background-color: #E8F0FE;
+    padding-left: 5px;
+    border-radius: 0 7px 7px 0;
+    font-size: 16px;
+}
+
+.input:focus {
+    outline: none;
+}
+
+.input_wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.input_wrapper img {
+    display: flex;
+    width: 45px;
+}
+
+.img {
+    justify-content: center;
+    width: 45px;
+    align-items: center;
+    background-color: greenyellow;
+    border-radius: 7px 0 0 7px;
+}
