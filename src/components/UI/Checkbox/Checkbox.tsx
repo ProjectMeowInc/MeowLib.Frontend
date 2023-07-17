@@ -21,6 +21,9 @@ const Checkbox = ({text, onClick}: ICheckboxProps) => {
                 className={isChecked ? styles.checkbox_checked : styles.checkbox}
                 onClick={() => ClickHandler(!isChecked)}
             >
+                <div className={styles.circle}>
+
+                </div>
             </div>
             {
                 text && (
