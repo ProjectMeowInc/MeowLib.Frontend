@@ -2,7 +2,7 @@ import React from 'react';
 import {IBookDto} from "../../../services/models/entities/BookModels";
 import styles from "./bookItem.module.css"
 
-const BookItem = ({id, name, description, imageName}:IBookDto) => {
+const BookItem = ({name, imageName}:IBookDto) => {
 
     return (
         <div className={styles.book}>
