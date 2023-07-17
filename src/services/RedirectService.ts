@@ -1,3 +1,5 @@
+import {redirect} from "react-router-dom";
+
 /**
  * Сервис для редиректа
  */
@@ -58,6 +60,12 @@ export class RedirectService {
         setTimeout(() => {
             window.history.back()
         }, 3000)
+    }
+
+    static delayRedirectToIndexPage(): void {
+        setTimeout(() => {
+            redirect("/")
+        })
     }
 
     /**
