@@ -2,10 +2,10 @@ import React from 'react';
 import {AlertService} from "../../../../../../../services/AlertService";
 import styles from "./booksListItem.module.css";
 import {Link} from "react-router-dom";
-import {IBookDTO} from "../../../../../../../services/models/DTO/IBookDTO";
+import {IBookDto} from "../../../../../../../services/models/entities/BookModels";
 import {BookService} from "../../../../../../../services/BookService";
 
-const BooksListItem = ({id, name}: IBookDTO) => {
+const BooksListItem = ({id, name}: IBookDto) => {
     function DeleteHandler () {
         BookService.deleteBookAsync(id).then(deleteBookResult => {
             if (deleteBookResult.tryCatchError()) {

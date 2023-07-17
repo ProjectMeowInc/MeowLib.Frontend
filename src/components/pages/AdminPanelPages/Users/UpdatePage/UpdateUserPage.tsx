@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import styles from "./updateUserPage.module.css";
-import {IUpdateUserInfoRequest} from "../../../../../services/models/requests/IUserRequests";
+import {IUpdateUserInfoRequest} from "../../../../../services/models/requests/UserRequests";
 import {useParams} from "react-router-dom";
 import {AlertService} from "../../../../../services/AlertService";
 import {UserService} from "../../../../../services/UserService";

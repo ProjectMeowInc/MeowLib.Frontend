@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 import {Link} from "react-router-dom";
 import styles from "./tagsPageListItem.module.css";
-import {ITagDTO} from "../../../../../../../services/models/DTO/ITagDTO";
+import {ITagDto} from "../../../../../../../services/models/entities/TagModels";
 import {TagsService} from "../../../../../../../services/TagsService";
 import {AlertService} from "../../../../../../../services/AlertService";
 import {RedirectService} from "../../../../../../../services/RedirectService";
 
-const TagsPageListItem = ({id, name}: ITagDTO) => {
+const TagsPageListItem = ({id, name}: ITagDto) => {
 
     const [tooltip, setTooltip] = useState<string>()
 

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import styles from "./updateChapterPage.module.css";
-import {IUpdateChapterTextRequest} from "../../../../../services/models/requests/IChapterRequests";
+import {IUpdateChapterTextRequest} from "../../../../../services/models/requests/ChapterRequests";
 import {ChapterService} from "../../../../../services/ChapterService";
 import {useParams} from "react-router-dom";
 import {RedirectService} from "../../../../../services/RedirectService";

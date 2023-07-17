@@ -19,7 +19,7 @@ const BurgerMenu = () => {
                 {
                     user
                     ? <div>
-                        <p className={styles.login}>{user.login}</p>
+                        <Link to={"user"} className={styles.login}>{user.login}</Link>
                         <p className={styles.list_item}>Избранное</p>
                     </div>
                     : <Link to={"/login"} className={styles.list_item}>Вход или регистрация</Link>

@@ -1,7 +1,7 @@
 /**
  * Интерфейс описывающий возвращаемое значение автора
  */
-export interface IAuthorDTO {
+export interface IAuthor {
     id: number,
     name: string
 }

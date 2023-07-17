@@ -1,0 +1,25 @@
+.login {
+    font-size: 40px;
+    font-weight: 600;
+}
+
+.role {
+    margin-left: 10px;
+    font-size: 20px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.user_data {
+    width: 17%;
+    justify-content: space-between;
+    display: flex;
+    align-items: end;
+}
+
+.avatar {
+    width: 70px;
+    height: 70px;
+    background-color: #6D5BFD;
+    border-radius: 7px;
+}

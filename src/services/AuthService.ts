@@ -1,8 +1,8 @@
-import {ILogInRequest, ISignInRequest} from "./models/requests/IUserRequests";
-import {ILoginResponse} from "./models/responses/IAuthResponses";
+import {ILogInRequest, ISignInRequest} from "./models/requests/UserRequests";
+import {ILoginResponse} from "./models/responses/AuthResponses";
 import {EmptyResult, Result} from "./result/Result";
 import HttpRequest from "./http/HttpRequest";
-import {ILoginDTO} from "./models/DTO/ILoginDTO";
+import {ILogin} from "./models/entities/LoginModels";
 
 /**
  * Сервис для авторизации пользователей
@@ -34,7 +34,7 @@ export class AuthService {
      * @param requestData Данные для авторизации.
      * @returns Возвращает ошибку или два токена
      */
-    static async authorizationAsync(requestData: ILogInRequest): Promise<Result<ILoginDTO>> {
+    static async authorizationAsync(requestData: ILogInRequest): Promise<Result<ILogin>> {
 
         const result = await new HttpRequest<ILoginResponse>()
             .withUrl("/authorization/log-in")

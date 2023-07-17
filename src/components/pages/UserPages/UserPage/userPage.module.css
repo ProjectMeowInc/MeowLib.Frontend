@@ -1,0 +1,13 @@
+.wrapper {
+    padding-top: 150px;
+    width: 85%;
+    margin: 0 auto;
+    font-family: Raleway, serif;
+}
+
+.page {
+    margin-top: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}

@@ -1,10 +1,10 @@
-import {ITagDTO} from "../DTO/ITagDTO";
+import {ITagDto} from "../entities/TagModels";
 
 /**
  * Интерфейс для получения всех тэгов
  */
-export interface IGetTagsResponse {
-    data: ITagDTO[]
+export interface GetTagsResponse {
+    data: ITagDto[]
 }
 
 /**

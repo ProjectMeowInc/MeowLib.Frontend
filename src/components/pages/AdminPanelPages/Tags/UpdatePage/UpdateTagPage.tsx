@@ -4,12 +4,12 @@ import {TagsService} from "../../../../../services/TagsService";
 import {useParams} from "react-router-dom";
 import {AlertService} from "../../../../../services/AlertService";
 import Preloader from "../../../../UI/Preloader/Preloader";
-import {ITagDTO} from "../../../../../services/models/DTO/ITagDTO";
+import {ITagDto} from "../../../../../services/models/entities/TagModels";
 import {RedirectService} from "../../../../../services/RedirectService";
 
 const UpdateTagPage = () => {
 
-    const [tagData, setTagData] = useState<ITagDTO | null>(null)
+    const [tagData, setTagData] = useState<ITagDto | null>(null)
     const params = useParams()
 
     useEffect(() => {
@@ -48,7 +48,7 @@ const UpdateTagPage = () => {
         return RedirectService.delayRedirectToPrevPage()
     }
 
-    function UpdateInformationHandler(updateTagData: ITagDTO) {
+    function UpdateInformationHandler(updateTagData: ITagDto) {
 
         if (tagData !== null && tagData.id !== undefined) {
             setTagData({...tagData, name: updateTagData.name, description: updateTagData.description})

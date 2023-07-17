@@ -2,13 +2,13 @@ import React, {useEffect, useState} from 'react';
 import styles from "./tagsPage.module.css"
 import Preloader from "../../../../UI/Preloader/Preloader";
 import TagsPageListItem from "./UI/TagsPageListItem/TagsPageListItem";
-import {ITagDTO} from "../../../../../services/models/DTO/ITagDTO";
+import {ITagDto} from "../../../../../services/models/entities/TagModels";
 import {TagsService} from "../../../../../services/TagsService";
 import {Link} from "react-router-dom";
 
 const TagsPage = () => {
-    const [tagList, setTagList] = useState<ITagDTO[]>([])
-    const [displayTagList, setDisplayTagList] = useState<ITagDTO[] | null>(null)
+    const [tagList, setTagList] = useState<ITagDto[]>([])
+    const [displayTagList, setDisplayTagList] = useState<ITagDto[] | null>(null)
 
     useEffect(() => {
         TagsService.getAllTagsAsync().then(getTagsResult => {

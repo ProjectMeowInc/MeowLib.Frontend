@@ -1,9 +1,8 @@
-import {IBook, IBookDTO} from "./models/DTO/IBookDTO";
-import {IBooksResponse} from "./models/responses/IBookResponse";
-import {ICreateBookRequest, IUpdateBookRequest, IUpdateBookTagsRequest} from "./models/requests/IBookRequests";
+import {IBook, IBookDto} from "./models/entities/BookModels";
+import {IBooksResponse} from "./models/responses/BookResponse";
+import {ICreateBookRequest, IUpdateBookRequest, IUpdateBookTagsRequest} from "./models/requests/BookRequests";
 import {EmptyResult, Result} from "./result/Result";
 import HttpRequest from "./http/HttpRequest";
-import {UserBookStatus} from "./models/UserBookStatus";
 
 /**
  * Сервис для работы с книгами
@@ -14,7 +13,7 @@ export class BookService {
      * Метод для получения всех книг
      * @return массив из книг или IError
      */
-    static async getBooksAsync(): Promise<Result<IBookDTO[]>> {
+    static async getBooksAsync(): Promise<Result<IBookDto[]>> {
         const result = await HttpRequest.create<IBooksResponse>()
             .withUrl("/books")
             .sendAsync()
@@ -175,25 +174,6 @@ export class BookService {
         if (result.hasError()) {
             const error = result.getError()
             return EmptyResult.withError(error)
-        }
-
-        return EmptyResult.ok()
-    }
-
-    /**
-     * Метод для добавления книги в избранное
-     * @param bookId id книги
-     * @param status статус книги
-     */
-    static async addStatusToBookAsync(bookId: number, status: UserBookStatus): Promise<EmptyResult> {
-        const result = await new HttpRequest<void>()
-            .withUrl("/users/favorite")
-            .withBody({bookId: bookId, status: status})
-            .withAuthorization()
-            .sendAsync()
-
-        if (result.hasError()) {
-            return EmptyResult.withError(result.getError())
         }
 
         return EmptyResult.ok()

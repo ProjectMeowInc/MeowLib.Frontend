@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext} from 'react';
 import styles from "./settings.module.css"
 import {SettingsContext} from "../../../../../../context/SettingsContext";
 import Button from "../../../../../UI/Button/Button";
@@ -8,7 +8,7 @@ import {AlertService} from "../../../../../../services/AlertService";
 
 const Settings = () => {
 
-    const {fontSize, setFontSize, lineHeight, setLineHeight, settings} = useContext(SettingsContext)
+    const {fontSize, setFontSize, lineHeight, setLineHeight} = useContext(SettingsContext)
     const params = useParams()
 
     async function AddBookMarkHandler() {

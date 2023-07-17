@@ -1,5 +1,5 @@
-import {IAuthorDTO} from "./models/DTO/IAuthorModels";
-import {ICreateAuthorRequest, ISearchAuthorRequest} from "./models/requests/IAuthorRequests";
+import {IAuthor} from "./models/entities/AuthorModels";
+import {ICreateAuthorRequest, ISearchAuthorRequest} from "./models/requests/AuthorRequests";
 import {EmptyResult, Result} from "./result/Result";
 import HttpRequest from "./http/HttpRequest";
 
@@ -12,9 +12,9 @@ export class AuthorServices {
      * Метод для получения списка авторов
      * @returns Возвращает массив объектов типа IAuthorDTO
      */
-    static async getAuthorsAsync(): Promise<Result<IAuthorDTO[]>> {
+    static async getAuthorsAsync(): Promise<Result<IAuthor[]>> {
 
-        const result = await new HttpRequest<IAuthorDTO[]>()
+        const result = await new HttpRequest<IAuthor[]>()
             .withUrl("/authors")
             .withGetMethod()
             .sendAsync()
@@ -34,9 +34,9 @@ export class AuthorServices {
      * @param id автора
      * @returns данные типа IAuthorDTO или ошибку типа IError
      */
-    static async getAuthorAsync(id: number): Promise<Result<IAuthorDTO>> {
+    static async getAuthorAsync(id: number): Promise<Result<IAuthor>> {
 
-        const result = await new HttpRequest<IAuthorDTO>()
+        const result = await new HttpRequest<IAuthor>()
             .withUrl(`/authors/${id}`)
             .withGetMethod()
             .sendAsync()
@@ -125,7 +125,7 @@ export class AuthorServices {
      * @param data имя / часть имени автора
      * @returns Массив из IAuthorDTO или ошибку в формате IError
      */
-    static async searchAuthorWithParamsAsync(data: ISearchAuthorRequest): Promise<Result<IAuthorDTO[]>> {
+    static async searchAuthorWithParamsAsync(data: ISearchAuthorRequest): Promise<Result<IAuthor[]>> {
         const request = HttpRequest.create<any>()
             .withUrl("/authors/get-with-params")
             .withBody(data)

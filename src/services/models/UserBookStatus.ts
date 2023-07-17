@@ -1,1 +1,1 @@
-export type UserBookStatus = "InPlans" | "ReadingNow" | "Favorite" | "Read"
+export type UserBookStatus = "InPlans" | "ReadingNow" | "Favourite" | "Read"

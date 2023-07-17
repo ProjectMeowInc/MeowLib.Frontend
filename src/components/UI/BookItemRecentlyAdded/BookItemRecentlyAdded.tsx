@@ -1,8 +1,8 @@
 import React from 'react';
-import {IBookDTO} from "../../../services/models/DTO/IBookDTO";
+import {IBookDto} from "../../../services/models/entities/BookModels";
 import styles from "./bookItemRecentlyAdded.module.css"
 
-const BookItemRecentlyAdded = ({id, name, description}: IBookDTO) => {
+const BookItemRecentlyAdded = ({name, description}: IBookDto) => {
     return (
         <div className={styles.book}>
             <p className={styles.caption}>{name}</p>

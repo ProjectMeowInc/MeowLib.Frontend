@@ -1,9 +1,9 @@
 import React from 'react';
 import styles from './tagList.module.css';
-import {IGetTagsResponse} from "../../../../../../../services/models/responses/IGetTagsResponse";
+import {GetTagsResponse} from "../../../../../../../services/models/responses/GetTagsResponse";
 import TagListItem from "../TagListItem/TagListItem";
 
-const TagList = ({data}: IGetTagsResponse) => {
+const TagList = ({data}: GetTagsResponse) => {
 
     if (data === null) {
         return (

@@ -3,7 +3,7 @@ import styles from "./createAuthorPage.module.css"
 import {AlertService} from "../../../../../services/AlertService";
 import {TokenService} from "../../../../../services/TokenService";
 import {AuthorServices} from "../../../../../services/AuthorServices";
-import {ICreateAuthorRequest} from "../../../../../services/models/requests/IAuthorRequests";
+import {ICreateAuthorRequest} from "../../../../../services/models/requests/AuthorRequests";
 import {RedirectService} from "../../../../../services/RedirectService";
 
 const CreateAuthorPage = () => {

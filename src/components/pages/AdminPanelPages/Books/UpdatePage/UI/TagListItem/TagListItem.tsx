@@ -1,9 +1,9 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {ITagDTO} from "../../../../../../../services/models/DTO/ITagDTO";
+import {ITagDto} from "../../../../../../../services/models/entities/TagModels";
 import styles from "./tagListItem.module.css";
 import {TagsContext} from "../../../../../../../context/TagsContext";
 
-const TagListItem = ({id, name}: ITagDTO) => {
+const TagListItem = ({id, name}: ITagDto) => {
 
     const [isChecked, setIsChecked] = useState<boolean>(false)
     const {setSelectedTags, checkTagIsSelected} = useContext(TagsContext)

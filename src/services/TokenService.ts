@@ -1,9 +1,9 @@
 import jwtDecode from "jwt-decode";
 import Cookies from "js-cookie";
 import {ErrorWithAction} from "./error/IError";
-import {IAccessTokenData} from "./models/DTO/ITokenModels";
+import {IAccessTokenData} from "./models/entities/TokenModels";
 import {Result} from "./result/Result";
-import {ILoginDTO} from "./models/DTO/ILoginDTO";
+import {ILogin} from "./models/entities/LoginModels";
 import {UserRoles} from "./models/UserRoles";
 import HttpRequest from "./http/HttpRequest";
 
@@ -47,7 +47,7 @@ export class TokenService {
      * Метод для обновления access и refresh токена
      * @returns ILoginResponse или IError
      */
-    static async updateAuthAsync(): Promise<Result<ILoginDTO>> {
+    static async updateAuthAsync(): Promise<Result<ILogin>> {
 
         const refreshToken = this.getRefreshToken()
 
@@ -56,7 +56,7 @@ export class TokenService {
             return Result.withError(error)
         }
 
-        const result = await new HttpRequest<ILoginDTO>()
+        const result = await new HttpRequest<ILogin>()
             .withUrl("/authorization/update-auth")
             .withPostMethod()
             .withBody({refreshToken: refreshToken})

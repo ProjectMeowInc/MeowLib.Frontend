@@ -1,21 +1,21 @@
-import {IAuthorDTO} from "../DTO/IAuthorModels";
-import {ITag} from "../DTO/ITagDTO";
-import {IBookDTO} from "../DTO/IBookDTO";
+import {IAuthor} from "../entities/AuthorModels";
+import {ITagModel} from "../entities/TagModels";
+import {IBookDto} from "../entities/BookModels";
 
 /**
  * Интерфейс описывающий возвращаемое занчение книги
  */
-interface IBookResponse {
+interface BookResponse {
     id: number
     name: string
     description: string
-    author: IAuthorDTO,
-    tags: ITag[]
+    author: IAuthor,
+    tags: ITagModel[]
 }
 
 /**
  * Интерфейс описывающий возвращаемое значение книг
  */
 export interface IBooksResponse {
-    items: IBookDTO[]
+    items: IBookDto[]
 }

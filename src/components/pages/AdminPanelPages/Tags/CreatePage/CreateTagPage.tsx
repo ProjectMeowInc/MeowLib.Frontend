@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import styles from "./createTagPage.module.css"
 import {ErrorService} from "../../../../../services/ErrorService";
 import {TagsService} from "../../../../../services/TagsService";
-import {ICreateTagRequest} from "../../../../../services/models/requests/ITagRequests";
+import {ICreateTagRequest} from "../../../../../services/models/requests/TagRequests";
 import {AlertService} from "../../../../../services/AlertService";
 import {RedirectService} from "../../../../../services/RedirectService";
 

@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import styles from "./libraryPage.module.css";
 import SearchInput from "../../../UI/SearchInput/SearchInput";
-import {IBookDTO} from "../../../../services/models/DTO/IBookDTO";
+import {IBookDto} from "../../../../services/models/entities/BookModels";
 import {BookService} from "../../../../services/BookService";
 import LibraryBookItem from "../../../UI/LibraryBookItem/LibraryBookItem";
 
 const LibraryPage = () => {
 
-    const [books, setBooks] = useState<IBookDTO[] | null>(null)
+    const [books, setBooks] = useState<IBookDto[] | null>(null)
 
     useEffect(() => {
         BookService.getBooksAsync().then(getBooksResult => {
