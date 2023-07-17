@@ -4,7 +4,7 @@ import {ICreateBookRequest, IUpdateBookRequest, IUpdateBookTagsRequest} from "./
 import {EmptyResult, Result} from "./result/Result";
 import HttpRequest from "./http/HttpRequest";
 import {UserBookStatus} from "./models/UserBookStatus";
-import {IFavoriteBookDTO} from "./models/DTO/IFavoriteBookDTO";
+import {IUserBooksStatusDTO} from "./models/DTO/IUserBooksStatusDTO";
 import {IGetBooksStatusResponse} from "./models/responses/IGetBooksStatusResponse";
 
 /**
@@ -205,7 +205,7 @@ export class BookService {
     /**
      * Метод для получения книг пользователя
      */
-    static async getBooksStatusAsync(): Promise<Result<IFavoriteBookDTO[]>> {
+    static async getBooksStatusAsync(): Promise<Result<IUserBooksStatusDTO[]>> {
         const result = await new HttpRequest<IGetBooksStatusResponse>()
             .withUrl("/users/favorite")
             .withGetMethod()
