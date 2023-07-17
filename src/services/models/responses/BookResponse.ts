@@ -5,7 +5,7 @@ import {IBookDTO} from "../DTO/IBookDTO";
 /**
  * Интерфейс описывающий возвращаемое занчение книги
  */
-interface IBookResponse {
+interface BookResponse {
     id: number
     name: string
     description: string

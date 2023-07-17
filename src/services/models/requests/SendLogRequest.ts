@@ -1,7 +1,7 @@
 /**
  * Интерфейс описывающий тело запроса для логирования в тг
  */
-export interface ISendLogRequest {
+export interface SendLogRequest {
     errorLog: {
         errorModule: string
         message: string
