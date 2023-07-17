@@ -4,6 +4,8 @@ import {ICreateBookRequest, IUpdateBookRequest, IUpdateBookTagsRequest} from "./
 import {EmptyResult, Result} from "./result/Result";
 import HttpRequest from "./http/HttpRequest";
 import {UserBookStatus} from "./models/UserBookStatus";
+import {IFavoriteBookDTO} from "./models/DTO/IFavoriteBookDTO";
+import {IGetBooksStatusResponse} from "./models/responses/IGetBooksStatusResponse";
 
 /**
  * Сервис для работы с книгами
@@ -189,6 +191,7 @@ export class BookService {
         const result = await new HttpRequest<void>()
             .withUrl("/users/favorite")
             .withBody({bookId: bookId, status: status})
+            .withPostMethod()
             .withAuthorization()
             .sendAsync()
 
@@ -197,5 +200,22 @@ export class BookService {
         }
 
         return EmptyResult.ok()
+    }
+
+    /**
+     * Метод для получения книг пользователя
+     */
+    static async getBooksStatusAsync(): Promise<Result<IFavoriteBookDTO[]>> {
+        const result = await new HttpRequest<IGetBooksStatusResponse>()
+            .withUrl("/users/favorite")
+            .withGetMethod()
+            .withAuthorization()
+            .sendAsync()
+
+        if (result.hasError()) {
+            return Result.withError(result.getError())
+        }
+
+        return Result.ok(result.unwrap().items)
     }
 }
