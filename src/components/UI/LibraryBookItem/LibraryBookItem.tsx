@@ -6,7 +6,7 @@ import {Link} from "react-router-dom";
 const LibraryBookItem = ({id, name, imageName}: IBookDTO) => {
 
     return (
-        <Link to={`${id}`} className={styles.book}>
+        <Link to={`/books/${id}`} className={styles.book}>
             {
                 imageName !== null
                     ? <div style={{backgroundImage: `url(https://localhost:7007/api/images/book/${imageName})`}} className={styles.img}></div>
