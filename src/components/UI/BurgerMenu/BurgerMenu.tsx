@@ -2,6 +2,8 @@ import React, {useContext, useState} from 'react';
 import styles from "./burgerMenu.module.css"
 import {Link} from "react-router-dom";
 import {AuthorizationContext} from "../../../context/AuthorizationContext";
+import BurgerMenuButton from "./UI/BurgerMenuButton/BurgerMenuButton";
+import BurgerMenuItem from "./UI/BurgerMenuItem/BurgerMenuItem";
 
 const BurgerMenu = () => {
 
@@ -10,26 +12,24 @@ const BurgerMenu = () => {
 
     return (
         <div className={styles.burger_menu} onClick={() => setIsOpen(!isOpen)}>
-            <div className={styles.btn}>
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+
+            <BurgerMenuButton/>
+
             <div className={isOpen ? styles.menu_active : styles.menu}>
                 {
                     user
                     ? <div>
-                        <Link to={"user"} className={styles.login}>{user.login}</Link>
-                        <p className={styles.list_item}>Избранное</p>
+                        <BurgerMenuItem text={user.login} link={"user"}/>
                     </div>
-                    : <Link to={"/login"} className={styles.list_item}>Вход или регистрация</Link>
+                    : <BurgerMenuItem text={"Вход или регистрация"} link={"/login"}/>
 
                 }
-                <Link to={"/books"} className={styles.list_item}>Библиотека</Link>
+
+                <BurgerMenuItem text={"Библиотека"} link={"/books"}/>
 
                 {
                     user && user.hasAdminAccess() &&
-                        <Link to={"/admin"} className={styles.list_item}>Админ панель</Link>
+                        <BurgerMenuItem text={"Админ панель"} link={"/admin"}/>
                 }
 
             </div>
