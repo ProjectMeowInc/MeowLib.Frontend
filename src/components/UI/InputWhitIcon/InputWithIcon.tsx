@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import classes from "./inputWithIcon.module.css"
 
-interface IInputInputWithIconProps {
+interface IInputWithIconProps {
     text?: string
     isSilentInput?: boolean,
     validateFunction?: (value: string) => boolean
@@ -15,7 +15,7 @@ interface IInputInputWithIconProps {
     }
 }
 
-const InputWithIcon = ({isSilentInput, imageName, validateFunction, displayError, placeholder, onChange, styles}: IInputInputWithIconProps) => {
+const InputWithIcon = ({isSilentInput, imageName, validateFunction, displayError, placeholder, onChange, styles}: IInputWithIconProps) => {
 
     const [input, setInput] = useState<string>("")
     const [error, setError] = useState<string | null>(null)
