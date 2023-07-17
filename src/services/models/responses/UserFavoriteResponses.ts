@@ -3,6 +3,6 @@ import {IUserBooksStatusDTO} from "../DTO/IUserBooksStatusDTO";
 /**
  * Интерфейс книг пользователя
  */
-export interface IGetBooksStatusResponse {
+export interface IGetUserFavoriteResponse {
     items: IUserBooksStatusDTO[]
 }
