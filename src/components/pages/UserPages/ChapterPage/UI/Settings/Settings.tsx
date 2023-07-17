@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext} from 'react';
 import styles from "./settings.module.css"
 import {SettingsContext} from "../../../../../../context/SettingsContext";
 import Button from "../../../../../UI/Button/Button";
