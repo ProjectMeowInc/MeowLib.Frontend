@@ -1,8 +1,17 @@
-import {IUserFavoriteDto} from "../entities/UserFavoriteModels";
+import {UserBookStatus} from "../UserBookStatus";
+
 
 /**
- * Интерфейс книг пользователя
+ * Ответ на получение списка книг пользователя
  */
 export interface IGetUserFavoriteResponse {
-    items: IUserFavoriteDto[]
+    items: {
+        status: UserBookStatus
+        books: {
+            id: number
+            name: string
+            description: string
+            imageName: string
+        }[]
+    }[]
 }
