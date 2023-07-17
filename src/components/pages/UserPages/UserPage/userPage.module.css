@@ -1,0 +1,47 @@
+.wrapper {
+    padding-top: 150px;
+    width: 70%;
+    margin: 0 auto;
+    font-family: Raleway, serif;
+}
+
+.login {
+    font-size: 40px;
+    font-weight: 600;
+}
+.role {
+    margin-left: 10px;
+    font-size: 20px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.user_data {
+    display: flex;
+    align-items: end;
+}
+
+.status_block {
+    margin-top: 50px;
+    width: 35%;
+    display: flex;
+    justify-content: space-evenly;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.status_active {
+    font-weight: 600;
+    transition: .2s all;
+}
+
+.status {
+    font-weight: 400;
+    transition: .2s all;
+}
+
+.books {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
