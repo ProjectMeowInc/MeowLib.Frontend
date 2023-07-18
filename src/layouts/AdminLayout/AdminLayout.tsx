@@ -1,11 +1,11 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import styles from "./adminLayout.module.css";
 import {Outlet} from "react-router-dom";
 import {RedirectService} from "../../services/RedirectService";
-import {AuthorizationContext} from "../../context/AuthorizationContext";
+import {useAuthorization} from "../../hooks/useAuthorization";
 
 const AdminLayout = () => {
-    const {user} = useContext(AuthorizationContext)
+    const {user} = useAuthorization()
 
     if (user && !user.hasAdminAccess()) {
         RedirectService.redirectToLogin()

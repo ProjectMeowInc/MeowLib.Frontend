@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link, useParams} from "react-router-dom";
 import Preloader from "../../../../UI/Preloader/Preloader";
 import styles from "./updateBooksPage.module.css";
@@ -9,14 +9,14 @@ import {AlertService} from "../../../../../services/AlertService";
 import ChapterListItem from "./UI/ChapterListItem/ChapterListItem";
 import {IChapterDto} from "../../../../../services/models/entities/ChapterModels";
 import TagList from "./UI/TagList/TagList";
-import {TagsContext} from "../../../../../context/TagsContext";
 import AuthorList from "./UI/AuthorList/AuthorList";
 import {IAuthor} from "../../../../../services/models/entities/AuthorModels";
-import {AuthorContext} from "../../../../../context/AuthorContext";
 import {TagsService} from "../../../../../services/TagsService";
 import {ITagDto} from "../../../../../services/models/entities/TagModels";
 import {AuthorServices} from "../../../../../services/AuthorServices";
 import {ChapterService} from "../../../../../services/ChapterService";
+import {useTags} from "../../../../../hooks/useTags";
+import {useAuthor} from "../../../../../hooks/useAuthor";
 
 const UpdateBooksPage = () => {
     const [bookData, setBookData] = useState<IUpdateBookRequest | null>(null)
@@ -25,8 +25,8 @@ const UpdateBooksPage = () => {
     const [authorList, setAuthorList] = useState<IAuthor[] | null>(null)
     const [image, setImage] = useState<FormData | null>(null)
     const params = useParams()
-    const {selectedTags, setSelectedTags} = useContext(TagsContext)
-    const {selectedAuthor, setSelectedAuthor} = useContext(AuthorContext)
+    const {selectedTags, setSelectedTags} = useTags()
+    const {selectedAuthor, setSelectedAuthor} = useAuthor()
 
     useEffect(() => {
 
@@ -155,7 +155,7 @@ const UpdateBooksPage = () => {
                         onChange={(ctx) => UpdateInformationHandler({...bookData, name: ctx.target.value})}
                         className={styles.input}
                         type="text"
-                        placeholder={bookData.name ?? "Введите название тэга"}/>
+                        placeholder={bookData.name ?? "Введите название тега"}/>
                     <textarea
                         onChange={(ctx) => UpdateInformationHandler({...bookData, description: ctx.target.value})}
                         className={styles.textarea}

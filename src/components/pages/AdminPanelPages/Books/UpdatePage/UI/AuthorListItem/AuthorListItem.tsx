@@ -1,11 +1,11 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {IAuthor} from "../../../../../../../services/models/entities/AuthorModels";
 import styles from "./authorListItem.module.css";
-import {AuthorContext} from "../../../../../../../context/AuthorContext";
+import {useAuthor} from "../../../../../../../hooks/useAuthor";
 
 const AuthorListItem = ({id, name}: IAuthor) => {
 
-    const {selectedAuthor, setSelectedAuthor} = useContext(AuthorContext)
+    const {selectedAuthor, setSelectedAuthor} = useAuthor()
 
     function SelectHandler() {
         if (selectedAuthor === id) {

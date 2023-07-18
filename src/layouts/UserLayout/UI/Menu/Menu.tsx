@@ -1,11 +1,11 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import MenuItem from "../MenuItem/MenuItem";
 import styles from "./menu.module.css"
-import {AuthorizationContext} from "../../../../context/AuthorizationContext";
+import {useAuthorization} from "../../../../hooks/useAuthorization";
 
 const Menu = () => {
 
-    const {user} = useContext(AuthorizationContext)
+    const {user} = useAuthorization()
 
     return (
         <div className={styles.menu}>

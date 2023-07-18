@@ -1,14 +1,14 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import styles from "./settings.module.css"
-import {SettingsContext} from "../../../../../../context/SettingsContext";
 import Button from "../../../../../UI/Button/Button";
 import {BookMarkService} from "../../../../../../services/BookMarkService";
 import {useParams} from "react-router-dom";
 import {AlertService} from "../../../../../../services/AlertService";
+import {useSettings} from "../../../../../../hooks/useSettings";
 
 const Settings = () => {
 
-    const {fontSize, setFontSize, lineHeight, setLineHeight} = useContext(SettingsContext)
+    const {fontSize, setFontSize, lineHeight, setLineHeight} = useSettings()
     const params = useParams()
 
     async function AddBookMarkHandler() {

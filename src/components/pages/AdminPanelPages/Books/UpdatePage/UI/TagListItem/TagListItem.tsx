@@ -1,12 +1,12 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {ITagDto} from "../../../../../../../services/models/entities/TagModels";
 import styles from "./tagListItem.module.css";
-import {TagsContext} from "../../../../../../../context/TagsContext";
+import {useTags} from "../../../../../../../hooks/useTags";
 
 const TagListItem = ({id, name}: ITagDto) => {
 
     const [isChecked, setIsChecked] = useState<boolean>(false)
-    const {setSelectedTags, checkTagIsSelected} = useContext(TagsContext)
+    const {setSelectedTags, checkTagIsSelected} = useTags()
 
     useEffect(() => {
         setIsChecked(checkTagIsSelected(id))
