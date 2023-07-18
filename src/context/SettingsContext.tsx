@@ -1,5 +1,5 @@
 import {createContext, Dispatch, ReactNode, SetStateAction, useEffect, useState} from "react";
-import IUserSettings from "../services/settings/UserSettings";
+import IUserSettings, {Themes} from "../services/settings/UserSettings";
 import SettingsService from "../services/SettingsService";
 
 export const SettingsContext = createContext<ISettingsContext>({} as  ISettingsContext)
@@ -14,6 +14,8 @@ interface ISettingsContext {
     setFontSize: Dispatch<SetStateAction<number>>
     lineHeight: number
     setLineHeight: Dispatch<SetStateAction<number>>
+    theme: Themes
+    setThemes: Dispatch<SetStateAction<Themes>>
 }
 
 export function SettingsContextProvider({children}: ISettingsContextProviderProps) {
@@ -22,19 +24,21 @@ export function SettingsContextProvider({children}: ISettingsContextProviderProp
 
     const [fontSize, setFontSize] = useState<number>(settings.reader.fontSize)
     const [lineHeight, setLineHeight] = useState<number>(settings.reader.lineHeight)
+    const [theme, setTheme] = useState<Themes>(settings.theme)
 
     useEffect(() => {
         SettingsService.updateUserSettings({
             ...settings,
+            theme: theme,
             reader: {
                 fontSize: fontSize,
                 lineHeight: lineHeight
             }
         })
-    }, [fontSize, lineHeight])
+    }, [fontSize, lineHeight, theme])
 
     return (
-        <SettingsContext.Provider value={{settings: settings, fontSize: fontSize, setFontSize: setFontSize, lineHeight: lineHeight, setLineHeight: setLineHeight}}>
+        <SettingsContext.Provider value={{settings: settings, fontSize: fontSize, setFontSize: setFontSize, lineHeight: lineHeight, setLineHeight: setLineHeight, theme: theme, setThemes: setTheme}}>
             {children}
         </SettingsContext.Provider>
     )

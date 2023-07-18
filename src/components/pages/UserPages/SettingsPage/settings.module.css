@@ -1,0 +1,5 @@
+.settings {
+    display: flex;
+    justify-content: space-around;
+    font-family: Ubuntu, serif;
+}

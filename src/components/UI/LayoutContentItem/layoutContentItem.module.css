@@ -1,9 +1,9 @@
 .content_item {
     padding: 50px;
-    height: 70vh;
     background-color: rgba(0, 0, 0, 0.05);
     border-radius: 20px;
     overflow: hidden;
     overflow-y: auto;
     background-color: white;
+    min-width: 300px;
 }

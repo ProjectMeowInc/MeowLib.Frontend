@@ -15,6 +15,7 @@ const Menu = () => {
                     <MenuItem text={"Админ панель"} path={"/admin"}/>
                 )
             }
+            <MenuItem text={"Настройки"} path={"/settings"}/>
         </div>
     );
 };

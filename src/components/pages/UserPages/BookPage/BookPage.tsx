@@ -7,9 +7,8 @@ import {IChapterDto} from "../../../../services/models/entities/ChapterModels";
 import {ChapterService} from "../../../../services/ChapterService";
 import Preloader from "../../../UI/Preloader/Preloader";
 import styles from "./bookPage.module.css"
-import TagItem from "../../../UI/TagItem/TagItem";
-import ChapterItem from "../../../UI/ChapterItem/ChapterItem";
-import SelectStatus from "./UI/SelectStatus/SelectStatus";
+import BookInfo from "./UI/BookInfo/BookInfo";
+import LayoutContentColumn from "../../../UI/LayoutContentColumn/LayoutContentColumn";
 
 const BookPage = () => {
     const [book, setBook] = useState<IBook| null>(null)
@@ -48,43 +47,7 @@ const BookPage = () => {
 
     return (
         <div className={styles.wrapper}>
-            <div className={styles.left}>
-                {
-                    book.imageUrl !== null
-                        ? <div className={styles.img} style={{backgroundImage: `url(https://localhost:7007/api/images/book/${book.imageUrl})`}}></div>
-                        : <div className={styles.img_not_found}>Нет изображения</div>
-                }
-
-                <SelectStatus bookId={parseInt(id)} currentlySelected={null}/>
-            </div>
-            <div className={styles.right}>
-                <h1>{book.name}</h1>
-
-                <p className={styles.author}>{book.author && book.author.name}</p>
-
-                <p className={styles.caption}>Описание</p>
-                <p className={styles.description}>{book.description}</p>
-
-                <div className={styles.tags}>
-                    {
-                        book.tags.map(tag => (
-                            <TagItem tagName={tag.name}/>
-                        ))
-                    }
-                </div>
-
-                <div className={styles.chapters}>
-                    {
-                        chapters && chapters.map(chapter => (
-                            <ChapterItem
-                                id={chapter.id}
-                                name={chapter.name}
-                                releaseDate={chapter.releaseDate}
-                            />
-                        ))
-                    }
-                </div>
-            </div>
+            <LayoutContentColumn elements={[<BookInfo book={book}/>]}/>
         </div>
     );
 };

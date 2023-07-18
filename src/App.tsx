@@ -23,6 +23,8 @@ import {AuthorContextProvider} from "./context/AuthorContext";
 import UserLayout from "./layouts/UserLayout/UserLayout";
 import LibraryPage from "./components/pages/UserPages/LibraryPage/LibraryPage";
 import BookPage from "./components/pages/UserPages/BookPage/BookPage";
+import SettingsPage from "./components/pages/UserPages/SettingsPage/SettingsPage";
+import LayoutContentColumn from "./components/UI/LayoutContentColumn/LayoutContentColumn";
 
 const App = () => {
   return (
@@ -63,9 +65,10 @@ const App = () => {
                     </Route>
                 </Route>
                 <Route path={"/"} element={<UserLayout/>}>
-                    <Route index element={<LibraryPage/>}/>
+                    <Route index element={<LayoutContentColumn elements={[<LibraryPage/>]}/> }/>
                     <Route path={"books/:bookId"} element={<BookPage/>}/>
                     <Route path={"favorites"}/>
+                    <Route path={"settings"} element={<SettingsPage/>}/>
                 </Route>
                 <Route path={"*"} element={<NotFoundPage/>}/>
             </Route>

@@ -11,7 +11,17 @@ export interface IGetUserFavoriteResponse {
             id: number
             name: string
             description: string
-            imageName: string
+            imageName: string | null
         }[]
     }[]
+}
+
+export interface IGetUserFavoriteByIdResponse {
+    status: UserBookStatus
+    book: {
+        id: number
+        name: string
+        description: string
+        imageName: string | null
+    }
 }
