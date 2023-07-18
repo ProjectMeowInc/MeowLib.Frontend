@@ -35,7 +35,7 @@ export function SettingsContextProvider({children}: ISettingsContextProviderProp
                 lineHeight: lineHeight
             }
         })
-    }, [fontSize, lineHeight])
+    }, [fontSize, lineHeight, theme])
 
     return (
         <SettingsContext.Provider value={{settings: settings, fontSize: fontSize, setFontSize: setFontSize, lineHeight: lineHeight, setLineHeight: setLineHeight, theme: theme, setThemes: setTheme}}>
