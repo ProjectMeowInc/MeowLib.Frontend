@@ -40,7 +40,7 @@ const BookPage = () => {
 
     }, [id])
 
-    if (book === null) {
+    if (!book || !id) {
         return (
             <Preloader/>
         )
@@ -55,7 +55,7 @@ const BookPage = () => {
                         : <div className={styles.img_not_found}>Нет изображения</div>
                 }
 
-                <SelectStatus/>
+                <SelectStatus bookId={parseInt(id)} currentlySelected={null}/>
             </div>
             <div className={styles.right}>
                 <h1>{book.name}</h1>
