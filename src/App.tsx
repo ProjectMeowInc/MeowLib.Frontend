@@ -21,11 +21,8 @@ import ChapterInfoPage from "./components/pages/AdminPanelPages/Chapters/Informa
 import {TagContextProvider} from "./context/TagsContext";
 import {AuthorContextProvider} from "./context/AuthorContext";
 import UserLayout from "./layouts/UserLayout/UserLayout";
-import MainPage from "./components/pages/UserPages/MainPage/MainPage";
 import LibraryPage from "./components/pages/UserPages/LibraryPage/LibraryPage";
 import BookPage from "./components/pages/UserPages/BookPage/BookPage";
-import ChapterPage from "./components/pages/UserPages/ChapterPage/ChapterPage";
-import UserPage from "./components/pages/UserPages/UserPage/UserPage";
 
 const App = () => {
   return (
@@ -66,15 +63,9 @@ const App = () => {
                     </Route>
                 </Route>
                 <Route path={"/"} element={<UserLayout/>}>
-                    <Route index element={<MainPage/>}/>
-                    <Route path={"/books"}>
-                        <Route index element={<LibraryPage/>}/>
-                        <Route path={":bookId"}>
-                            <Route index element={<BookPage/>}/>
-                            <Route path={"chapter/:chapterId"} element={<ChapterPage/>}/>
-                        </Route>
-                    </Route>
-                    <Route path={"user"} element={<UserPage/>}/>
+                    <Route index element={<LibraryPage/>}/>
+                    <Route path={"books/:bookId"} element={<BookPage/>}/>
+                    <Route path={"favorites"}/>
                 </Route>
                 <Route path={"*"} element={<NotFoundPage/>}/>
             </Route>
