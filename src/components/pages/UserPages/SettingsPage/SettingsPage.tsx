@@ -1,9 +1,9 @@
 import React from 'react';
 import styles from "./settings.module.css"
-import LayoutContentItem from "../../../UI/LayoutContentItem/LayoutContentItem";
 import ChangePassword from "./UI/ChangePassword/ChangePassword";
 import ChangeTheme from "./UI/ChangeTheme/ChangeTheme";
 import {useAuthorization} from "../../../../hooks/useAuthorization";
+import LayoutContentColumn from "../../../UI/LayoutContentColumn/LayoutContentColumn";
 
 const SettingsPage = () => {
 
@@ -11,15 +11,13 @@ const SettingsPage = () => {
 
     return (
         <div className={styles.settings}>
-            <LayoutContentItem>
-                {user && (
-                    <ChangePassword/>
-                )}
-            </LayoutContentItem>
+            {
+                user && (
+                    <LayoutContentColumn elements={[<ChangePassword/>]}/>
+                )
+            }
 
-            <LayoutContentItem>
-                <ChangeTheme/>
-            </LayoutContentItem>
+            <LayoutContentColumn elements={[<ChangeTheme/>]}/>
         </div>
 
     );

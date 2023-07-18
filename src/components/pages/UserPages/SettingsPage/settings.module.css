@@ -1,6 +1,5 @@
 .settings {
     display: flex;
-    justify-content: space-between;
-    width: 50%;
+    justify-content: space-around;
     font-family: Ubuntu, serif;
 }
