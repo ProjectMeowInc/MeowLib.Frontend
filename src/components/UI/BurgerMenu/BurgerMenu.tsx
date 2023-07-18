@@ -1,6 +1,5 @@
 import React, {useContext, useState} from 'react';
 import styles from "./burgerMenu.module.css"
-import {Link} from "react-router-dom";
 import {AuthorizationContext} from "../../../context/AuthorizationContext";
 import BurgerMenuButton from "./UI/BurgerMenuButton/BurgerMenuButton";
 import BurgerMenuItem from "./UI/BurgerMenuItem/BurgerMenuItem";
