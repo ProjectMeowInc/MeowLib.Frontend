@@ -1,22 +1,20 @@
 import React from 'react';
-import BurgerMenu from "../../components/UI/BurgerMenu/BurgerMenu";
 import styles from "./userLayout.module.css"
 import {Outlet} from "react-router-dom";
-import Footer from "../../components/UI/Footer/Footer";
+import StatusBar from "./UI/StatusBar/StatusBar";
+import Menu from "./UI/Menu/Menu";
 
 const UserLayout = () => {
     return (
         <div>
-            <div className={styles.block}>
-                <BurgerMenu/>
-                <img src="/img/LogoBlack.png" alt=""/>
-            </div>
+            <StatusBar/>
 
             <div className={styles.wrapper}>
-                <Outlet/>
+                <Menu/>
+                <div className={styles.outlet}>
+                    <Outlet/>
+                </div>
             </div>
-
-            <Footer/>
         </div>
     );
 };
