@@ -17,7 +17,7 @@ const ChangePassword = () => {
                 placeholder={"Введите новый пароль"}
                 isSilentInput={true}/>
             <Input
-                placeholder={"Повторите старый пароль"}
+                placeholder={"Повторите новый пароль"}
                 isSilentInput={true}/>
             <Button children={"Сменить"}/>
         </div>
