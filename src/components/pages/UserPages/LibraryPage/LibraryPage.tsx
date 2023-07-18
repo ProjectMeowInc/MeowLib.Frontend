@@ -23,7 +23,7 @@ const LibraryPage = () => {
     }, [])
 
     return (
-        <LayoutContentItem style={{width: 100}}>
+        <LayoutContentItem>
             <div className={styles.wrapper}>
                 <h1 className={styles.caption}>Библиотека ранобэ</h1>
 
