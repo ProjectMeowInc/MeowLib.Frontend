@@ -1,27 +1,21 @@
 import React, {useState} from 'react';
 import styles from "./select.module.css"
-import {UserBookStatus} from "../../../../../../services/models/UserBookStatus";
-import {useParams} from "react-router-dom";
+import {UserBookStatus, UserBookStatuses} from "../../../../../../services/models/UserBookStatus";
 import {AlertService} from "../../../../../../services/AlertService";
 import {UserFavoriteService} from "../../../../../../services/UserFavoriteService";
 
-const SelectStatus = () => {
-    const [isOpen, setIsOpen] = useState<boolean>(false)
-    const [status, setStatus] = useState<UserBookStatus | null>(null)
-    const params = useParams()
+interface ISelectStatusProps {
+    bookId: number
+    currentlySelected: UserBookStatus | null
+}
 
-    const id = params.bookId
+const SelectStatus = ({bookId, currentlySelected}: ISelectStatusProps) => {
+    const [isOpen, setIsOpen] = useState<boolean>(false)
+    const [status, setStatus] = useState<UserBookStatus | null>(currentlySelected)
 
     async function AddStatusHandler(status: UserBookStatus) {
-
-        if (id === undefined) {
-            return
-        }
-
-        setStatus(status)
-
         const addStatusResult = await UserFavoriteService.addToUserFavorite({
-            bookId: parseInt(id),
+            bookId,
             status
         })
 
@@ -29,17 +23,20 @@ const SelectStatus = () => {
             return
         }
 
+        setStatus(status)
+
         AlertService.successMessage("Книга была добавлена")
     }
 
     return (
         <div onClick={() => setIsOpen(!isOpen)} className={styles.select}>
-            <div className={styles.add}>{status ?? "Добавить в закладки"}</div>
+            <div className={styles.add}>{status ? UserFavoriteService.getDisplayStatusName(status) : "Добавить в закладки"}</div>
             <div className={isOpen ? styles.option_active : styles.option}>
-                <div onClick={() => AddStatusHandler("InPlans")}>В планах</div>
-                <div onClick={() => AddStatusHandler("ReadingNow")}>Читаю</div>
-                <div onClick={() => AddStatusHandler("Favourite")}>Избранное</div>
-                <div onClick={() => AddStatusHandler("Read")}>Прочитано</div>
+                {
+                    UserBookStatuses.map((status: UserBookStatus) => (
+                        <div onClick={() => AddStatusHandler(status)}>{UserFavoriteService.getDisplayStatusName(status)}</div>
+                    ))
+                }
             </div>
         </div>
     );

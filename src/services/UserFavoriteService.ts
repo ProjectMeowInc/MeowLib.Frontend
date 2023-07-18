@@ -3,6 +3,7 @@ import {ICreateUserFavoriteRequest} from "./models/requests/UserFavoriteRequests
 import HttpRequest from "./http/HttpRequest";
 import {IGetUserFavoriteResponse} from "./models/responses/UserFavoriteResponses";
 import {IUserFavorite} from "./models/entities/UserFavoriteModels";
+import {UserBookStatus} from "./models/UserBookStatus";
 
 /**
  * Метод добавляет книги в список пользователя.
@@ -35,8 +36,21 @@ export class UserFavoriteService {
             return Result.withError(result.getError())
         }
 
-
-
         return Result.ok(result.unwrap().items);
+    }
+
+    static getDisplayStatusName(status: UserBookStatus): string {
+        switch (status) {
+            case "Favourite":
+                return "Любимое"
+            case "InPlans":
+                return "В планах"
+            case "Read":
+                return "Прочитано"
+            case "ReadingNow":
+                return "Читаю"
+            default:
+                return "N/A"
+        }
     }
 }
