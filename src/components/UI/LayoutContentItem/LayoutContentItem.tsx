@@ -3,14 +3,12 @@ import styles from "./layoutContentItem.module.css"
 
 interface ILayoutContentItemProps {
     children: ReactNode
-    style?: {
-        width: number
-    }
+    removePadding?: boolean
 }
 
-const LayoutContentItem = ({children, style}: ILayoutContentItemProps) => {
+const LayoutContentItem = ({children, removePadding}: ILayoutContentItemProps) => {
     return (
-        <div className={styles.content_item} style={{width: `${style?.width}%`}}>
+        <div className={styles.content_item} style={{padding: removePadding ? 0 : 20}}>
             {children}
         </div>
     );

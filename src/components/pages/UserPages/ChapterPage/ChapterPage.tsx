@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import {IChapter} from "../../../../services/models/entities/ChapterModels";
 import {ChapterService} from "../../../../services/ChapterService";
@@ -6,12 +6,12 @@ import {RedirectService} from "../../../../services/RedirectService";
 import Preloader from "../../../UI/Preloader/Preloader";
 import styles from "./chapterPage.module.css";
 import Settings from "./UI/Settings/Settings";
-import {SettingsContext} from "../../../../context/SettingsContext";
+import {useSettings} from "../../../../hooks/useSettings";
 
 const ChapterPage = () => {
 
     const [chapter, setChapter] = useState<IChapter | null>(null)
-    const {settings} = useContext(SettingsContext)
+    const {settings} = useSettings()
     const params = useParams()
 
     const chapterId = params.chapterId

@@ -1,5 +1,6 @@
 .content_item {
-    padding: 20px;
+    padding: 50px;
+    height: 70vh;
     background-color: rgba(0, 0, 0, 0.05);
     border-radius: 20px;
     overflow: hidden;

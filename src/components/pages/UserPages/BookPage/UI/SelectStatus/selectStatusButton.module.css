@@ -1,0 +1,17 @@
+.wrapper {
+
+}
+
+.select_item_list {
+    display: none;
+    transition: all .7s;
+}
+
+.select_item_list_active {
+    transition: all .7s;
+    display: block;
+}
+
+.select_item_list_active > div {
+    margin-bottom: 10px;
+}
