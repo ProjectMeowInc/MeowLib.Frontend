@@ -1,6 +1,6 @@
 .wrapper {
     margin: 0 auto;
-    width: 75%;
+    width: 100%;
     font-family: Raleway, serif;
 }
 
@@ -12,7 +12,6 @@
 }
 
 .caption {
-    padding-top: 230px;
     font-size: 40px;
     font-style: normal;
     font-weight: 600;
