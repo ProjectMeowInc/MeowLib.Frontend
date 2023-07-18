@@ -1,15 +1,14 @@
 import React, {ReactNode} from 'react';
 import styles from "./layoutContentItem.module.css"
-import {Outlet} from "react-router-dom";
 
 interface ILayoutContentItemProps {
-    component: ReactNode
+    children: ReactNode
 }
 
-const LayoutContentItem = ({component}: ILayoutContentItemProps) => {
+const LayoutContentItem = ({children}: ILayoutContentItemProps) => {
     return (
         <div className={styles.content_item}>
-            {component}
+            {children}
         </div>
     );
 };
