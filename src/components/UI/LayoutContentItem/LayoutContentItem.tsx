@@ -3,11 +3,14 @@ import styles from "./layoutContentItem.module.css"
 
 interface ILayoutContentItemProps {
     children: ReactNode
+    style?: {
+        width: number
+    }
 }
 
-const LayoutContentItem = ({children}: ILayoutContentItemProps) => {
+const LayoutContentItem = ({children, style}: ILayoutContentItemProps) => {
     return (
-        <div className={styles.content_item}>
+        <div className={styles.content_item} style={{width: `${style?.width}%`}}>
             {children}
         </div>
     );
