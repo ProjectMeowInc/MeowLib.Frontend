@@ -4,6 +4,7 @@ import SearchInput from "../../../UI/SearchInput/SearchInput";
 import {IBookDto} from "../../../../services/models/entities/BookModels";
 import {BookService} from "../../../../services/BookService";
 import LibraryBookItem from "../../../UI/LibraryBookItem/LibraryBookItem";
+import LayoutContentItem from "../../../UI/LayoutContentItem/LayoutContentItem";
 
 const LibraryPage = () => {
 
@@ -22,27 +23,29 @@ const LibraryPage = () => {
     }, [])
 
     return (
-        <div className={styles.wrapper}>
-            <h1 className={styles.caption}>Библиотека ранобэ</h1>
+        <LayoutContentItem>
+            <div className={styles.wrapper}>
+                <h1 className={styles.caption}>Библиотека ранобэ</h1>
 
-            <div className={styles.search}>
-                <SearchInput placeholder={"Что ищем, семпай?"} type={"text"}/>
-                <img className={styles.send} src="/img/send.svg" alt=""/>
+                <div className={styles.search}>
+                    <SearchInput placeholder={"Что ищем, семпай?"} type={"text"}/>
+                    <img className={styles.send} src="/img/send.svg" alt=""/>
+                </div>
+                <div className={styles.books}>
+                    {
+                        books && books.map(book => (
+                            <LibraryBookItem
+                                key={book.id}
+                                id={book.id}
+                                name={book.name}
+                                description={book.description}
+                                imageName={book.imageName}
+                            />
+                        ))
+                    }
+                </div>
             </div>
-            <div className={styles.books}>
-                {
-                    books && books.map(book => (
-                        <LibraryBookItem
-                            key={book.id}
-                            id={book.id}
-                            name={book.name}
-                            description={book.description}
-                            imageName={book.imageName}
-                        />
-                    ))
-                }
-            </div>
-        </div>
+        </LayoutContentItem>
     );
 };
 
