@@ -1,15 +1,16 @@
 import React, {useState} from 'react';
-import styles from "./select.module.css"
+import styles from "./selectStatusButton.module.css"
 import {UserBookStatus, UserBookStatuses} from "../../../../../../services/models/UserBookStatus";
 import {AlertService} from "../../../../../../services/AlertService";
 import {UserFavoriteService} from "../../../../../../services/UserFavoriteService";
+import Button from "../../../../../UI/Button/Button";
 
 interface ISelectStatusProps {
     bookId: number
     currentlySelected: UserBookStatus | null
 }
 
-const SelectStatus = ({bookId, currentlySelected}: ISelectStatusProps) => {
+const SelectStatusButton = ({bookId, currentlySelected}: ISelectStatusProps) => {
     const [isOpen, setIsOpen] = useState<boolean>(false)
     const [status, setStatus] = useState<UserBookStatus | null>(currentlySelected)
 
@@ -29,12 +30,24 @@ const SelectStatus = ({bookId, currentlySelected}: ISelectStatusProps) => {
     }
 
     return (
-        <div onClick={() => setIsOpen(!isOpen)} className={styles.select}>
-            <div className={styles.add}>{status ? UserFavoriteService.getDisplayStatusName(status) : "Добавить в закладки"}</div>
-            <div className={isOpen ? styles.option_active : styles.option}>
+        <div className={styles.wrapper}>
+            <Button
+                onClick={() => setIsOpen(prev => !prev)}
+            >
+                {
+                    status ? UserFavoriteService.getDisplayStatusName(status) : "Добавить в закладки"
+                }
+            </Button>
+            <div
+                className={isOpen ? styles.select_item_list_active : styles.select_item_list}
+            >
                 {
                     UserBookStatuses.map((status: UserBookStatus) => (
-                        <div onClick={() => AddStatusHandler(status)}>{UserFavoriteService.getDisplayStatusName(status)}</div>
+                        <div
+                            onClick={() => AddStatusHandler(status)}
+                        >
+                            {UserFavoriteService.getDisplayStatusName(status)}
+                        </div>
                     ))
                 }
             </div>
@@ -42,4 +55,4 @@ const SelectStatus = ({bookId, currentlySelected}: ISelectStatusProps) => {
     );
 };
 
-export default SelectStatus;
+export default SelectStatusButton;

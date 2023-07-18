@@ -9,7 +9,7 @@ import Preloader from "../../../UI/Preloader/Preloader";
 import styles from "./bookPage.module.css"
 import TagItem from "../../../UI/TagItem/TagItem";
 import ChapterItem from "../../../UI/ChapterItem/ChapterItem";
-import SelectStatus from "./UI/SelectStatus/SelectStatus";
+import BookInfo from "./UI/BookInfo/BookInfo";
 
 const BookPage = () => {
     const [book, setBook] = useState<IBook| null>(null)
@@ -48,15 +48,7 @@ const BookPage = () => {
 
     return (
         <div className={styles.wrapper}>
-            <div className={styles.left}>
-                {
-                    book.imageUrl !== null
-                        ? <div className={styles.img} style={{backgroundImage: `url(https://localhost:7007/api/images/book/${book.imageUrl})`}}></div>
-                        : <div className={styles.img_not_found}>Нет изображения</div>
-                }
-
-                <SelectStatus bookId={parseInt(id)} currentlySelected={null}/>
-            </div>
+            <BookInfo book={book}/>
             <div className={styles.right}>
                 <h1>{book.name}</h1>
 

@@ -3,11 +3,11 @@ import styles from "./libraryList.module.css";
 import LibraryBookItem from "../../../../../UI/LibraryBookItem/LibraryBookItem";
 import {UserBookStatus} from "../../../../../../services/models/UserBookStatus";
 import {UserFavoriteService} from "../../../../../../services/UserFavoriteService";
-import {IUserFavorite} from "../../../../../../services/models/entities/UserFavoriteModels";
+import {IUserFavorites} from "../../../../../../services/models/entities/UserFavoriteModels";
 
 const LibraryList = () => {
 
-    const [userBooks, setUserBooks] = useState<IUserFavorite[] | null>(null)
+    const [userBooks, setUserBooks] = useState<IUserFavorites[] | null>(null)
     const [bookStatus, setBookStatus] = useState<UserBookStatus>("InPlans")
 
     useEffect(() => {
