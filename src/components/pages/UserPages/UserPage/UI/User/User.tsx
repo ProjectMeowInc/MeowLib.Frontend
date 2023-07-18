@@ -1,11 +1,11 @@
-import React, {useContext} from 'react';
-import {AuthorizationContext} from "../../../../../../context/AuthorizationContext";
+import React from 'react';
 import Preloader from "../../../../../UI/Preloader/Preloader";
 import styles from "./user.module.css"
+import {useAuthorization} from "../../../../../../hooks/useAuthorization";
 
 const User = () => {
 
-    const {user} = useContext(AuthorizationContext)
+    const {user} = useAuthorization()
 
     if (user === null) {
         return (

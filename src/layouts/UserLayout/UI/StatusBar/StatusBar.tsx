@@ -1,11 +1,11 @@
-import React, {useContext} from 'react';
-import {AuthorizationContext} from "../../../../context/AuthorizationContext";
+import React from 'react';
 import styles from "./statusBar.module.css"
 import {Link} from "react-router-dom";
+import {useAuthorization} from "../../../../hooks/useAuthorization";
 
 const StatusBar = () => {
 
-    const {user} = useContext(AuthorizationContext)
+    const {user} = useAuthorization()
 
     return (
         <div className={styles.status_bar}>

@@ -1,13 +1,13 @@
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 import styles from "./burgerMenu.module.css"
-import {AuthorizationContext} from "../../../context/AuthorizationContext";
 import BurgerMenuButton from "./UI/BurgerMenuButton/BurgerMenuButton";
 import BurgerMenuItem from "./UI/BurgerMenuItem/BurgerMenuItem";
+import {useAuthorization} from "../../../hooks/useAuthorization";
 
 const BurgerMenu = () => {
 
     const [isOpen, setIsOpen] = useState<boolean>(false)
-    const {user} = useContext(AuthorizationContext)
+    const {user} = useAuthorization()
 
     return (
         <div className={styles.burger_menu} onClick={() => setIsOpen(!isOpen)}>
