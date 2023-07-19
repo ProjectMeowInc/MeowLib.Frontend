@@ -1,9 +1,13 @@
-.left {
-    width: 20%;
+.wrapper {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    font-family: Raleway, serif;
 }
 
-.wrapper {
-    width: 70%;
+.left {
+    width: 20%;
 }
 
 .img {
