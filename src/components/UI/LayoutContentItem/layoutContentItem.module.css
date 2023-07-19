@@ -1,7 +1,7 @@
 .content_item {
     padding: 50px;
     background-color: rgba(0, 0, 0, 0.05);
-    border-radius: 20px;
+    border-radius: 10px;
     overflow: hidden;
     overflow-y: auto;
     background-color: white;
