@@ -1,0 +1,18 @@
+.description {
+    font-family: Raleway, serif;
+    min-height: 33vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.text {
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.tags {
+    display: flex;
+}
