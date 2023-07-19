@@ -1,13 +1,9 @@
-.wrapper {
-    width: 100%;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    font-family: Raleway, serif;
-}
-
 .left {
     width: 20%;
+}
+
+.wrapper {
+    width: 70%;
 }
 
 .img {

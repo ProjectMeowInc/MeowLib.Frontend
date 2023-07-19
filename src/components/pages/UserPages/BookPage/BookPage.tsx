@@ -1,45 +1,36 @@
 import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import {IBook} from "../../../../services/models/entities/BookModels";
-import {RedirectService} from "../../../../services/RedirectService";
-import {BookService} from "../../../../services/BookService";
 import {IChapterDto} from "../../../../services/models/entities/ChapterModels";
-import {ChapterService} from "../../../../services/ChapterService";
-import Preloader from "../../../UI/Preloader/Preloader";
 import styles from "./bookPage.module.css"
-import BookInfo from "./UI/BookInfo/BookInfo";
 import LayoutContentColumn from "../../../UI/LayoutContentColumn/LayoutContentColumn";
+import BookDescription from "./UI/BookDescription/BookDescription";
+import Preloader from "../../../UI/Preloader/Preloader";
+import {BookService} from "../../../../services/BookService";
+import {RedirectService} from "../../../../services/RedirectService";
 
 const BookPage = () => {
     const [book, setBook] = useState<IBook| null>(null)
     const [chapters, setChapters] = useState<IChapterDto[] | null>(null)
     const params = useParams()
-    const id = params.bookId
+    const bookId = params.bookId
 
     useEffect(() => {
-        if (id === undefined) {
+
+        if (!bookId) {
             return RedirectService.redirectToNotFoundPage()
         }
 
-        BookService.getBookAsync(parseInt(id)).then(getBookResult => {
+        BookService.getBookAsync(parseInt(bookId)).then(getBookResult => {
             if (getBookResult.tryCatchError()) {
                 return
             }
 
             setBook(getBookResult.unwrap())
         })
+    }, [])
 
-        ChapterService.getChaptersAsync(parseInt(id)).then(getChaptersResult => {
-            if (getChaptersResult.tryCatchError()) {
-                return
-            }
-
-            setChapters(getChaptersResult.unwrap())
-        })
-
-    }, [id])
-
-    if (!book || !id) {
+    if (book === null) {
         return (
             <Preloader/>
         )
@@ -47,7 +38,7 @@ const BookPage = () => {
 
     return (
         <div className={styles.wrapper}>
-            <LayoutContentColumn elements={[<BookInfo book={book}/>]}/>
+            <LayoutContentColumn elements={[<BookDescription description={book.description} tags={book.tags}/>]}/>
         </div>
     );
 };
