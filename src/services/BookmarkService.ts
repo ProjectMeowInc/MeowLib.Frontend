@@ -5,13 +5,13 @@ import {IBookmark} from "./models/entities/BookmarkModels";
 /**
  * Написан сервис для работы с закладками
  */
-export class BookMarkService {
+export class BookmarkService {
 
     /**
      * Метод для добавления закладки
      * @param chapterId id главы
      */
-    static async addBookMarkAsync(chapterId: number): Promise<EmptyResult> {
+    static async addBookmarkAsync(chapterId: number): Promise<EmptyResult> {
         const result = await new HttpRequest<void>()
             .withUrl("/users/bookmark")
             .withBody({chapterId: chapterId})
@@ -30,9 +30,9 @@ export class BookMarkService {
      * Метод для получения закладки
      * @param bookId id книги
      */
-    static async getBookMarksAsync(bookId: number): Promise<Result<IBookmark>> {
+    static async getBookmarkByBookIdAsync(bookId: number): Promise<Result<IBookmark>> {
         const result = await new HttpRequest<IBookmark>()
-            .withUrl(`/users/bookmarks/book/${bookId}`)
+            .withUrl(`/users/bookmark/book/${bookId}`)
             .withGetMethod()
             .withAuthorization()
             .sendAsync()
