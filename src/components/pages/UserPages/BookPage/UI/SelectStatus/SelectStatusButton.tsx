@@ -3,18 +3,18 @@ import styles from "./selectStatusButton.module.css"
 import {UserBookStatus, UserBookStatuses} from "../../../../../../services/models/UserBookStatus";
 import {AlertService} from "../../../../../../services/AlertService";
 import {UserFavoriteService} from "../../../../../../services/UserFavoriteService";
-import Button from "../../../../../UI/Button/Button";
 
-interface ISelectStatusProps {
+interface ISelectStatusButtonProps {
     bookId: number
     currentlySelected: UserBookStatus | null
+    onStatusChanged?: (updatedStatus: UserBookStatus) => void
 }
 
-const SelectStatusButton = ({bookId, currentlySelected}: ISelectStatusProps) => {
+const SelectStatusButton = ({bookId, currentlySelected, onStatusChanged}: ISelectStatusButtonProps) => {
     const [isOpen, setIsOpen] = useState<boolean>(false)
-    const [status, setStatus] = useState<UserBookStatus | null>(currentlySelected)
+    const [_, setStatus] = useState<UserBookStatus | null>(currentlySelected)
 
-    async function AddStatusHandler(status: UserBookStatus) {
+    async function ClickStatusHandler(status: UserBookStatus) {
         const addStatusResult = await UserFavoriteService.addToUserFavorite({
             bookId,
             status
@@ -26,25 +26,24 @@ const SelectStatusButton = ({bookId, currentlySelected}: ISelectStatusProps) => 
 
         setStatus(status)
 
+        onStatusChanged?.call(null, status)
+
         AlertService.successMessage("Книга была добавлена")
     }
 
     return (
         <div className={styles.wrapper}>
-            <Button
+            <img className={styles.btn}
                 onClick={() => setIsOpen(prev => !prev)}
-            >
-                {
-                    status ? UserFavoriteService.getDisplayStatusName(status) : "Добавить в закладки"
-                }
-            </Button>
+                src="/img/bookmark.png" alt=""
+            />
             <div
                 className={isOpen ? styles.select_item_list_active : styles.select_item_list}
             >
                 {
                     UserBookStatuses.map((status: UserBookStatus) => (
-                        <div
-                            onClick={() => AddStatusHandler(status)}
+                        <div className={currentlySelected === status ? styles.current : styles.none_current}
+                            onClick={() => ClickStatusHandler(status)}
                         >
                             {UserFavoriteService.getDisplayStatusName(status)}
                         </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from "./settings.module.css"
 import Button from "../../../../../UI/Button/Button";
-import {BookMarkService} from "../../../../../../services/BookMarkService";
+import {BookmarkService} from "../../../../../../services/BookmarkService";
 import {useParams} from "react-router-dom";
 import {AlertService} from "../../../../../../services/AlertService";
 import {useSettings} from "../../../../../../hooks/useSettings";
@@ -17,7 +17,7 @@ const Settings = () => {
         if (!chapterId) {
             return
         }
-        const addBookMarkResult = await BookMarkService.addBookMarkAsync(parseInt(chapterId))
+        const addBookMarkResult = await BookmarkService.addBookmarkAsync(parseInt(chapterId))
 
         if (addBookMarkResult.tryCatchError()) {
             return
