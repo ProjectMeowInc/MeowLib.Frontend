@@ -3,13 +3,49 @@
 }
 
 .select_item_list {
-    display: none;
-    transition: all .7s;
+    width: 10%;
+    height: 0;
+    background-color: #6D5BFD;
+    transition: all .4s;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    color: transparent;
+    overflow: hidden;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .select_item_list_active {
-    transition: all .7s;
-    display: block;
+    width: 10%;
+    height: 20vh;
+    background-color: #6D5BFD;
+    transition: all .4s;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn {
+    cursor: pointer;
+}
+
+.current {
+    background-color: white;
+    color: #6D5BFD;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.none_current {
+    cursor: pointer;
 }
 
 .select_item_list_active > div {

@@ -3,7 +3,7 @@ import styles from "./selectStatusButton.module.css"
 import {UserBookStatus, UserBookStatuses} from "../../../../../../services/models/UserBookStatus";
 import {AlertService} from "../../../../../../services/AlertService";
 import {UserFavoriteService} from "../../../../../../services/UserFavoriteService";
-import Button from "../../../../../UI/Button/Button";
+import {RedirectService} from "../../../../../../services/RedirectService";
 
 interface ISelectStatusProps {
     bookId: number
@@ -26,24 +26,22 @@ const SelectStatusButton = ({bookId, currentlySelected}: ISelectStatusProps) => 
 
         setStatus(status)
 
+        RedirectService.delayReloadPage()
         AlertService.successMessage("Книга была добавлена")
     }
 
     return (
         <div className={styles.wrapper}>
-            <Button
+            <img className={styles.btn}
                 onClick={() => setIsOpen(prev => !prev)}
-            >
-                {
-                    status ? UserFavoriteService.getDisplayStatusName(status) : "Добавить в закладки"
-                }
-            </Button>
+                src="/img/bookmark.png" alt=""
+            />
             <div
                 className={isOpen ? styles.select_item_list_active : styles.select_item_list}
             >
                 {
                     UserBookStatuses.map((status: UserBookStatus) => (
-                        <div
+                        <div className={currentlySelected === status ? styles.current : styles.none_current}
                             onClick={() => AddStatusHandler(status)}
                         >
                             {UserFavoriteService.getDisplayStatusName(status)}
