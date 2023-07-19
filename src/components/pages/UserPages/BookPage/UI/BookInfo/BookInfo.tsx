@@ -4,6 +4,8 @@ import Button from "../../../../../UI/Button/Button";
 import SelectStatusButton from "../SelectStatus/SelectStatusButton";
 import {UserBookStatus} from "../../../../../../services/models/UserBookStatus";
 import {UserFavoriteService} from "../../../../../../services/UserFavoriteService";
+import {BookmarkService} from "../../../../../../services/BookmarkService";
+import {IBookmark} from "../../../../../../services/models/entities/BookmarkModels";
 
 interface IBookInfoProps {
     bookId: number
@@ -14,6 +16,7 @@ interface IBookInfoProps {
 const BookInfo = ({bookId, bookName, imageName}: IBookInfoProps) => {
 
     const [currentStatus, setCurrentStatus] = useState<UserBookStatus | null>(null)
+    const [bookmark, setBookmark] = useState<IBookmark | null>(null)
 
     useEffect(() => {
         UserFavoriteService.getUserFavoriteByBookId(bookId).then(getUserFavoriteResult => {
@@ -28,6 +31,14 @@ const BookInfo = ({bookId, bookName, imageName}: IBookInfoProps) => {
             }
 
             setCurrentStatus(null)
+        })
+
+        BookmarkService.getBookmarkByBookIdAsync(bookId).then(getBookmarkResult => {
+            if (getBookmarkResult.hasError()) {
+                return
+            }
+
+            setBookmark(getBookmarkResult.unwrap())
         })
     }, [])
 
@@ -44,7 +55,7 @@ const BookInfo = ({bookId, bookName, imageName}: IBookInfoProps) => {
             }
 
             <div className={styles.buttons}>
-                <Button children={"Продолжить читать"}/>
+                <Button children={bookmark !== null ? "Продолжить читать" : "Начать читать"}/>
                 <SelectStatusButton
                     bookId={bookId}
                     currentlySelected={currentStatus}
