@@ -39,7 +39,7 @@ const BookPage = () => {
 
     return (
         <div className={styles.wrapper}>
-            <LayoutContentColumn elements={[<BookInfo bookName={book.name} imageName={book.imageUrl}/>]}/>
+            <LayoutContentColumn elements={[<BookInfo bookId={book.id} bookName={book.name} imageName={book.imageUrl}/>]}/>
             <LayoutContentColumn flex={0} elements={[<BookDescription description={book.description} tags={book.tags}/>]}/>
         </div>
     );
