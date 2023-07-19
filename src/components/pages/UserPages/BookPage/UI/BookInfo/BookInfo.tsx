@@ -33,10 +33,16 @@ const BookInfo = ({bookId, bookName, imageName}: IBookInfoProps) => {
 
     return (
         <div style={imageName !== null ? {backgroundImage:`linear-gradient(136deg, rgba(109, 91, 253, 0.80) 0%, rgba(255, 0, 229, 0.06) 49.87%, rgba(0, 0, 0, 0.69) 87.79%, #000 100%),
-         url(https://localhost:7007/api/images/book/${imageName})`} : {}}
+         url(https://localhost:7007/api/images/book/${imageName})`} : {background:"linear-gradient(136deg, rgba(109, 91, 253, 0.80) 0%, rgba(255, 0, 229, 0.06) 49.87%, rgba(0, 0, 0, 0.69) 87.79%, #000 100%)"}}
              className={styles.book_info}
         >
             <p>{bookName}</p>
+
+            {imageName === null
+                ? <p>Изображения пока нет</p>
+                : <></>
+            }
+
             <div className={styles.buttons}>
                 <Button children={"Продолжить читать"}/>
                 <SelectStatusButton
