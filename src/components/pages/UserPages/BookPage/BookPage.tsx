@@ -8,6 +8,7 @@ import BookDescription from "./UI/BookDescription/BookDescription";
 import Preloader from "../../../UI/Preloader/Preloader";
 import {BookService} from "../../../../services/BookService";
 import {RedirectService} from "../../../../services/RedirectService";
+import BookInfo from "./UI/BookInfo/BookInfo";
 
 const BookPage = () => {
     const [book, setBook] = useState<IBook| null>(null)
@@ -38,7 +39,8 @@ const BookPage = () => {
 
     return (
         <div className={styles.wrapper}>
-            <LayoutContentColumn elements={[<BookDescription description={book.description} tags={book.tags}/>]}/>
+            <LayoutContentColumn elements={[<BookInfo bookName={book.name} imageName={book.imageUrl}/>]}/>
+            <LayoutContentColumn flex={0} elements={[<BookDescription description={book.description} tags={book.tags}/>]}/>
         </div>
     );
 };
