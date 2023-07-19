@@ -3,18 +3,18 @@ import styles from "./selectStatusButton.module.css"
 import {UserBookStatus, UserBookStatuses} from "../../../../../../services/models/UserBookStatus";
 import {AlertService} from "../../../../../../services/AlertService";
 import {UserFavoriteService} from "../../../../../../services/UserFavoriteService";
-import {RedirectService} from "../../../../../../services/RedirectService";
 
-interface ISelectStatusProps {
+interface ISelectStatusButtonProps {
     bookId: number
     currentlySelected: UserBookStatus | null
+    onStatusChanged?: (updatedStatus: UserBookStatus) => void
 }
 
-const SelectStatusButton = ({bookId, currentlySelected}: ISelectStatusProps) => {
+const SelectStatusButton = ({bookId, currentlySelected, onStatusChanged}: ISelectStatusButtonProps) => {
     const [isOpen, setIsOpen] = useState<boolean>(false)
-    const [status, setStatus] = useState<UserBookStatus | null>(currentlySelected)
+    const [_, setStatus] = useState<UserBookStatus | null>(currentlySelected)
 
-    async function AddStatusHandler(status: UserBookStatus) {
+    async function ClickStatusHandler(status: UserBookStatus) {
         const addStatusResult = await UserFavoriteService.addToUserFavorite({
             bookId,
             status
@@ -26,7 +26,8 @@ const SelectStatusButton = ({bookId, currentlySelected}: ISelectStatusProps) => 
 
         setStatus(status)
 
-        RedirectService.delayReloadPage()
+        onStatusChanged?.call(null, status)
+
         AlertService.successMessage("Книга была добавлена")
     }
 
@@ -42,7 +43,7 @@ const SelectStatusButton = ({bookId, currentlySelected}: ISelectStatusProps) => 
                 {
                     UserBookStatuses.map((status: UserBookStatus) => (
                         <div className={currentlySelected === status ? styles.current : styles.none_current}
-                            onClick={() => AddStatusHandler(status)}
+                            onClick={() => ClickStatusHandler(status)}
                         >
                             {UserFavoriteService.getDisplayStatusName(status)}
                         </div>

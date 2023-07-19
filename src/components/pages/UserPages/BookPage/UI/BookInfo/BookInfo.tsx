@@ -4,7 +4,6 @@ import Button from "../../../../../UI/Button/Button";
 import SelectStatusButton from "../SelectStatus/SelectStatusButton";
 import {UserBookStatus} from "../../../../../../services/models/UserBookStatus";
 import {UserFavoriteService} from "../../../../../../services/UserFavoriteService";
-import {IUserFavorite} from "../../../../../../services/models/entities/UserFavoriteModels";
 
 interface IBookInfoProps {
     bookId: number
@@ -40,7 +39,11 @@ const BookInfo = ({bookId, bookName, imageName}: IBookInfoProps) => {
             <p>{bookName}</p>
             <div className={styles.buttons}>
                 <Button children={"Продолжить читать"}/>
-                <SelectStatusButton bookId={bookId} currentlySelected={currentStatus}/>
+                <SelectStatusButton
+                    bookId={bookId}
+                    currentlySelected={currentStatus}
+                    onStatusChanged={(newStatus) => setCurrentStatus(newStatus)}
+                />
             </div>
         </div>
     );
