@@ -16,7 +16,7 @@ const BookDescription = ({description, tags}:IBookDescriptionProps) => {
             <div className={styles.tags}>
                 {
                     tags.map(tag => (
-                        <BookTag tag={tag.name}/>
+                        <BookTag tagName={tag.name}/>
                     ))
                 }
             </div>

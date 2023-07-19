@@ -1,14 +1,14 @@
 import React from 'react';
 import styles from "./bookTag.module.css"
 
-interface IBookTag {
-    tag: string
+interface IBookTagProps {
+    tagName: string
 }
 
-const BookTag = ({tag}: IBookTag) => {
+const BookTag = ({tagName}: IBookTagProps) => {
     return (
         <div className={styles.tag}>
-            {tag}
+            {tagName}
         </div>
     );
 };
