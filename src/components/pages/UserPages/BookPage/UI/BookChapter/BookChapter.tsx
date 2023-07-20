@@ -8,13 +8,11 @@ interface IBookChapterProps {
 
 const BookChapter = ({nameChapter, releaseDate}: IBookChapterProps) => {
 
-    const date = new Date(releaseDate)
-
     return (
         <div className={styles.chapter}>
             <div className={styles.wrapper}>
                 <p>{nameChapter}</p>
-                <p>{date.toLocaleString("ru", {dateStyle: "short"})}</p>
+                <p>{releaseDate.toLocaleString("ru", {dateStyle: "short"})}</p>
             </div>
         </div>
     );
