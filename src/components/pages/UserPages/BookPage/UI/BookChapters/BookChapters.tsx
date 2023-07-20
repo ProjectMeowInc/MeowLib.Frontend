@@ -27,7 +27,6 @@ const BookChapters = ({bookId}:IBookChaptersProps) => {
                     <BookChapter nameChapter={chapter.name} releaseDate={chapter.releaseDate}/>
                 ))
                 : <p>Здесь пока ничего нет</p>
-
             }
         </div>
     );
