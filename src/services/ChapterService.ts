@@ -49,7 +49,12 @@ export class ChapterService {
 
         const chapters = result.unwrap()
 
-        return Result.ok(chapters.items)
+        const domainChapters: IChapterDto[] = chapters.items.map(chapter => ({
+            ...chapter,
+            releaseDate: new Date(chapter.releaseDate)
+        }))
+
+        return Result.ok(domainChapters)
     }
 
     /**
