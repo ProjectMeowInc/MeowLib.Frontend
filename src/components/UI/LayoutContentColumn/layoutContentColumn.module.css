@@ -3,5 +3,6 @@
     flex: 1;
     flex-direction: column;
     justify-content: space-between;
-    margin-right: 80px;
+    margin-right: 50px;
+    margin-bottom: -175px;
 }
