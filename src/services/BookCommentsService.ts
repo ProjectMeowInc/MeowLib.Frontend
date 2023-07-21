@@ -1,7 +1,8 @@
 import {IBookCommentsDto} from "./models/entities/BookCommentsModels";
 import HttpRequest from "./http/HttpRequest";
 import {IGetBookCommentsResponse} from "./models/responses/BookResponse";
-import {EmptyResult, Result} from "./result/Result";
+import {Result} from "./result/Result";
+import {IAddBookCommentResponse} from "./models/responses/IAddBookCommentResponse";
 
 /**
  * Написан класс для работы с комментариями книги
@@ -24,7 +25,7 @@ export class BookCommentsService {
 
         const comments = result.unwrap().items
 
-        const domainComments = comments.map(comment => ({
+        const domainComments: IBookCommentsDto[] = comments.map(comment => ({
             ...comment,
             postedAt: new Date(comment.postedAt)
         }))
@@ -37,8 +38,8 @@ export class BookCommentsService {
      * @param bookId id книги
      * @param text содержимое комментария
      */
-    static async addBookCommentAsync(bookId: number, text: string): Promise<EmptyResult> {
-        const result = await new HttpRequest<void>()
+    static async addBookCommentAsync(bookId: number, text: string): Promise<Result<IBookCommentsDto>> {
+        const result = await new HttpRequest<IAddBookCommentResponse>()
             .withUrl(`/books/${bookId}/comments`)
             .withBody({text: text})
             .withPostMethod()
@@ -46,9 +47,16 @@ export class BookCommentsService {
             .sendAsync()
 
         if (result.hasError()) {
-            return EmptyResult.withError(result.getError())
+            return Result.withError(result.getError())
         }
 
-        return EmptyResult.ok()
+        const comment = result.unwrap()
+
+        const domainComment: IBookCommentsDto = {
+            ...comment,
+            postedAt: new Date(comment.postedAt)
+        }
+
+        return Result.ok(domainComment)
     }
 }
