@@ -1,0 +1,17 @@
+.add_comment {
+    margin-top: 20px;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.add_comment input {
+    width: 35vw;
+}
+
+.none_comments {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: 500;
+}
