@@ -1,7 +1,7 @@
 import {IAuthor} from "../entities/AuthorModels";
 import {ITagModel} from "../entities/TagModels";
 import {IBookDto} from "../entities/BookModels";
-import {IBookCommentsDto} from "../entities/BookCommentsModels";
+import {UserRoles} from "../UserRoles";
 
 /**
  * Интерфейс описывающий возвращаемое значение книги
@@ -26,5 +26,14 @@ export interface IBooksResponse {
  */
 export interface IGetBookCommentsResponse {
     bookId: number
-    items: IBookCommentsDto[]
+    items: {
+        id: number
+        text: string
+        postedAt: Date
+        author: {
+            id: number
+            login: string
+            role: UserRoles
+        }
+    }[]
 }
