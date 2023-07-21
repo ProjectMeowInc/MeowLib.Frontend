@@ -6,14 +6,15 @@ import {BookCommentsService} from "../../../../../../services/BookCommentsServic
 import BookComment from "../BookComment/BookComment";
 import styles from "./bookComments.module.css"
 import {AlertService} from "../../../../../../services/AlertService";
+import Preloader from "../../../../../UI/Preloader/Preloader";
 
 interface IBookCommentsProps {
     bookId: number
 }
 
-const BookComments = ({bookId}:IBookCommentsProps) => {
+const BookComments = ({bookId}: IBookCommentsProps) => {
 
-    const [comments, setComments] = useState<IBookCommentsDto[]>([])
+    const [comments, setComments] = useState<IBookCommentsDto[] | null>(null)
     const [newComment, setNewComment] = useState<string>("")
 
     useEffect(() => {
@@ -33,9 +34,19 @@ const BookComments = ({bookId}:IBookCommentsProps) => {
             return
         }
 
-        setComments(prevState => [addBookCommentResult.unwrap(), ...prevState])
+        setComments(prevState => {
+            if (prevState !== null) {
+                return [addBookCommentResult.unwrap(), ...prevState]
+            }
+
+            return null
+        })
 
         AlertService.successMessage("Комментарий оставлен")
+    }
+
+    if (comments === null) {
+        return <Preloader/>
     }
 
     return (
