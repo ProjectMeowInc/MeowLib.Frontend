@@ -6,4 +6,10 @@
     overflow-y: auto;
     background-color: white;
     min-width: 300px;
+    min-height: 35vh;
+    margin-bottom: 50px;
+}
+
+.content_item::-webkit-scrollbar {
+    display: none;
 }
