@@ -33,6 +33,8 @@ const BookComments = ({bookId}:IBookCommentsProps) => {
             return
         }
 
+        setComments(prevState => [addBookCommentResult.unwrap(), ...prevState])
+
         AlertService.successMessage("Комментарий оставлен")
     }
 

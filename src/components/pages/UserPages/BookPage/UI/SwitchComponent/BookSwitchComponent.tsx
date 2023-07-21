@@ -7,7 +7,7 @@ interface ISwitchComponentProps {
     bookId: number
 }
 
-const SwitchComponent = ({bookId}: ISwitchComponentProps) => {
+const BookSwitchComponent = ({bookId}: ISwitchComponentProps) => {
 
     const [isChapters, setIsChapters] = useState<boolean>(true)
 
@@ -29,4 +29,4 @@ const SwitchComponent = ({bookId}: ISwitchComponentProps) => {
     );
 };
 
-export default SwitchComponent;
+export default BookSwitchComponent;

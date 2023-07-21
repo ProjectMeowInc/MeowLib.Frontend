@@ -8,7 +8,7 @@ import Preloader from "../../../UI/Preloader/Preloader";
 import {BookService} from "../../../../services/BookService";
 import {RedirectService} from "../../../../services/RedirectService";
 import BookInfo from "./UI/BookInfo/BookInfo";
-import SwitchComponent from "./UI/SwitchComponent/SwitchComponent";
+import BookSwitchComponent from "./UI/SwitchComponent/BookSwitchComponent";
 
 const BookPage = () => {
     const [book, setBook] = useState<IBook| null>(null)
@@ -39,7 +39,7 @@ const BookPage = () => {
     return (
         <div className={styles.wrapper}>
             <LayoutContentColumn elements={[<BookInfo bookId={book.id} bookName={book.name} imageName={book.imageUrl}/>]}/>
-            <LayoutContentColumn flex={0} elements={[<BookDescription description={book.description} tags={book.tags}/>, <SwitchComponent bookId={book.id}/>]}/>
+            <LayoutContentColumn flex={0} elements={[<BookDescription description={book.description} tags={book.tags}/>, <BookSwitchComponent bookId={book.id}/>]}/>
         </div>
     );
 };

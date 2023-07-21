@@ -14,7 +14,7 @@ const BookComment = ({text, author, postedAt}: IBookCommentProps) => {
             <p className={styles.author}>{author.login}</p>
             <div className={styles.text}>
                 <p>{text}</p>
-                <p>{postedAt.toLocaleString("ru", {dateStyle: "short"})}</p>
+                <p>{postedAt.toLocaleString("ru", {dateStyle: "medium", timeStyle: "medium"})}</p>
             </div>
         </div>
     );
