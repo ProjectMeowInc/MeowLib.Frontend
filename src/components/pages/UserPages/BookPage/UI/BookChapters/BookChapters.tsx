@@ -3,6 +3,7 @@ import {IChapterDto} from "../../../../../../services/models/entities/ChapterMod
 import {ChapterService} from "../../../../../../services/ChapterService";
 import BookChapter from "../BookChapter/BookChapter";
 import styles from "./bookChapters.module.css"
+import Preloader from "../../../../../UI/Preloader/Preloader";
 
 interface IBookChaptersProps {
     bookId: number
@@ -20,9 +21,13 @@ const BookChapters = ({bookId}:IBookChaptersProps) => {
         })
     }, [bookId])
 
+    if (chapters === null) {
+        return <Preloader/>
+    }
+
     return (
         <div className={styles.chapters}>
-            {chapters !== null
+            {chapters.length > 0
                 ? chapters.map(chapter => (
                     <BookChapter nameChapter={chapter.name} releaseDate={chapter.releaseDate}/>
                 ))
