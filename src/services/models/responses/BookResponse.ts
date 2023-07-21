@@ -1,9 +1,10 @@
 import {IAuthor} from "../entities/AuthorModels";
 import {ITagModel} from "../entities/TagModels";
 import {IBookDto} from "../entities/BookModels";
+import {IBookCommentsDto} from "../entities/BookCommentsModels";
 
 /**
- * Интерфейс описывающий возвращаемое занчение книги
+ * Интерфейс описывающий возвращаемое значение книги
  */
 interface BookResponse {
     id: number
@@ -18,4 +19,12 @@ interface BookResponse {
  */
 export interface IBooksResponse {
     items: IBookDto[]
+}
+
+/**
+ * Интерфейс описывающий возвращаемое значение комментариев к книгам
+ */
+export interface IGetBookCommentsResponse {
+    bookId: number
+    items: IBookCommentsDto[]
 }
