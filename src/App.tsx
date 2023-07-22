@@ -25,6 +25,7 @@ import LibraryPage from "./components/pages/UserPages/LibraryPage/LibraryPage";
 import BookPage from "./components/pages/UserPages/BookPage/BookPage";
 import SettingsPage from "./components/pages/UserPages/SettingsPage/SettingsPage";
 import LayoutContentColumn from "./components/UI/LayoutContentColumn/LayoutContentColumn";
+import ChapterPage from "./components/pages/UserPages/ChapterPage/ChapterPage";
 
 const App = () => {
   return (
@@ -66,7 +67,10 @@ const App = () => {
                 </Route>
                 <Route path={"/"} element={<UserLayout/>}>
                     <Route index element={<LayoutContentColumn elements={[<LibraryPage/>]}/> }/>
-                    <Route path={"books/:bookId"} element={<BookPage/>}/>
+                    <Route path={"books/:bookId"}>
+                        <Route index element={<BookPage/>}/>
+                        <Route path={"chapter/:chapterId"} element={<ChapterPage/>}/>
+                    </Route>
                     <Route path={"favorites"}/>
                     <Route path={"settings"} element={<SettingsPage/>}/>
                 </Route>
