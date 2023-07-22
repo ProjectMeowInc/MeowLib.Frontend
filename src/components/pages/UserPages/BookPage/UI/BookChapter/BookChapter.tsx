@@ -1,20 +1,22 @@
 import React from 'react';
 import styles from "./bookChapter.module.css"
+import {Link} from "react-router-dom";
 
 interface IBookChapterProps {
+    chapterId: number
     nameChapter: string
     releaseDate: Date
 }
 
-const BookChapter = ({nameChapter, releaseDate}: IBookChapterProps) => {
+const BookChapter = ({chapterId, nameChapter, releaseDate}: IBookChapterProps) => {
 
     return (
-        <div className={styles.chapter}>
+        <Link to={`chapter/${chapterId}`} className={styles.chapter}>
             <div className={styles.wrapper}>
                 <p>{nameChapter}</p>
                 <p>{releaseDate.toLocaleString("ru", {dateStyle: "short"})}</p>
             </div>
-        </div>
+        </Link>
     );
 };
 

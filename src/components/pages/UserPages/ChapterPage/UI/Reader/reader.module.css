@@ -1,0 +1,17 @@
+.caption {
+    text-align: center;
+}
+
+.page {
+    font-family: Raleway, serif;
+    padding: 20px;
+    border-radius: 7px;
+}
+
+.text {
+    margin-top: 50px;
+    font-family: Raleway, serif;
+    font-size: 20px;
+    line-height: 2;
+    transition: .2s all;
+}

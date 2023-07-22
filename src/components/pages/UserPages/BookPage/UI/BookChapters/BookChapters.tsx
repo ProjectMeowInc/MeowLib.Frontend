@@ -29,7 +29,7 @@ const BookChapters = ({bookId}:IBookChaptersProps) => {
         <div className={styles.chapters}>
             {chapters.length > 0
                 ? chapters.map(chapter => (
-                    <BookChapter nameChapter={chapter.name} releaseDate={chapter.releaseDate}/>
+                    <BookChapter chapterId={chapter.id} nameChapter={chapter.name} releaseDate={chapter.releaseDate}/>
                 ))
                 : <p>Здесь пока ничего нет</p>
             }

@@ -9,6 +9,7 @@ import {BookService} from "../../../../services/BookService";
 import {RedirectService} from "../../../../services/RedirectService";
 import BookInfo from "./UI/BookInfo/BookInfo";
 import BookSwitchComponent from "./UI/SwitchComponent/BookSwitchComponent";
+import {AlertService} from "../../../../services/AlertService";
 
 const BookPage = () => {
     const [book, setBook] = useState<IBook| null>(null)
@@ -22,8 +23,8 @@ const BookPage = () => {
         }
 
         BookService.getBookAsync(parseInt(bookId)).then(getBookResult => {
-            if (getBookResult.tryCatchError()) {
-                return
+            if (getBookResult.hasError()) {
+                AlertService.errorMessage(getBookResult.getError().displayMessage)
             }
 
             setBook(getBookResult.unwrap())
