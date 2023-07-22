@@ -65,7 +65,7 @@ export class RedirectService {
     static delayRedirectToIndexPage(): void {
         setTimeout(() => {
             redirect("/")
-        })
+        }, 3000)
     }
 
     /**
