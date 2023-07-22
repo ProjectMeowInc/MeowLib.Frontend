@@ -5,14 +5,12 @@ import {ChapterService} from "../../../../services/ChapterService";
 import {RedirectService} from "../../../../services/RedirectService";
 import Preloader from "../../../UI/Preloader/Preloader";
 import Settings from "./UI/Settings/Settings";
-import {useSettings} from "../../../../hooks/useSettings";
 import LayoutContentColumn from "../../../UI/LayoutContentColumn/LayoutContentColumn";
 import Reader from "./UI/Reader/Reader";
 
 const ChapterPage = () => {
 
     const [chapter, setChapter] = useState<IChapter | null>(null)
-    const {settings} = useSettings()
     const params = useParams()
 
     const chapterId = params.chapterId
