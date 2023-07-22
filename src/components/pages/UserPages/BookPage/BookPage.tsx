@@ -25,7 +25,6 @@ const BookPage = () => {
         BookService.getBookAsync(parseInt(bookId)).then(getBookResult => {
             if (getBookResult.hasError()) {
                 AlertService.errorMessage(getBookResult.getError().displayMessage)
-                RedirectService.redirectToNotFoundPage()
             }
 
             setBook(getBookResult.unwrap())
