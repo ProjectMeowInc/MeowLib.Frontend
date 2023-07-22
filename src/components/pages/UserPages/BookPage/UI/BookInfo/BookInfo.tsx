@@ -18,7 +18,7 @@ const BookInfo = ({bookId, bookName, imageName}: IBookInfoProps) => {
 
     const [currentStatus, setCurrentStatus] = useState<UserBookStatus | null>(null)
     const [bookmark, setBookmark] = useState<IBookmark | null>(null)
-    const [chapter, setChapter] = useState<number>()
+    const [firstChapterId, setFirstChapterId] = useState<number>()
 
     useEffect(() => {
         UserFavoriteService.getUserFavoriteByBookId(bookId).then(getUserFavoriteResult => {
@@ -51,16 +51,16 @@ const BookInfo = ({bookId, bookName, imageName}: IBookInfoProps) => {
             const chapters = getChaptersResult.unwrap()
             const firstChapterNumber = Math.min(...chapters.map(chapter => chapter.id))
 
-            setChapter(firstChapterNumber)
+            setFirstChapterId(firstChapterNumber)
         })
     }, [])
 
-    function ContinueRead() {
+    function ReadButtonClickHandler() {
         if (bookmark) {
             return RedirectService.redirect(`/books/${bookId}/chapter/${bookmark.chapterId}`)
         }
 
-        return RedirectService.redirect(`/books/${bookId}/chapter/${chapter}`)
+        return RedirectService.redirect(`/books/${bookId}/chapter/${firstChapterId}`)
     }
 
     return (
@@ -76,7 +76,7 @@ const BookInfo = ({bookId, bookName, imageName}: IBookInfoProps) => {
             }
 
             <div className={styles.buttons}>
-                <Button onClick={ContinueRead} children={bookmark !== null ? "Продолжить читать" : "Начать читать"}/>
+                <Button onClick={ReadButtonClickHandler} children={bookmark !== null ? "Продолжить читать" : "Начать читать"}/>
                 <SelectStatusButton
                     bookId={bookId}
                     currentlySelected={currentStatus}
