@@ -1,3 +1,5 @@
+import {redirect} from "react-router-dom";
+
 /**
  * Сервис для редиректа
  */
@@ -52,11 +54,17 @@ export class RedirectService {
     }
 
     /**
-     * Метод для редиректа на предидущую страницу с задержкой в 3с
+     * Метод для редиректа на предыдущую страницу с задержкой в 3с
      */
     static delayRedirectToPrevPage(): void {
         setTimeout(() => {
             window.history.back()
+        }, 3000)
+    }
+
+    static delayRedirectToIndexPage(): void {
+        setTimeout(() => {
+            redirect("/")
         }, 3000)
     }
 

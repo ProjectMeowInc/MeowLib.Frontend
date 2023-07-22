@@ -1,0 +1,28 @@
+.switch {
+    width: 25%;
+    display: flex;
+    justify-content: space-between;
+    font-family: Raleway, serif;
+}
+
+.switch_active {
+    color: #6D5BFD;
+    text-decoration: #6D5BFD underline;
+    text-underline-offset: 5px;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    transition: .4s all;
+    cursor: pointer;
+}
+
+.switch_none_active {
+    color: rgba(0, 0, 0, 0.50);
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    transition: .4s all;
+    cursor: pointer;
+}

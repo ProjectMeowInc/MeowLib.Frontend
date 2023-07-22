@@ -1,4 +1,4 @@
-import {Error, ErrorTypesEnum, IError, IErrorWithAction} from "./models/IError";
+import {Error, IError, IErrorWithAction} from "./error/IError";
 import {AxiosError} from "axios";
 import {IBaseErrorResponse} from "./models/responses/errors/IBaseErrorResponse";
 import {LogService} from "./LogService";
@@ -17,7 +17,7 @@ export class ErrorService {
      * @returns Модель ошибки.
      */
     static criticalError(displayMessage: string | null = null): IError {
-        return new Error(displayMessage ?? "Неизвестная ошибка", ErrorTypesEnum.Critical);
+        return new Error(displayMessage ?? "Неизвестная ошибка", "Critical");
     }
 
     /**
@@ -26,7 +26,7 @@ export class ErrorService {
      * @returns Модель ошибки.
      */
     static warningError(displayMessage: string | null): IError {
-        return new Error(displayMessage ?? "Неизвестная ошибка", ErrorTypesEnum.Warning);
+        return new Error(displayMessage ?? "Неизвестная ошибка", "Warning");
     }
 
     /**
@@ -35,7 +35,7 @@ export class ErrorService {
      * @returns Модель ошибки.
      */
     static commonError(displayMessage: string | null): IError {
-        return new Error(displayMessage ?? "Неизвестная ошибка", ErrorTypesEnum.Error);
+        return new Error(displayMessage ?? "Неизвестная ошибка", "Error");
     }
 
     /**
@@ -63,7 +63,7 @@ export class ErrorService {
 
     /**
      * Метод для проверки действия в ошибке
-     * @param data предпологаемая ошибка
+     * @param data предполагаемая ошибка
      * @returns является ли data IErrorWithAction
      */
     static isActionError(data: IError): data is IErrorWithAction {

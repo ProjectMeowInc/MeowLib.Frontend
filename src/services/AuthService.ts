@@ -1,9 +1,8 @@
-import {ILogInRequest, ISignInRequest} from "./models/requests/IUserRequests";
-import {IError} from "./models/IError";
-import axios from "axios";
-import {ErrorService} from "./ErrorService";
-import {ILoginResponse} from "./models/responses/IAuthResponses";
+import {ILogInRequest, ISignInRequest} from "./models/requests/UserRequests";
+import {ILoginResponse} from "./models/responses/AuthResponses";
 import {EmptyResult, Result} from "./result/Result";
+import HttpRequest from "./http/HttpRequest";
+import {ILogin} from "./models/entities/LoginModels";
 
 /**
  * Сервис для авторизации пользователей
@@ -16,14 +15,18 @@ export class AuthService {
      * @returns ошибка при наличии или null
      */
     static async registrationAsync(requestData: ISignInRequest): Promise<EmptyResult> {
-        try {
-            await axios.post(process.env.REACT_APP_URL_API + "/authorization/sign-in", requestData)
 
-            return EmptyResult.ok()
+        const result = await new HttpRequest<void>()
+            .withUrl("/authorization/sign-in")
+            .withBody(requestData)
+            .withPostMethod()
+            .sendAsync()
+
+        if (result.hasError()) {
+            return EmptyResult.withError(result.getError())
         }
-        catch (err: any) {
-            return EmptyResult.withError(ErrorService.toServiceError(err, "AuthService"))
-        }
+
+        return EmptyResult.ok()
     }
 
     /**
@@ -31,14 +34,18 @@ export class AuthService {
      * @param requestData Данные для авторизации.
      * @returns Возвращает ошибку или два токена
      */
-    static async authorizationAsync(requestData: ILogInRequest): Promise<Result<ILoginResponse>> {
-        try {
-            const response = await axios.post<ILoginResponse>(process.env.REACT_APP_URL_API + "/authorization/log-in", requestData)
+    static async authorizationAsync(requestData: ILogInRequest): Promise<Result<ILogin>> {
 
-            return Result.ok(response.data)
+        const result = await new HttpRequest<ILoginResponse>()
+            .withUrl("/authorization/log-in")
+            .withBody(requestData)
+            .withPostMethod()
+            .sendAsync()
+
+        if (result.hasError()) {
+            return Result.withError(result.getError())
         }
-        catch (err: any) {
-            return Result.withError(ErrorService.toServiceError(err, "UserService"))
-        }
+
+        return Result.ok(result.unwrap())
     }
 }

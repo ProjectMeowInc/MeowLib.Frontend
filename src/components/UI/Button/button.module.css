@@ -1,0 +1,27 @@
+.button {
+    background-color: #6D5BFD;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    border-radius: 4px;
+    font-weight: 500;
+    font-size: 14px;
+    font-family: "Ubuntu", serif;
+    cursor: pointer;
+    user-select: none;
+    transition: opacity .7s;
+}
+
+.button_locked {
+    background-color: #6D5BFD;
+    opacity: 0.5;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    border-radius: 4px;
+    font-weight: 500;
+    font-size: 14px;
+    font-family: "Ubuntu", serif;
+    user-select: none;
+    transition: opacity .7s;
+}

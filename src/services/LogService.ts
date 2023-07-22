@@ -1,9 +1,6 @@
-import {ISendLogRequest} from "./models/requests/ISendLogRequest";
-import {IError} from "./models/IError";
-import axios from "axios";
-import {TokenService} from "./TokenService";
-import {ErrorService} from "./ErrorService";
+import {SendLogRequest} from "./models/requests/SendLogRequest";
 import {EmptyResult} from "./result/Result";
+import HttpRequest from "./http/HttpRequest";
 
 /**
  * Сервис для логирования в тг
@@ -15,18 +12,19 @@ export class LogService {
      * @param data тело ошибки
      * @returns null при успехе или ошибка
      */
-    static async sendLogAsync(data: ISendLogRequest): Promise<EmptyResult> {
-        try {
-            await axios.post(process.env.REACT_APP_URL_API + "/logs", data, {
-                headers: {
-                    Authorization: await TokenService.getAccessTokenAsync()
-                }
-            })
+    static async sendLogAsync(data: SendLogRequest): Promise<EmptyResult> {
 
-            return EmptyResult.ok()
+        const result = await HttpRequest.create<void>()
+            .withUrl("/logs")
+            .withAuthorization()
+            .withBody(data)
+            .sendAsync()
+
+        if (result.hasError()) {
+            const error = result.getError()
+            return EmptyResult.withError(error)
         }
-        catch (err: any) {
-            return EmptyResult.withError(ErrorService.toServiceError(err, "LogService"))
-        }
+
+        return EmptyResult.ok()
     }
 }

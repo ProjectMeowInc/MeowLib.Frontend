@@ -1,13 +1,28 @@
-.block {
-    width: 22%;
-    position: fixed;
+.wrapper {
+    width: 90%;
+    margin: 0 auto;
+    min-height: 90vh;
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: start;
 }
 
-.block img {
-    margin-top: 20px;
-    width: 310px;
-    height: 62px;
+.outlet {
+    padding: 50px;
+    width: 75%;
+    height: 70vh;
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 20px;
+    overflow: hidden;
+    overflow-y: auto;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.outlet::-webkit-scrollbar {
+    display: none;
+}
+
+body::-webkit-scrollbar {
+    display: none;
 }

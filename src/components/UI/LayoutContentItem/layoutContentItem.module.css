@@ -1,0 +1,15 @@
+.content_item {
+    padding: 50px;
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+    overflow: hidden;
+    overflow-y: auto;
+    background-color: white;
+    min-width: 300px;
+    min-height: 35vh;
+    margin-bottom: 50px;
+}
+
+.content_item::-webkit-scrollbar {
+    display: none;
+}
