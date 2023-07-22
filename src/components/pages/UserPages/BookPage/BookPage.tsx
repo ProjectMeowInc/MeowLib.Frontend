@@ -22,7 +22,7 @@ const BookPage = () => {
         }
 
         BookService.getBookAsync(parseInt(bookId)).then(getBookResult => {
-            if (getBookResult.tryCatchError()) {
+            if (getBookResult.hasError()) {
                 return
             }
 
