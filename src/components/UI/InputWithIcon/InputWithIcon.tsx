@@ -23,11 +23,12 @@ const InputWithIcon: React.FC<InputWithIconProps> = (
             <div className={styles.content}>
                 <img
                     className={styles.img}
-                    src={"/img/" + image} alt=""
+                    src={"/img/" + image}
+                    alt=""
                 />
 
                 <input
-                    placeholder={placeholder ?? "Начните вводить"}
+                    placeholder={placeholder}
                     className={styles.input}
                     onChange={onChange}
                     type={inputType}
