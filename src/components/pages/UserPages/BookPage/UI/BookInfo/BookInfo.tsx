@@ -8,6 +8,7 @@ import {BookmarkService} from "../../../../../../services/BookmarkService";
 import {IBookmark} from "../../../../../../services/models/entities/BookmarkModels";
 import {RedirectService} from "../../../../../../services/RedirectService";
 import {ChapterService} from "../../../../../../services/ChapterService";
+
 interface IBookInfoProps {
     bookId: number
     bookName: string
