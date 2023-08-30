@@ -1,0 +1,41 @@
+.input_with_icon {
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    font-family: Ubuntu, serif;
+}
+
+.input_label {
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.input {
+    width: 90%;
+    height: 45px;
+    border: none;
+    background-color: #E8F0FE;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 0 7px 7px 0;
+}
+
+.content {
+    border-radius: 7px;
+    background-color: #E8F0FE;
+    height: 45px;
+    padding: 0 5px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin: 10px auto 0 auto;
+}
+
+.input:focus {
+    outline: none;
+}
+
+.img {
+    width: 10%;
+    border-radius: 7px 0 0 7px;
+}
